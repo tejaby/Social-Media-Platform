@@ -8,4 +8,4 @@ from .views import UserViewset
 
 router = routers.DefaultRouter()
 
-router.register(r'api/user', UserViewset, 'user')
+router.register(r'users', UserViewset, 'user')

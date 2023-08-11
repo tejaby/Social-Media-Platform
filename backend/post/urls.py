@@ -1,13 +1,18 @@
 # django
 
-from django.urls import path, include
+from django.urls import path
+
+# rest_framework
+
+# views
 
 # routers
 
 from .routers import router
 
+
 urlpatterns = [
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+
 ]
 
 urlpatterns += router.urls
