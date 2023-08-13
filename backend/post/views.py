@@ -11,11 +11,13 @@ from rest_framework.decorators import action
 # serializers
 
 from .serializers import UserSerializer
+from .serializers import PostSerializer
 
 # models
 
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from .models import Post
 
 
 class UserViewset(viewsets.ModelViewSet):
@@ -74,3 +76,10 @@ class UserViewset(viewsets.ModelViewSet):
             return Response({"message": "Sesión cerrada exitosamente"}, status=status.HTTP_200_OK)
         else:
             return Response({"message": "No se encontró ninguna sesión activa"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PostViewset(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
