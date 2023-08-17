@@ -24,7 +24,7 @@ class UserViewset(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
     @action(detail=False, methods=['post'], authentication_classes=[], permission_classes=[permissions.AllowAny])
     def create_user(self, request):
@@ -66,7 +66,7 @@ class UserViewset(viewsets.ModelViewSet):
                 "message": "Credenciales inválidas"
             }, status=status.HTTP_401_UNAUTHORIZED)
 
-    @action(detail=False, methods=['post'])
+    @action(detail=False, methods=['post'], authentication_classes=[authentication.TokenAuthentication], permission_classes=[permissions.IsAuthenticated])
     def logout(self, request):
         user = request.user
         if user.is_authenticated:
