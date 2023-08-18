@@ -14,9 +14,9 @@ function navBar() {
         <li>
           <NavLink to="/account">account</NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink to="/dashboard">dashboard</NavLink>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

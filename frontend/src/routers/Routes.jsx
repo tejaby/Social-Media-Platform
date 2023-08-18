@@ -3,21 +3,21 @@ import { Routes, Route, redirect } from "react-router-dom";
 import Home from "../pages/Home";
 import Post from "../pages/Post";
 import Account from "../pages/Account";
-import Dashboard from "../pages/Dashboard";
+// import Dashboard from "../pages/Dashboard";
 
 import ProtectedRoute from "../components/routes/ProtectedRoute";
 
-function Rutas({ user }) {
+function Rutas() {
   return (
     <Routes>
       <Route index element={<Home />} />
       <Route path="/home" element={<Home />} />
-      <Route element={<ProtectedRoute isAllowed={!!user} />}>
+      <Route element={<ProtectedRoute />}>
         <Route path="/post" element={<Post />} />
         <Route path="/account" element={<Account />} />
       </Route>
 
-      <Route
+      {/* <Route
         path="/dashboard"
         element={
           <ProtectedRoute
@@ -27,7 +27,7 @@ function Rutas({ user }) {
             <Dashboard />
           </ProtectedRoute>
         }
-      />
+      /> */}
     </Routes>
   );
 }
