@@ -1,23 +1,30 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import { UserContext } from "../context/User";
+import { InterfaceContext } from "../context/Interface";
 
 import Signin from "../components/form/user/Signin";
 import Signup from "../components/form/user/Signup";
 
 function Home() {
-  const { data } = useContext(UserContext);
+  const { data, logout } = useContext(UserContext);
+
+  const { showLogin } = useContext(InterfaceContext);
 
   if (!data) {
-    return (
-      <>
-        <Signin />
-        <Signup />
-      </>
-    );
+    return <>{showLogin ? <Signin /> : <Signup />}</>;
   }
 
-  return <div>Home - public</div>;
+  const handleLogout = () => {
+    logout("");
+  };
+
+  return (
+    <div>
+      Home - public
+      <button onClick={handleLogout}>logout</button>
+    </div>
+  );
 }
 
 export default Home;

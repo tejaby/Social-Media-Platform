@@ -5,8 +5,11 @@ import { UserContext } from "../../context/User";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-function FormGenerator({ formData, schema, title }) {
+import { InterfaceContext } from "../../context/Interface";
+
+function FormGenerator({ formData, schema, headers }) {
   const { login } = useContext(UserContext);
+  const { showLogin, setShowLogin } = useContext(InterfaceContext);
 
   const {
     register,
@@ -21,9 +24,13 @@ function FormGenerator({ formData, schema, title }) {
     login(data);
   };
 
+  const toggleForm = () => {
+    setShowLogin(!showLogin);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>{title}</h2>
+      <h2>{headers.title}</h2>
       {formData.map((input) => {
         return (
           <div key={input.name}>
@@ -34,6 +41,10 @@ function FormGenerator({ formData, schema, title }) {
         );
       })}
       <input type="submit" />
+      <p>
+        {headers.message}
+        <button onClick={toggleForm}>Sign Up</button>
+      </p>
     </form>
   );
 }

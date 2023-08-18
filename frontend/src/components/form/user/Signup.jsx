@@ -40,12 +40,15 @@ const formData = [
   },
 ];
 
-const title = "Sign Up";
+const headers = {
+  title: "Sign Up",
+  message: "¿Tienes una cuenta?",
+};
 
 function Signup() {
   return (
     <>
-      <FormGenerator formData={formData} schema={schema} title={title} />
+      <FormGenerator formData={formData} schema={schema} headers={headers} />
     </>
   );
 }

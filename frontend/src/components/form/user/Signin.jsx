@@ -1,5 +1,3 @@
-// librerias
-
 import * as yup from "yup";
 
 import FormGenerator from "../FormGenerator";
@@ -7,7 +5,7 @@ import FormGenerator from "../FormGenerator";
 const schema = yup
   .object({
     username: yup.string().required(),
-    password: yup.string().required(),
+    password: yup.string().min(6).required(),
   })
   .required();
 
@@ -24,12 +22,15 @@ const formData = [
   },
 ];
 
-const title = "Sign In";
+const headers = {
+  title: "Sign In",
+  message: "¿No tienes una cuenta?",
+};
 
 function Signin() {
   return (
     <>
-      <FormGenerator formData={formData} schema={schema} title={title} />
+      <FormGenerator formData={formData} schema={schema} headers={headers} />
     </>
   );
 }
