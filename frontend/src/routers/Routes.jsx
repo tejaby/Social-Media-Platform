@@ -5,7 +5,7 @@ import Post from "../pages/Post";
 import Account from "../pages/Account";
 import Dashboard from "../pages/Dashboard";
 
-import ProtectedRoute from "../components/ProtectedRoute";
+import ProtectedRoute from "../components/routes/ProtectedRoute";
 
 function Rutas({ user }) {
   return (
