@@ -1,14 +1,13 @@
 import { useContext } from "react";
 
-import { UserContext } from "../../context/User";
+// import { UserContext } from "../../context/User";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { InterfaceContext } from "../../context/Interface";
 
-function FormGenerator({ formData, schema, headers }) {
-  const { login } = useContext(UserContext);
+function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
   const { showLogin, setShowLogin } = useContext(InterfaceContext);
 
   const {
@@ -19,17 +18,12 @@ function FormGenerator({ formData, schema, headers }) {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    login(data);
-  };
-
   const toggleForm = () => {
     setShowLogin(!showLogin);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
       <h2>{headers.title}</h2>
       {formData.map((input) => {
         return (

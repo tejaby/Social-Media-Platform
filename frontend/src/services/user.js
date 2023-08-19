@@ -23,11 +23,15 @@ export const loginUser = async (data) => {
 
 export const logoutUser = async (userToken) => {
   try {
-    const response = await axios.post(`${urlUsers}logout/`, {
-      headers: {
-        Authorization: `Token ${userToken}`,
-      },
-    });
+    const response = await axios.post(
+      `${urlUsers}logout/`,
+      {},
+      {
+        headers: {
+          Authorization: `Token ${userToken}`,
+        },
+      }
+    );
     const userLogout = response.data;
     return userLogout;
   } catch (e) {

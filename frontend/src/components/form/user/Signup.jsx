@@ -2,6 +2,10 @@ import * as yup from "yup";
 
 import FormGenerator from "../FormGenerator";
 
+import { createUser } from "../../../services/user";
+
+import useSubmitForm from "../../../hooks/user/onSubmit";
+
 const schema = yup
   .object({
     first_name: yup.string().required(),
@@ -46,9 +50,21 @@ const headers = {
 };
 
 function Signup() {
+  const { error, onSubmit } = useSubmitForm(createUser);
+
+  const handleFormSubmit = (data) => {
+    onSubmit(data, "create");
+  };
+
   return (
     <>
-      <FormGenerator formData={formData} schema={schema} headers={headers} />
+      <FormGenerator
+        formData={formData}
+        schema={schema}
+        headers={headers}
+        onSubmit={onSubmit}
+        handleFormSubmit={handleFormSubmit}
+      />
     </>
   );
 }

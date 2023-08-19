@@ -5,9 +5,9 @@ import { UserContext } from "../../context/User";
 import { Navigate, Outlet } from "react-router-dom";
 
 function ProtectedRoute({ children, isAllowed, redirectTo = "/home" }) {
-  const { data } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
-  if (!data) {
+  if (!user) {
     return <Navigate to={redirectTo} />;
   }
   return children ? children : <Outlet />;

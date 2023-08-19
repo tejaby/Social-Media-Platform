@@ -3,18 +3,10 @@ import { createContext, useState } from "react";
 export const UserContext = createContext();
 
 export function UserContextProvider({ children }) {
-  const [data, setData] = useState("");
-
-  const login = (v) => {
-    setData(v);
-  };
-
-  const logout = () => {
-    setData("");
-  };
+  const [user, setUser] = useState("");
 
   return (
-    <UserContext.Provider value={{ login, logout, data }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );
