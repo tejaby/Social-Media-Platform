@@ -1,8 +1,11 @@
-import { useState, useContext } from "react";
-
+// context
 import { UserContext } from "../../context/User";
 
+// hooks
 import useTokenLocalStorage from "./useTokenLocalStorage ";
+
+// react
+import { useState, useContext } from "react";
 
 const useSubmitForm = (submitFunction) => {
   const { setUser } = useContext(UserContext);

@@ -1,9 +1,13 @@
+// libraries
 import * as yup from "yup";
 
-import FormGenerator from "../FormGenerator";
-
+// services
 import { createUser } from "../../../services/user";
 
+// components
+import FormGenerator from "../FormGenerator";
+
+// hooks
 import useSubmitForm from "../../../hooks/user/onSubmit";
 
 const schema = yup

@@ -1,10 +1,13 @@
+// libraries
 import { BrowserRouter } from "react-router-dom";
 
+// pages
+import Rutas from "./routers/Routes";
+import Navbar from "./components/navBar/NavBar";
+
+// context
 import { UserContextProvider } from "./context/User";
 import { InterfaceContextProvider } from "./context/Interface";
-
-import Rutas from "./routers/Routes";
-import Navbar from "./components/NavBar";
 
 function App() {
   return (

@@ -1,11 +1,14 @@
+// Libraries
 import { Routes, Route, redirect } from "react-router-dom";
 
+// components
+import ProtectedRoute from "../components/routes/ProtectedRoute";
+
+// pages
 import Home from "../pages/Home";
 import Post from "../pages/Post";
 import Account from "../pages/Account";
 // import Dashboard from "../pages/Dashboard";
-
-import ProtectedRoute from "../components/routes/ProtectedRoute";
 
 function Rutas() {
   return (

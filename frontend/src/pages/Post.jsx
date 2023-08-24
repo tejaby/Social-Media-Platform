@@ -1,6 +1,8 @@
-import React from "react";
-
+// components
 import Posts from "../components/Posts";
+
+// react
+import React from "react";
 
 function Post() {
   return (

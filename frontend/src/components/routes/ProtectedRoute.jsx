@@ -1,8 +1,11 @@
-import { useContext } from "react";
+// Libraries
+import { Navigate, Outlet } from "react-router-dom";
 
+// context
 import { UserContext } from "../../context/User";
 
-import { Navigate, Outlet } from "react-router-dom";
+// react
+import { useContext } from "react";
 
 function ProtectedRoute({ children, isAllowed, redirectTo = "/home" }) {
   const { user } = useContext(UserContext);

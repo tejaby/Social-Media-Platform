@@ -1,11 +1,12 @@
-import { useContext } from "react";
-
-// import { UserContext } from "../../context/User";
-
+// Libraries
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+// context
 import { InterfaceContext } from "../../context/Interface";
+
+// react
+import { useContext } from "react";
 
 function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
   const { showLogin, setShowLogin } = useContext(InterfaceContext);
