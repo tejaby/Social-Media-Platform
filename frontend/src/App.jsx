@@ -6,19 +6,21 @@ import Rutas from "./routers/Routes";
 import Navbar from "./components/navBar/NavBar";
 
 // context
-import { UserContextProvider } from "./context/User";
-import { InterfaceContextProvider } from "./context/Interface";
+import { UserContext } from "./context/User";
+
+// react
+import { useContext } from "react";
 
 function App() {
+  const { user } = useContext(UserContext);
+
   return (
-    <UserContextProvider>
-      <InterfaceContextProvider>
-        <BrowserRouter>
-          <Navbar />
-          <Rutas />
-        </BrowserRouter>
-      </InterfaceContextProvider>
-    </UserContextProvider>
+    <BrowserRouter>
+      <div className="h-screen">
+        {!!user && <Navbar />}
+        <Rutas />
+      </div>
+    </BrowserRouter>
   );
 }
 

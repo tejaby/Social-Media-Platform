@@ -19,18 +19,6 @@ function Rutas() {
         <Route path="/post" element={<Post />} />
         <Route path="/account" element={<Account />} />
       </Route>
-
-      {/* <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute
-            isAllowed={!!user && user.permissions.includes("admin")}
-            redirectTo="/account"
-          >
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      /> */}
     </Routes>
   );
 }

@@ -1,5 +1,6 @@
 // libraries
 import * as yup from "yup";
+import toast, { Toaster } from "react-hot-toast";
 
 // services
 import { createUser } from "../../../services/user";
@@ -12,11 +13,14 @@ import useSubmitForm from "../../../hooks/user/onSubmit";
 
 const schema = yup
   .object({
-    first_name: yup.string().required(),
-    last_name: yup.string().required(),
-    email: yup.string().email().required(),
-    username: yup.string().required(),
-    password: yup.string().min(6).required(),
+    first_name: yup.string().min(5, "¿Cuál es tu nombre").required(),
+    last_name: yup.string().min(5, "¿Cuál es tu apellido?").required(),
+    email: yup
+      .string()
+      .email()
+      .required("Introduce un correo electronico válido"),
+    username: yup.string().required("Introduce un nombre válido"),
+    password: yup.string().min(6, "Introduce una contraseña válida").required(),
   })
   .required();
 
@@ -24,33 +28,50 @@ const formData = [
   {
     type: "text",
     name: "first_name",
-    label: "First Name",
+    label: "Nombre",
+    class:
+      "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-background",
+    container: "1/2",
   },
   {
     type: "text",
     name: "last_name",
-    label: "Last Name",
+    label: "Apellido",
+    class:
+      "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-background",
+    container: "1/2",
   },
   {
     type: "email",
     name: "email",
-    label: "Email",
+    label: "Correo electrónico",
+    class:
+      "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-background",
+    container: "full",
   },
   {
     type: "text",
     name: "username",
-    label: "Username",
+    label: "Usuario",
+    class:
+      "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-background",
+    container: "full",
   },
   {
     type: "password",
     name: "password",
-    label: "Password",
+    label: "Contraseña",
+    class:
+      "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-background",
+    container: "full",
   },
 ];
 
 const headers = {
-  title: "Sign Up",
-  message: "¿Tienes una cuenta?",
+  title: "Crea tu cuenta",
+  message: "¿Ya tienes una cuenta?",
+  button_submit: "Crear cuenta",
+  button_form: "Iniciar sesión",
 };
 
 function Signup() {
@@ -59,6 +80,8 @@ function Signup() {
   const handleFormSubmit = (data) => {
     onSubmit(data, "create");
   };
+
+  toast.error(`${error?.data.username}`);
 
   return (
     <>
@@ -69,6 +92,7 @@ function Signup() {
         onSubmit={onSubmit}
         handleFormSubmit={handleFormSubmit}
       />
+      {error && <Toaster position="bottom-center" reverseOrder={false} />}
     </>
   );
 }

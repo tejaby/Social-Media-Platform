@@ -4,13 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Agregar colores personalizados usando extend
-        background: "#FFFFFF",
-        primary: "#000000",
-        backgroundDark: "#000000",
-        secondary: "#FFFFFF",
-        backgroundSecondary: "#03A9F4",
-        hoverEffect: "#03A9F4",
+        background: "#8511fa",
+        hoverEffect: "#8511fa",
       },
     },
   },

@@ -1,10 +1,8 @@
 // components
-import Signin from "../components/form/user/Signin";
-import Signup from "../components/form/user/Signup";
+import Form from "../components/form/user/Form";
 
 // context
 import { UserContext } from "../context/User";
-import { InterfaceContext } from "../context/Interface";
 
 // react
 import { useContext } from "react";
@@ -12,10 +10,8 @@ import { useContext } from "react";
 function Home() {
   const { user } = useContext(UserContext);
 
-  const { showLogin } = useContext(InterfaceContext);
-
   if (!user) {
-    return <>{showLogin ? <Signin /> : <Signup />}</>;
+    return <Form />;
   }
 
   return <div>Home - public</div>;

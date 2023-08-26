@@ -1,4 +1,6 @@
+// libraries
 import axios from "axios";
+
 const urlUsers = "http://localhost:8000/api/users/";
 
 export const createUser = async (data) => {

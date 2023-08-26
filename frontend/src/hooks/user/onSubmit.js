@@ -16,6 +16,7 @@ const useSubmitForm = (submitFunction) => {
   const onSubmit = async (data, action) => {
     try {
       const response = await submitFunction(data);
+      console.log(response);
       if (action == "login") {
         setToken(response.token);
         setUser(response);
