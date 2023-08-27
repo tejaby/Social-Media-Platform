@@ -16,9 +16,15 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="h-screen">
-        {!!user && <Navbar />}
-        <Rutas />
+      <div className={`grid ${!!user ? "grid-cols-3" : "grid-cols-1"}`}>
+        {!!user && (
+          <div className="col-span-1">
+            <Navbar />
+          </div>
+        )}
+        <div className={`${!!user ? "col-span-2" : "col-span-1"}`}>
+          <Rutas />
+        </div>
       </div>
     </BrowserRouter>
   );

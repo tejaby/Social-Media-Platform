@@ -43,10 +43,7 @@ function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
       <div className="flex flex-wrap mb-4 px-3 md:px-12">
         {formData.map((input) => {
           return (
-            <div
-              className={`mb-2 px-2 w-full lg:w-${input.container}`}
-              key={input.name}
-            >
+            <div className={`w-full mb-2 px-2 ${input.width}`} key={input.name}>
               <label
                 htmlFor={input.name}
                 className="block font-semibold text-zinc-700"
