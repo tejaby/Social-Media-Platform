@@ -1,6 +1,6 @@
 # django
 
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import authenticate
 
 # rest_framework
 
@@ -32,7 +32,6 @@ class UserViewset(viewsets.ModelViewSet):
         if serializer.is_valid():
             user = serializer.save()
             token, _ = Token.objects.get_or_create(user=user)
-            login(request, user)
             response_data = {
                 "message": "Usuario creado exitosamente",
                 "token": token.key,
@@ -54,7 +53,6 @@ class UserViewset(viewsets.ModelViewSet):
 
         user = authenticate(username=username, password=password)
         if user is not None:
-            login(request, user)
             token, _ = Token.objects.get_or_create(user=user)
             return Response({
                 "message": "Inicio de sesión exitoso",
@@ -72,10 +70,17 @@ class UserViewset(viewsets.ModelViewSet):
         if user.is_authenticated:
             token = Token.objects.get(user=user)
             token.delete()
-            logout(request)
             return Response({"message": "Sesión cerrada exitosamente"}, status=status.HTTP_200_OK)
         else:
             return Response({"message": "No se encontró ninguna sesión activa"}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=['get'], authentication_classes=[authentication.TokenAuthentication], permission_classes=[permissions.IsAuthenticated])
+    def validate_token(self, request):
+        user = request.user
+        return Response({
+            "message": "Token válido",
+            "user": UserSerializer(user).data,
+        }, status=status.HTTP_200_OK)
 
 
 class PostViewset(viewsets.ModelViewSet):
