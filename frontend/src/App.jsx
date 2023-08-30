@@ -1,32 +1,17 @@
-// libraries
-import { BrowserRouter } from "react-router-dom";
-
 // pages
-import Rutas from "./routers/Routes";
-import Navbar from "./components/navBar/NavBar";
+import AppContent from "./AppContent";
 
-// context
-import { UserContext } from "./context/User";
-
-// react
-import { useContext } from "react";
+// provider
+import { UserContextProvider } from "./context/User";
+import { InterfaceContextProvider } from "./context/Interface";
 
 function App() {
-  const { user } = useContext(UserContext);
-
   return (
-    <BrowserRouter>
-      <div className={`grid ${!!user ? "grid-cols-3" : "grid-cols-1"}`}>
-        {!!user && (
-          <div className="col-span-1">
-            <Navbar />
-          </div>
-        )}
-        <div className={`${!!user ? "col-span-2" : "col-span-1"}`}>
-          <Rutas />
-        </div>
-      </div>
-    </BrowserRouter>
+    <UserContextProvider>
+      <InterfaceContextProvider>
+        <AppContent />
+      </InterfaceContextProvider>
+    </UserContextProvider>
   );
 }
 

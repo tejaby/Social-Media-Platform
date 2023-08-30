@@ -9,10 +9,10 @@ import FormGenerator from "../FormGenerator";
 import getSigninConfig from "./getSigninConfig";
 
 // hooks
-import useSubmitForm from "../../../hooks/user/onSubmit";
+import useFormSubmit from "../../../hooks/user/useFormSubmit";
 
 function Signin() {
-  const { error, onSubmit } = useSubmitForm(loginUser);
+  const { error, onSubmit } = useFormSubmit(loginUser);
 
   const { schema, formData, headers } = getSigninConfig();
 

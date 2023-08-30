@@ -2,12 +2,12 @@
 import { UserContext } from "../../context/User";
 
 // hooks
-import useTokenLocalStorage from "./useTokenLocalStorage ";
+import useTokenLocalStorage from "./useTokenLocalStorage";
 
 // react
 import { useState, useContext } from "react";
 
-const useSubmitForm = (submitFunction) => {
+const useFormSubmit = (submitFunction) => {
   const { setUser } = useContext(UserContext);
   const [error, setError] = useState(null);
 
@@ -16,7 +16,6 @@ const useSubmitForm = (submitFunction) => {
   const onSubmit = async (data, action) => {
     try {
       const response = await submitFunction(data);
-      console.log(response);
       if (action == "login") {
         setToken(response.token);
         setUser(response);
@@ -30,11 +29,10 @@ const useSubmitForm = (submitFunction) => {
       setError(null);
     } catch (e) {
       setError(e);
-      console.log(e);
     }
   };
 
   return { error, onSubmit };
 };
 
-export default useSubmitForm;
+export default useFormSubmit;

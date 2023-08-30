@@ -40,3 +40,17 @@ export const logoutUser = async (userToken) => {
     throw e.response;
   }
 };
+
+export const tokenValidation = async (userToken) => {
+  try {
+    const response = await axios.get(`${urlUsers}validate_token/`, {
+      headers: {
+        Authorization: `Token ${userToken}`,
+      },
+    });
+    const userLogged = response.data;
+    return userLogged;
+  } catch (e) {
+    throw e.response;
+  }
+};
