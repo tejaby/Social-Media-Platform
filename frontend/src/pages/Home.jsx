@@ -14,7 +14,11 @@ function Home() {
     return <Form />;
   }
 
-  return <div>Home - public</div>;
+  return (
+    <div className="flex h-screen justify-center items-center">
+      Home - public
+    </div>
+  );
 }
 
 export default Home;

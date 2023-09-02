@@ -4,13 +4,13 @@ import Posts from "../components/Posts";
 // react
 import React from "react";
 
-function Post() {
+function Explore() {
   return (
     <>
-      <div>Post - private</div>
+      <div>Explore - private</div>
       <Posts />
     </>
   );
 }
 
-export default Post;
+export default Explore;

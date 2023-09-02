@@ -25,15 +25,21 @@ function AppContent() {
 
   return (
     <BrowserRouter>
-      <div className={`grid ${!!user ? "grid-cols-3" : "grid-cols-1"}`}>
-        {!!user && (
+      <div className={`grid ${!!user ? "grid-cols-3" : "grid-cols-1"} gap-2`}>
+        {!!user ? (
+          <>
+            <div className="col-span-1">
+              <Navbar />
+            </div>
+            <div className="col-span-2">
+              <Rutas />
+            </div>
+          </>
+        ) : (
           <div className="col-span-1">
-            <Navbar />
+            <Rutas />
           </div>
         )}
-        <div className={`${!!user ? "col-span-2" : "col-span-1"}`}>
-          <Rutas />
-        </div>
       </div>
     </BrowserRouter>
   );
