@@ -28,7 +28,7 @@ function AppContent() {
       <div
         className={`grid ${
           !!user
-            ? "grid-cols-1 sm:grid-cols-[256px_1fr] md:grid-cols-[288px_1fr] lg:grid-cols-[320px_1fr] grid-rows-[1fr_64px] sm:grid-rows-1 grid-flow-row sm:grid-flow-col"
+            ? "grid-cols-1 sm:grid-cols-[144px_1fr] lg:grid-cols-[320px_1fr] grid-rows-[1fr_64px] sm:grid-rows-1 grid-flow-row sm:grid-flow-col"
             : "grid-cols-1"
         } gap-2`}
       >

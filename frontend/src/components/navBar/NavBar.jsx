@@ -33,9 +33,12 @@ function navBar() {
   };
 
   return (
-    <nav className="flex sm:flex-col items-center sm-items-start sm:justify-between sm:fixed sm:w-64 md:w-72 lg:w-80 h-16 sm:h-screen border-t-2 sm:border-t-0 sm:border-r-2 sm:py-6 sm:px-6 overflow-hidden">
-      <div className="hidden sm:flex flex-col gap-2 w-full py-2 px-3">
-        <NavLink to="/home">
+    <nav className="flex sm:flex-col items-center sm-items-start sm:justify-between sm:fixed sm:w-36 lg:w-80 h-16 sm:h-screen border-t-2 sm:border-t-0 sm:border-r-2 sm:py-4 sm:px-6">
+      <div className="hidden sm:block w-full">
+        <NavLink
+          to="/home"
+          className="flex flex-col items-center lg:items-start gap-2 py-2 px-3"
+        >
           <UseSvgLoader
             name="logo"
             options={{ width: "48px", height: "48px" }}
@@ -43,7 +46,7 @@ function navBar() {
           <span className="font-semibold text-xl tracking-tight">NotDark</span>
         </NavLink>
       </div>
-      <div className="flex justify-evenly items-center sm:hidden w-full h-full">
+      <div className="relative flex justify-evenly items-center sm:hidden w-full h-full">
         <NavLink to="/" className="rounded-xl">
           <UseSvgLoader
             name="home"
@@ -56,7 +59,7 @@ function navBar() {
             options={{ width: "32px", height: "32px" }}
           />
         </NavLink>
-        <NavLink to="/post" className="rounded-xl bg-primary">
+        <NavLink to="/post" className="rounded-xl">
           <UseSvgLoader
             name="plus"
             options={{ width: "32px", height: "32px" }}
@@ -68,66 +71,105 @@ function navBar() {
             options={{ width: "32px", height: "32px" }}
           />
         </NavLink>
-        <NavLink to="/account" className="rounded-xl">
+        <NavLink to="/account" className="rounded-xl" onClick={handleModal}>
           <UseSvgLoader
             name="user"
             options={{ width: "32px", height: "32px", color: "blue" }}
           />
         </NavLink>
+        {isModalOpen && (
+          <div
+            className="absolute flex flex-col w-1/2 p-2 border border-primary rounded-xl right-2 bottom-full bg-white z-10"
+            onClick={handleModal}
+          >
+            <button className="text-start rounded-xl py-2 px-3">
+              Configuración
+            </button>
+            <button className="text-start rounded-xl py-2 px-3">
+              Ver perfil
+            </button>
+            <button
+              className="text-start rounded-xl py-2 px-3"
+              onClick={handleFormSubmit}
+            >
+              Salir
+            </button>
+          </div>
+        )}
       </div>
-      <div className="hidden sm:flex justify-center sm:flex-col sm:justify-center gap-4 w-full">
+      <div className="hidden sm:flex flex-col items-start gap-2 w-full">
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `rounded-xl sm:py-2 sm:px-3 hover:text-primary hover:bg-gray-100 ${
+            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl hover:text-primary hover:bg-gray-100 ${
               isActive && "font-semibold text-primary"
             }`
           }
         >
-          Inicio
+          <UseSvgLoader
+            name="home"
+            options={{ width: "32px", height: "32px" }}
+          />
+          <span className="flex-grow hidden lg:block">Inicio</span>
         </NavLink>
         <NavLink
           to="/explore"
           className={({ isActive }) =>
-            `rounded-xl sm:py-2 sm:px-3 hover:text-primary hover:bg-gray-100 ${
+            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl hover:text-primary hover:bg-gray-100 ${
               isActive && "font-semibold text-primary"
             }`
           }
         >
-          Explorar
+          <UseSvgLoader
+            name="explore"
+            options={{ width: "32px", height: "32px" }}
+          />
+          <span className="flex-grow hidden lg:block">Explorar</span>
         </NavLink>
         <NavLink
           to="/notifications"
           className={({ isActive }) =>
-            `rounded-xl sm:py-2 sm:px-3 hover:text-primary hover:bg-gray-100 ${
+            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl hover:text-primary hover:bg-gray-100 ${
               isActive && "font-semibold text-primary"
             }`
           }
         >
-          Notificaciones
+          <UseSvgLoader
+            name="bell"
+            options={{ width: "32px", height: "32px" }}
+          />
+          <span className="flex-grow hidden lg:block">Notificaciones</span>
         </NavLink>
         <NavLink
           to="/account"
           className={({ isActive }) =>
-            `rounded-xl sm:py-2 sm:px-3 hover:text-primary hover:bg-gray-100 ${
+            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl hover:text-primary hover:bg-gray-100 ${
               isActive && "font-semibold text-primary"
             }`
           }
         >
-          Perfil
+          <UseSvgLoader
+            name="user"
+            options={{ width: "32px", height: "32px", color: "blue" }}
+          />
+          <span className="flex-grow hidden lg:block">Perfil</span>
         </NavLink>
         <NavLink
           to="/post"
-          className="rounded-xl max-w-fit sm:py-2 sm:px-3 text-white bg-primary"
+          className="flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl hover:text-primary hover:bg-gray-100"
         >
-          Postear
+          <UseSvgLoader
+            name="plus"
+            options={{ width: "32px", height: "32px", color: "blue" }}
+          />
+          <span className="flex-grow hidden lg:block">Postear</span>
         </NavLink>
       </div>
       <div
-        className="hidden relative sm:flex items-center justify-between gap-2 w-full py-2 px-3 cursor-pointer hover:bg-gray-100"
+        className="hidden relative sm:flex justify-center lg:justify-between items-center gap-2 w-full py-2 px-3 cursor-pointer hover:bg-gray-100"
         onClick={handleModal}
       >
-        <div className="flex flex-col">
+        <div className="hidden lg:flex flex-col">
           {user && (
             <>
               <p className="text-sm">
@@ -139,19 +181,22 @@ function navBar() {
             </>
           )}
         </div>
-        <div>
+        <div className="">
           <UseSvgLoader
             name="dots-vertical"
             options={{ width: "24px", height: "24px" }}
           />
         </div>
         {isModalOpen && (
-          <div className="flex flex-col w-full p-2 absolute border border-primary rounded-xl left-0 bottom-full z-10 overflow-hidden">
+          <div className="absolute flex flex-col w-48 p-2 border border-primary rounded-xl left-0 bottom-full bg-white z-10">
             <button className="text-start rounded-xl py-2 px-3 hover:text-primary hover:bg-gray-100">
               Configuración
             </button>
             <button className="text-start rounded-xl py-2 px-3 hover:text-primary hover:bg-gray-100">
               Cambiar tema
+            </button>
+            <button className="text-start rounded-xl py-2 px-3 hover:text-primary hover:bg-gray-100">
+              Ver perfil
             </button>
             <button
               className="text-start rounded-xl py-2 px-3 hover:text-primary hover:bg-gray-100"
