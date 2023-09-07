@@ -21,10 +21,10 @@ function Rutas() {
         <Route path="/explore" element={<Explore />} />
         <Route
           path="/notifications"
-          element={<h1>notificaciones = private</h1>}
+          element={<h1>notificaciones - private</h1>}
         />
         <Route path="/account" element={<Account />} />
-        <Route path="/post" element={<h1>postear = private</h1>} />
+        <Route path="/post" element={<h1>postear - private</h1>} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

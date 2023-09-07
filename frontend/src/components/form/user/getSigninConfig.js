@@ -18,7 +18,7 @@ function getSigninConfig() {
       name: "username",
       label: "Usuario",
       class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-background",
+        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-primary",
       width: "md:w-full",
     },
     {
@@ -26,7 +26,7 @@ function getSigninConfig() {
       name: "password",
       label: "Contraseña",
       class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-background",
+        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-primary",
       width: "md:w-full",
     },
   ];

@@ -4,8 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#8511fa",
-        hoverEffect: "#8511fa",
+        primary: "#8511fa",
       },
     },
   },
