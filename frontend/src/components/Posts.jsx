@@ -1,14 +1,12 @@
-import imagesData from "../static/post/post";
-
-function Posts() {
+function Posts({ post }) {
   return (
     <div>
-      {imagesData.map((image) => (
-        <div key={image.username}>
-          <p>Username: {image.username}</p>
+      {post.map((image) => (
+        <div key={image.id}>
+          <p>Username: {image.author}</p>
           <img
-            src={image.img}
-            alt={image.username}
+            src={image.image}
+            alt={image.author}
             style={{ maxWidth: "400px" }}
           />
         </div>
