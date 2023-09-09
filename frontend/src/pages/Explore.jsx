@@ -11,10 +11,9 @@ function Explore() {
   const post = useApiFetch();
 
   return (
-    <>
-      <div>Explore - private</div>
+    <div className="container mx-auto">
       <Posts post={post} />
-    </>
+    </div>
   );
 }
 
