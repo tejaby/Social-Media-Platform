@@ -6,6 +6,9 @@ export default {
       colors: {
         primary: "#8511fa",
       },
+      backgroundColor: {
+        "black-rgba": "rgba(0, 0, 0, 0.3)",
+      },
     },
   },
   plugins: [],

@@ -1,6 +1,9 @@
 // libraries
 import { BrowserRouter } from "react-router-dom";
 
+// components
+import ModalPost from "./components/Modal/Post/ModalPost";
+
 // pages
 import Rutas from "./routers/Routes";
 import Navbar from "./components/navBar/NavBar";
@@ -40,6 +43,7 @@ function AppContent() {
             <div className="order-1 sm:order-2 w-full">
               <Rutas />
             </div>
+            <ModalPost />
           </>
         ) : (
           <div className="">

@@ -6,6 +6,7 @@ import { logoutUser } from "../../services/user";
 
 // context
 import { UserContext } from "../../context/User";
+import { InterfaceContext } from "../../context/Interface";
 
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
@@ -17,6 +18,7 @@ import { useContext, useState } from "react";
 
 function navBar() {
   const { user } = useContext(UserContext);
+  const { isModalPost, setIsModalPost } = useContext(InterfaceContext);
 
   const { getToken } = useTokenLocalStorage("userToken");
   const { onSubmit } = useFormSubmit(logoutUser);
@@ -25,6 +27,10 @@ function navBar() {
 
   const handleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const toggleModalPost = () => {
+    setIsModalPost(!isModalPost);
   };
 
   const handleFormSubmit = () => {
@@ -59,7 +65,7 @@ function navBar() {
             options={{ width: "32px", height: "32px" }}
           />
         </NavLink>
-        <NavLink to="/post" className="rounded-xl">
+        <NavLink to="/post" className="rounded-xl" onClick={toggleModalPost}>
           <UseSvgLoader
             name="plus"
             options={{ width: "32px", height: "32px" }}
