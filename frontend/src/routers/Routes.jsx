@@ -24,7 +24,6 @@ function Rutas() {
           element={<h1>notificaciones - private</h1>}
         />
         <Route path="/account" element={<Account />} />
-        <Route path="/post" element={<h1>postear - private</h1>} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

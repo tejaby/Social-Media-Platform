@@ -10,6 +10,7 @@ import Navbar from "./components/navBar/NavBar";
 
 // context
 import { UserContext } from "./context/User";
+import { InterfaceContext } from "./context/Interface";
 
 // hooks
 import useAuthenticatedRequest from "./hooks/user/useAuthenticatedRequest";
@@ -19,6 +20,7 @@ import { useContext, useEffect } from "react";
 
 function AppContent() {
   const { user } = useContext(UserContext);
+  const { isModalPost } = useContext(InterfaceContext);
 
   const { onSubmit } = useAuthenticatedRequest();
 
@@ -29,11 +31,11 @@ function AppContent() {
   return (
     <BrowserRouter>
       <div
-        className={`grid ${
+        className={`grid ${isModalPost && "fixed"} ${
           !!user
             ? "grid-cols-1 sm:grid-cols-[144px_1fr] lg:grid-cols-[320px_1fr] grid-rows-[1fr_64px] sm:grid-rows-1 grid-flow-row sm:grid-flow-col"
             : "grid-cols-1"
-        } gap-2`}
+        } gap-2 w-full h-full`}
       >
         {!!user ? (
           <>
@@ -43,7 +45,7 @@ function AppContent() {
             <div className="order-1 sm:order-2 w-full">
               <Rutas />
             </div>
-            <ModalPost />
+            {isModalPost && <ModalPost />}
           </>
         ) : (
           <div className="">

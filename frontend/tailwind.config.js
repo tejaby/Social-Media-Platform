@@ -7,7 +7,10 @@ export default {
         primary: "#8511fa",
       },
       backgroundColor: {
-        "black-rgba": "rgba(0, 0, 0, 0.3)",
+        "black-rgba": "rgba(0, 0, 0, .5)",
+      },
+      screens: {
+        xs: "425px",
       },
     },
   },

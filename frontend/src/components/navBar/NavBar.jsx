@@ -65,12 +65,12 @@ function navBar() {
             options={{ width: "32px", height: "32px" }}
           />
         </NavLink>
-        <NavLink to="/post" className="rounded-xl" onClick={toggleModalPost}>
+        <button className="rounded-xl" onClick={toggleModalPost}>
           <UseSvgLoader
             name="plus"
             options={{ width: "32px", height: "32px" }}
           />
-        </NavLink>
+        </button>
         <NavLink to="/notifications" className="rounded-xl">
           <UseSvgLoader
             name="bell"
@@ -160,16 +160,16 @@ function navBar() {
           />
           <span className="flex-grow hidden lg:block">Perfil</span>
         </NavLink>
-        <NavLink
-          to="/post"
+        <button
           className="flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl hover:text-primary hover:bg-gray-100"
+          onClick={toggleModalPost}
         >
           <UseSvgLoader
             name="plus"
             options={{ width: "32px", height: "32px", color: "blue" }}
           />
-          <span className="flex-grow hidden lg:block">Postear</span>
-        </NavLink>
+          <span className="flex-grow text-start hidden lg:block">Postear</span>
+        </button>
       </div>
       <div
         className="hidden relative sm:flex justify-center lg:justify-between items-center gap-2 w-full py-2 px-3 cursor-pointer hover:bg-gray-100"
