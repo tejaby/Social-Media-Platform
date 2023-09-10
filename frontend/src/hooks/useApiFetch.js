@@ -1,5 +1,5 @@
 // services
-import { getProducts } from "../services/post";
+import { getPosts } from "../services/post";
 
 // hooks
 import useTokenValidation from "../hooks/user/useTokenValidation";
@@ -15,7 +15,7 @@ function useApiFetch() {
   const fetchDataFromApi = async () => {
     if (token) {
       try {
-        const response = await getProducts(token);
+        const response = await getPosts(token);
         setPost(response);
       } catch (e) {
         console.error(e);

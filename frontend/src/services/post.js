@@ -2,7 +2,7 @@ import axios from "axios";
 
 const urlPosts = "http://localhost:8000/api/posts/";
 
-export const getProducts = async (userToken) => {
+export const getPosts = async (userToken) => {
   try {
     const response = await axios.get(`${urlPosts}`, {
       headers: {
