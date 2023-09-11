@@ -15,7 +15,8 @@ import { useContext } from "react";
 function ModalPost() {
   const { isModalPost, setIsModalPost, isNextPost, setIsNextPost } =
     useContext(InterfaceContext);
-  const { handleChangeFile, setCover, cover } = useFileReader();
+  const { handleChangeFile, image, setImage, cover, setCover } =
+    useFileReader();
 
   const toggleModalPost = () => {
     setIsModalPost(!isModalPost);
@@ -38,6 +39,7 @@ function ModalPost() {
           {!!isNextPost ? (
             <ImagePreviewAndCaption
               cover={cover}
+              image={image}
               toggleBackPost={toggleBackPost}
             />
           ) : (

@@ -187,9 +187,15 @@ function navBar() {
             </>
           )}
         </div>
-        <div className="">
+        <div className="hidden lg:block">
           <UseSvgLoader
             name="dots-vertical"
+            options={{ width: "24px", height: "24px" }}
+          />
+        </div>
+        <div className="lg:hidden">
+          <UseSvgLoader
+            name="menu-2"
             options={{ width: "24px", height: "24px" }}
           />
         </div>

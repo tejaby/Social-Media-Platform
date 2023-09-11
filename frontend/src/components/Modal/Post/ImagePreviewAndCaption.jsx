@@ -1,15 +1,30 @@
 // context
 import { UserContext } from "../../../context/User";
 
-// react
-import { useContext } from "react";
+// hooks
+import usePostActions from "../../../hooks/post/usePostActions";
 
-function ImagePreviewAndCaption({ cover, toggleBackPost }) {
+// react
+import { useContext, useState } from "react";
+
+function ImagePreviewAndCaption({ cover, image, toggleBackPost }) {
   const { user } = useContext(UserContext);
+  console.log(image);
+
+  const [content, setContent] = useState("");
+
+  const { submitPost } = usePostActions();
+
+  const hadleChange = (e) => {
+    setContent(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("xd");
+    const data = new FormData();
+    data.append("content", content);
+    data.append("image", image);
+    submitPost(data);
   };
 
   return (
@@ -45,6 +60,7 @@ function ImagePreviewAndCaption({ cover, toggleBackPost }) {
               <textarea
                 className="grow w-full text-center resize-none focus:outline-none"
                 placeholder={`¡¿Qué está pasando ${user.user.first_name}?!`}
+                onChange={hadleChange}
               />
             </div>
             <div className="basis-1/4">
@@ -52,7 +68,7 @@ function ImagePreviewAndCaption({ cover, toggleBackPost }) {
                 type="submit"
                 className="rounded py-2 px-3 hover:border-transparent hover:text-white hover:bg-primary"
               >
-                <button type="submit">Postear</button>
+                Postear
               </button>
             </div>
           </div>
