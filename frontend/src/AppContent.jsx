@@ -20,7 +20,7 @@ import { useContext, useEffect } from "react";
 
 function AppContent() {
   const { user } = useContext(UserContext);
-  const { isModalPost } = useContext(InterfaceContext);
+  const { showModal } = useContext(InterfaceContext);
 
   const { onSubmit } = useAuthenticatedRequest();
 
@@ -31,7 +31,7 @@ function AppContent() {
   return (
     <BrowserRouter>
       <div
-        className={`grid ${isModalPost && "fixed"} ${
+        className={`grid ${showModal && "fixed"} ${
           !!user
             ? "grid-cols-1 sm:grid-cols-[144px_1fr] lg:grid-cols-[320px_1fr] grid-rows-[1fr_64px] sm:grid-rows-1 grid-flow-row sm:grid-flow-col"
             : "grid-cols-1"
@@ -45,7 +45,7 @@ function AppContent() {
             <div className="order-1 sm:order-2 w-full">
               <Rutas />
             </div>
-            {isModalPost && <ModalPost />}
+            {showModal && <ModalPost />}
           </>
         ) : (
           <div className="">

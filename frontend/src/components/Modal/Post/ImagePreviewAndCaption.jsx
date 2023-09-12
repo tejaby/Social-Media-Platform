@@ -1,5 +1,7 @@
 // context
+import { InterfaceContext } from "../../../context/Interface";
 import { UserContext } from "../../../context/User";
+import { PostContext } from "../../../context/Post";
 
 // hooks
 import usePostActions from "../../../hooks/post/usePostActions";
@@ -7,8 +9,10 @@ import usePostActions from "../../../hooks/post/usePostActions";
 // react
 import { useContext, useState } from "react";
 
-function ImagePreviewAndCaption({ cover, image, toggleBackPost }) {
+function ImagePreviewAndCaption() {
+  const { toggleShowModal } = useContext(InterfaceContext);
   const { user } = useContext(UserContext);
+  const { cover, image } = useContext(PostContext);
 
   const [content, setContent] = useState("");
 
@@ -24,15 +28,13 @@ function ImagePreviewAndCaption({ cover, image, toggleBackPost }) {
     data.append("content", content);
     data.append("image", image);
     submitPost(data);
+    toggleShowModal();
   };
 
   return (
     <div className="basis-full flex flex-col">
       <div className="flex justify-between p-1">
-        <button
-          className="rounded-lg font-semibold hover:text-primary"
-          onClick={toggleBackPost}
-        >
+        <button className="rounded-lg font-semibold hover:text-primary">
           atras
         </button>
         <button className="rounded-lg font-semibold hover:text-primary">

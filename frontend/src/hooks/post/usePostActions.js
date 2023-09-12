@@ -16,10 +16,8 @@ function usePostActions() {
     if (token) {
       try {
         const response = await createPost(token, data);
-        console.log(response);
         setError(null);
       } catch (e) {
-        console.log(e);
         setError(e);
       }
     }

@@ -26,7 +26,6 @@ export const createPost = async (userToken, data) => {
     const post = response.data;
     return post;
   } catch (e) {
-    console.log(e);
     throw e.response;
   }
 };

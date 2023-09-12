@@ -18,7 +18,7 @@ import { useContext, useState } from "react";
 
 function navBar() {
   const { user } = useContext(UserContext);
-  const { isModalPost, setIsModalPost } = useContext(InterfaceContext);
+  const { toggleShowModal } = useContext(InterfaceContext);
 
   const { getToken } = useTokenLocalStorage("userToken");
   const { onSubmit } = useFormSubmit(logoutUser);
@@ -27,10 +27,6 @@ function navBar() {
 
   const handleModal = () => {
     setIsModalOpen(!isModalOpen);
-  };
-
-  const toggleModalPost = () => {
-    setIsModalPost(!isModalPost);
   };
 
   const handleFormSubmit = () => {
@@ -65,7 +61,7 @@ function navBar() {
             options={{ width: "32px", height: "32px" }}
           />
         </NavLink>
-        <button className="rounded-xl" onClick={toggleModalPost}>
+        <button className="rounded-xl" onClick={toggleShowModal}>
           <UseSvgLoader
             name="plus"
             options={{ width: "32px", height: "32px" }}
@@ -162,7 +158,7 @@ function navBar() {
         </NavLink>
         <button
           className="flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl hover:text-primary hover:bg-gray-100"
-          onClick={toggleModalPost}
+          onClick={toggleShowModal}
         >
           <UseSvgLoader
             name="plus"

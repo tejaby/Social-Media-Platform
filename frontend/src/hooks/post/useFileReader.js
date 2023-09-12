@@ -1,13 +1,21 @@
-import { useState } from "react";
+// context
+import { InterfaceContext } from "../../context/Interface";
+import { PostContext } from "../../context/Post";
+
+// react
+import { useContext } from "react";
 
 function useFileReader() {
-  const [cover, setCover] = useState("");
-  const [image, setImage] = useState("");
+  const { setCondition } = useContext(InterfaceContext);
+  const { setCover, setImage } = useContext(PostContext);
 
   const handleChangeFile = (e) => {
     const file = e.target.files[0];
-    setImage(e.target.files[0]);
+
     if (file) {
+      setImage(e.target.files[0]);
+      setCondition(true);
+
       const reader = new FileReader();
 
       reader.readAsDataURL(file);
@@ -18,7 +26,7 @@ function useFileReader() {
     }
   };
 
-  return { handleChangeFile, image, setImage, cover, setCover };
+  return handleChangeFile;
 }
 
 export default useFileReader;

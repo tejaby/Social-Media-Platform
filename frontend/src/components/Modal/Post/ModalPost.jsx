@@ -13,46 +13,21 @@ import useFileReader from "../../../hooks/post/useFileReader";
 import { useContext } from "react";
 
 function ModalPost() {
-  const { isModalPost, setIsModalPost, isNextPost, setIsNextPost } =
-    useContext(InterfaceContext);
-  const { handleChangeFile, image, setImage, cover, setCover } =
-    useFileReader();
-
-  const toggleModalPost = () => {
-    setIsModalPost(!isModalPost);
-    setIsNextPost(false);
-  };
-
-  const toggleNextPost = () => {
-    setIsNextPost(true);
-  };
-
-  const toggleBackPost = () => {
-    setCover(null);
-    setIsNextPost(false);
-  };
+  const { toggleShowModal, condition } = useContext(InterfaceContext);
+  const handleChangeFile = useFileReader();
 
   return (
     <>
       <div className="absolute flex justify-center items-center w-full h-full bg-black-rgba text-center">
         <div className="flex flex-col w-4/5 h-2/5 xs:w-2/3 sm:w-3/5 sm:h-2/4 md:w-1/2 lg:w-2/5 rounded-lg bg-white">
-          {!!isNextPost ? (
-            <ImagePreviewAndCaption
-              cover={cover}
-              image={image}
-              toggleBackPost={toggleBackPost}
-            />
+          {!!condition ? (
+            <ImagePreviewAndCaption />
           ) : (
-            <ImageUploader
-              cover={cover}
-              handleChangeFile={handleChangeFile}
-              toggleNextPost={toggleNextPost}
-              toggleBackPost={toggleBackPost}
-            />
+            <ImageUploader handleChangeFile={handleChangeFile} />
           )}
         </div>
         <div className="absolute top-0 right-0 p-4">
-          <button onClick={toggleModalPost}>
+          <button onClick={toggleShowModal}>
             <UseSvgLoader
               name="x"
               options={{ width: "32px", height: "32px" }}
