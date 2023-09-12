@@ -1,14 +1,17 @@
 // services
 import { getPosts } from "../services/post";
 
+// context
+import { PostContext } from "../context/Post";
+
 // hooks
 import useTokenValidation from "../hooks/user/useTokenValidation";
 
 // react
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 function useApiFetch() {
-  const [post, setPost] = useState([]);
+  const { setPost } = useContext(PostContext);
 
   const token = useTokenValidation();
 
@@ -27,7 +30,7 @@ function useApiFetch() {
     fetchDataFromApi();
   }, []);
 
-  return post;
+  return;
 }
 
 export default useApiFetch;

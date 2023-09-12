@@ -2,16 +2,19 @@
 import AppContent from "./AppContent";
 
 // provider
-import { UserContextProvider } from "./context/User";
 import { InterfaceContextProvider } from "./context/Interface";
+import { UserContextProvider } from "./context/User";
+import { PostContextProvider } from "./context/Post";
 
 function App() {
   return (
-    <UserContextProvider>
-      <InterfaceContextProvider>
-        <AppContent />
-      </InterfaceContextProvider>
-    </UserContextProvider>
+    <InterfaceContextProvider>
+      <UserContextProvider>
+        <PostContextProvider>
+          <AppContent />
+        </PostContextProvider>
+      </UserContextProvider>
+    </InterfaceContextProvider>
   );
 }
 

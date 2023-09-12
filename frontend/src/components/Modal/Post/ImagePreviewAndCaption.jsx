@@ -9,7 +9,6 @@ import { useContext, useState } from "react";
 
 function ImagePreviewAndCaption({ cover, image, toggleBackPost }) {
   const { user } = useContext(UserContext);
-  console.log(image);
 
   const [content, setContent] = useState("");
 

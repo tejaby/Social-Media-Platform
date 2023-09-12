@@ -9,8 +9,8 @@ import Rutas from "./routers/Routes";
 import Navbar from "./components/navBar/NavBar";
 
 // context
-import { UserContext } from "./context/User";
 import { InterfaceContext } from "./context/Interface";
+import { UserContext } from "./context/User";
 
 // hooks
 import useAuthenticatedRequest from "./hooks/user/useAuthenticatedRequest";

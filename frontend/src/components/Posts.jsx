@@ -1,4 +1,11 @@
-function Posts({ post }) {
+// context
+import { PostContext } from "../context/Post";
+
+// react
+import { useContext } from "react";
+
+function Posts() {
+  const { post } = useContext(PostContext);
   return (
     <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
       {post.map((p) => (
