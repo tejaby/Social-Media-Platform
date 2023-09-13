@@ -1,4 +1,6 @@
 // libraries
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 function createPostConfig() {
@@ -16,7 +18,16 @@ function createPostConfig() {
       }),
     content: yup.string().required("El campo de texto es obligatorio").max(100),
   });
-  return { schema };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  return { register, errors, handleSubmit };
 }
 
 export default createPostConfig;

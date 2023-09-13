@@ -1,4 +1,12 @@
-function ImageUploader({ handleChangeFile }) {
+// context
+import { PostContext } from "../../../context/Post";
+
+// react
+import { useContext } from "react";
+
+function ImageUploader() {
+  const { register, errors, handleChangeFile } = useContext(PostContext);
+
   return (
     <>
       <div className="border-b-2 p-2">
@@ -11,10 +19,13 @@ function ImageUploader({ handleChangeFile }) {
         <div className="w-full p-2 flex flex-wrap justify-center items-center">
           <input
             type="file"
-            onChange={handleChangeFile}
-            accept="image/*"
+            id="file"
+            {...register("image")}
+            accept=".png, .jpg, .webp"
             className="text-sm text-slate-500 file:mr-2 file:p-4 file:rounded-full file:border-0 file:font-semibold file:bg-violet-100 file:text-black hover:file:bg-primary hover:file:text-white"
+            onChange={handleChangeFile}
           />
+          <p>{errors.image?.message}</p>
         </div>
       </div>
     </>

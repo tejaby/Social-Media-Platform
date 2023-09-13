@@ -7,29 +7,14 @@ import { PostContext } from "../../../context/Post";
 import usePostActions from "../../../hooks/post/usePostActions";
 
 // react
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 function ImagePreviewAndCaption() {
   const { toggleShowModal } = useContext(InterfaceContext);
   const { user } = useContext(UserContext);
-  const { cover, image } = useContext(PostContext);
+  const { cover, register, errors, handleSubmit } = useContext(PostContext);
 
-  const [content, setContent] = useState("");
-
-  const { submitPost } = usePostActions();
-
-  const hadleChange = (e) => {
-    setContent(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    data.append("content", content);
-    data.append("image", image);
-    submitPost(data);
-    toggleShowModal();
-  };
+  const onSubmit = (data) => console.log(data);
 
   return (
     <div className="basis-full flex flex-col">
@@ -42,7 +27,7 @@ function ImagePreviewAndCaption() {
         </button>
       </div>
       <div className="grow basis-full">
-        <form className="w-full h-full flex" onSubmit={handleSubmit}>
+        <form className="w-full h-full flex" onSubmit={handleSubmit(onSubmit)}>
           <div className="grow basis-3/5 relative">
             <img
               src={cover}
@@ -61,8 +46,10 @@ function ImagePreviewAndCaption() {
               <textarea
                 className="grow w-full text-center resize-none focus:outline-none"
                 placeholder={`¡¿Qué está pasando ${user.user.first_name}?!`}
-                onChange={hadleChange}
+                {...register("content")}
               />
+              <p>{errors.content?.message}</p>
+              <p>{errors.content?.message}</p>
             </div>
             <div className="basis-1/4">
               <button
