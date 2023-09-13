@@ -1,3 +1,6 @@
+// libraries
+import { useNavigate } from "react-router-dom";
+
 // context
 import { InterfaceContext } from "../../../context/Interface";
 import { UserContext } from "../../../context/User";
@@ -10,21 +13,36 @@ import usePostActions from "../../../hooks/post/usePostActions";
 import { useContext } from "react";
 
 function ImagePreviewAndCaption() {
-  const { toggleShowModal } = useContext(InterfaceContext);
+  const { toggleShowModal, setCondition } = useContext(InterfaceContext);
   const { user } = useContext(UserContext);
-  const { cover, register, errors, handleSubmit } = useContext(PostContext);
+  const { cover, setCover, register, errors, reset, handleSubmit } =
+    useContext(PostContext);
 
-  const onSubmit = (data) => console.log(data);
+  const { submitPost } = usePostActions();
+
+  const navigate = useNavigate();
+
+  const onSubmit = (v) => {
+    const data = new FormData();
+    data.append("content", v.content);
+    data.append("image", v.image[0]);
+    try {
+      submitPost(data);
+      toggleShowModal();
+      setCover("");
+      setCondition(false);
+      reset();
+      navigate("/explore");
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <div className="basis-full flex flex-col">
-      <div className="flex justify-between p-1">
-        <button className="rounded-lg font-semibold hover:text-primary">
-          atras
-        </button>
-        <button className="rounded-lg font-semibold hover:text-primary">
-          Postear
-        </button>
+      <div className="flex justify-between p-2">
+        <button className="font-semibold hover:text-primary">atras</button>
+        <button className="font-semibold hover:text-primary">Postear</button>
       </div>
       <div className="grow basis-full">
         <form className="w-full h-full flex" onSubmit={handleSubmit(onSubmit)}>
@@ -48,7 +66,6 @@ function ImagePreviewAndCaption() {
                 placeholder={`¡¿Qué está pasando ${user.user.first_name}?!`}
                 {...register("content")}
               />
-              <p>{errors.content?.message}</p>
               <p>{errors.content?.message}</p>
             </div>
             <div className="basis-1/4">

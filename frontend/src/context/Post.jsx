@@ -10,7 +10,7 @@ import { createContext, useState } from "react";
 export const PostContext = createContext();
 
 export function PostContextProvider({ children }) {
-  const { register, errors, handleSubmit } = createPostConfig();
+  const { register, errors, reset, handleSubmit } = createPostConfig();
 
   const { handleChangeFile, cover, setCover } = useFileReader();
 
@@ -23,6 +23,7 @@ export function PostContextProvider({ children }) {
         setPost,
         register,
         errors,
+        reset,
         handleSubmit,
         handleChangeFile,
         cover,

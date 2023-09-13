@@ -23,11 +23,12 @@ function createPostConfig() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  return { register, errors, handleSubmit };
+  return { register, errors, reset, handleSubmit };
 }
 
 export default createPostConfig;
