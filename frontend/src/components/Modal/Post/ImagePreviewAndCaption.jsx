@@ -13,7 +13,8 @@ import usePostActions from "../../../hooks/post/usePostActions";
 import { useContext } from "react";
 
 function ImagePreviewAndCaption() {
-  const { toggleShowModal, setCondition } = useContext(InterfaceContext);
+  const { toggleShowModal, condition, setCondition } =
+    useContext(InterfaceContext);
   const { user } = useContext(UserContext);
   const { cover, setCover, register, errors, reset, handleSubmit } =
     useContext(PostContext);
@@ -41,16 +42,34 @@ function ImagePreviewAndCaption() {
   return (
     <div className="basis-full flex flex-col">
       <div className="flex justify-between p-2">
-        <button className="font-semibold hover:text-primary">atras</button>
-        <button className="font-semibold hover:text-primary">Postear</button>
+        <button
+          className="font-semibold hover:text-primary"
+          onClick={() => {
+            const text = "¿Descartar post?";
+            if (confirm(text) == true) {
+              setCondition(false);
+            }
+          }}
+        >
+          atras
+        </button>
+        <button
+          className="font-semibold hover:text-primary"
+          onClick={handleSubmit(onSubmit)}
+        >
+          Postear
+        </button>
       </div>
       <div className="grow basis-full">
-        <form className="w-full h-full flex" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="w-full h-full flex flex-col xs:flex-row"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="grow basis-3/5 relative">
             <img
               src={cover}
               alt=""
-              className="absolute inset-0 w-full h-full object-cover rounded-bl-lg"
+              className="absolute inset-0 w-full h-full object-cover xs:rounded-bl-lg"
             />
           </div>
           <div className="basis-2/5 flex flex-col">

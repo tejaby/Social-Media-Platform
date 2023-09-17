@@ -2,7 +2,7 @@
 import { BrowserRouter } from "react-router-dom";
 
 // components
-import ModalPost from "./components/Modal/Post/ModalPost";
+import ModalPost from "./components/modal/post/ModalPost";
 
 // pages
 import Rutas from "./routers/Routes";
