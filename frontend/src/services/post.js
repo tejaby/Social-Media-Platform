@@ -29,3 +29,15 @@ export const createPost = async (userToken, data) => {
     throw e.response;
   }
 };
+
+export const user_posts = async (userToken) => {
+  try {
+    const response = await axios.get(`${urlPosts}user_posts/`, {
+      headers: { Authorization: `Token ${userToken}` },
+    });
+    const posts = response.data;
+    return posts;
+  } catch (e) {
+    throw e.response;
+  }
+};

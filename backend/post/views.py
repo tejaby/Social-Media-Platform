@@ -88,3 +88,10 @@ class PostViewset(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=False, methods=['get'], authentication_classes=[authentication.TokenAuthentication], permission_classes=[permissions.IsAuthenticated])
+    def user_posts(self, request):
+        user = request.user
+        posts = Post.objects.filter(author=user)
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
