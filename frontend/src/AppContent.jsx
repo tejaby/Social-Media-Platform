@@ -16,17 +16,13 @@ import { UserContext } from "./context/User";
 import useAuthenticatedRequest from "./hooks/user/useAuthenticatedRequest";
 
 // react
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 function AppContent() {
   const { user } = useContext(UserContext);
   const { showModal } = useContext(InterfaceContext);
 
-  const { onSubmit } = useAuthenticatedRequest();
-
-  useEffect(() => {
-    onSubmit();
-  }, []);
+  const { error } = useAuthenticatedRequest();
 
   return (
     <BrowserRouter>

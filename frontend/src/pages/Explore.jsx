@@ -2,10 +2,10 @@
 import Posts from "../components/Posts";
 
 // hooks
-import useApiFetch from "../hooks/useApiFetch";
+import useApiFetch from "../hooks/post/useApiFetch";
 
 function Explore() {
-  useApiFetch();
+  const { error } = useApiFetch();
 
   return (
     <div className="container mx-auto">

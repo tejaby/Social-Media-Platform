@@ -2,6 +2,7 @@ function useTokenLocalStorage(tokenkey) {
   const getToken = () => {
     return localStorage.getItem(tokenkey);
   };
+
   const setToken = (token) => {
     localStorage.setItem(tokenkey, token);
   };

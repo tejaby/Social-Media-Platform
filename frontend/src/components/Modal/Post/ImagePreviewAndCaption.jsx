@@ -30,7 +30,7 @@ function ImagePreviewAndCaption() {
     try {
       submitPost(data);
       toggleShowModal();
-      setCover("");
+      setCover(null);
       setCondition(false);
       reset();
       navigate("/explore");
@@ -85,7 +85,7 @@ function ImagePreviewAndCaption() {
               <div className="basis-5/6 sm:basis-3/4 flex justify-start">
                 <textarea
                   className="w-full sm:w-11/12 text-base xs:text-sm md:text-base text-center font resize-none focus:outline-none"
-                  placeholder={`¡¿Qué está pasando ${user.user.first_name}?!`}
+                  placeholder={`¡¿Qué está pasando ${user.first_name}?!`}
                   {...register("content")}
                 />
               </div>

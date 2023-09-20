@@ -6,7 +6,8 @@ import { useContext, useState } from "react";
 
 function useFileReader() {
   const { setCondition } = useContext(InterfaceContext);
-  const [cover, setCover] = useState("");
+
+  const [cover, setCover] = useState(null);
 
   const handleChangeFile = (e) => {
     const file = e.target.files[0];

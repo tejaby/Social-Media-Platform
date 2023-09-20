@@ -8,9 +8,9 @@ import useTokenValidation from "../user/useTokenValidation";
 import { useState } from "react";
 
 function usePostActions() {
-  const [error, setError] = useState(null);
-
   const token = useTokenValidation();
+
+  const [error, setError] = useState(null);
 
   const submitPost = async (data) => {
     if (token) {
@@ -18,7 +18,7 @@ function usePostActions() {
         const response = await createPost(token, data);
         setError(null);
       } catch (e) {
-        setError(e);
+        setError(e.data);
       }
     }
   };
