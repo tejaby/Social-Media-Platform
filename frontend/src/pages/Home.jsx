@@ -3,44 +3,33 @@ import { user_posts } from "../services/post";
 
 // components
 import Form from "../components/form/user/Form";
+import UserPostsList from "../components/post/UserPostsList";
 
 // context
 import { UserContext } from "../context/User";
+import { PostContext } from "../context/Post";
 
 // hooks
-import useTokenValidation from "../hooks/user/useTokenValidation";
+import useApiFetch from "../hooks/post/useApiFetch";
 
 // react
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 function Home() {
   const { user } = useContext(UserContext);
+  const { setUserPosts } = useContext(PostContext);
 
-  const token = useTokenValidation();
-
-  const [post, setPost] = useState([]);
-  const [error, setError] = useState(null);
-
-  const fetchDataFromApi = async () => {
-    if (token) {
-      try {
-        const response = await user_posts(token);
-        setPost(response);
-      } catch (e) {
-        setError(e.data);
-      }
-    }
-  };
-
-  useEffect(() => {
-    fetchDataFromApi();
-  }, []);
+  const { error } = useApiFetch(user_posts, setUserPosts);
 
   if (!user) {
     return <Form />;
   }
 
-  return <div className="">Home - public</div>;
+  return (
+    <div className="container mx-auto">
+      <UserPostsList />
+    </div>
+  );
 }
 
 export default Home;

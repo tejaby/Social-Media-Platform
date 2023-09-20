@@ -14,13 +14,16 @@ export function PostContextProvider({ children }) {
 
   const { handleChangeFile, cover, setCover } = useFileReader();
 
-  const [post, setPost] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
 
   return (
     <PostContext.Provider
       value={{
-        post,
-        setPost,
+        allPosts,
+        setAllPosts,
+        userPosts,
+        setUserPosts,
         register,
         errors,
         reset,

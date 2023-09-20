@@ -1,15 +1,26 @@
+// services
+import { getPosts } from "../services/post";
+
 // components
-import Posts from "../components/Posts";
+import PostsList from "../components/post/PostsList";
+
+// context
+import { PostContext } from "../context/Post";
 
 // hooks
 import useApiFetch from "../hooks/post/useApiFetch";
 
+// react
+import { useContext } from "react";
+
 function Explore() {
-  const { error } = useApiFetch();
+  const { setAllPosts } = useContext(PostContext);
+
+  const { error } = useApiFetch(getPosts, setAllPosts);
 
   return (
     <div className="container mx-auto">
-      <Posts />
+      <PostsList />
     </div>
   );
 }

@@ -94,4 +94,11 @@ class PostViewset(viewsets.ModelViewSet):
         user = request.user
         posts = Post.objects.filter(author=user)
         serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        data = serializer.data
+        for post_data in data:
+            if 'image' in post_data:
+                post_data['image'] = request.build_absolute_uri(
+                    post_data['image'])
+
+        return Response(data, status=status.HTTP_200_OK)
