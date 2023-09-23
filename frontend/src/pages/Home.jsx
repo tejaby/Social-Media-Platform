@@ -3,7 +3,7 @@ import { user_posts } from "../services/post";
 
 // components
 import Form from "../components/form/user/Form";
-import HomePostsList from "../components/post/HomePostsList";
+import HomePostsList from "../components/post/grid/HomePostsList";
 
 // context
 import { UserContext } from "../context/User";
@@ -17,16 +17,16 @@ import { useContext } from "react";
 
 function Home() {
   const { user } = useContext(UserContext);
-  const { setUserPosts } = useContext(PostContext);
+  const { setFollowingPosts } = useContext(PostContext);
 
-  const { error } = useApiFetch(user_posts, setUserPosts);
+  const { error } = useApiFetch(user_posts, setFollowingPosts);
 
   if (!user) {
     return <Form />;
   }
 
   return (
-    <div className="">
+    <div className="max-w-3xl mx-auto sm:my-2">
       <HomePostsList />
     </div>
   );

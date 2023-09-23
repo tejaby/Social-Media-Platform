@@ -16,6 +16,7 @@ export function PostContextProvider({ children }) {
 
   const [allPosts, setAllPosts] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
+  const [followingPosts, setFollowingPosts] = useState([]);
 
   return (
     <PostContext.Provider
@@ -24,6 +25,8 @@ export function PostContextProvider({ children }) {
         setAllPosts,
         userPosts,
         setUserPosts,
+        followingPosts,
+        setFollowingPosts,
         register,
         errors,
         reset,

@@ -2,7 +2,7 @@
 import { getPosts } from "../services/post";
 
 // components
-import ExplorePostsList from "../components/post/ExplorePostsList";
+import ExplorePostsList from "../components/post/grid/ExplorePostsList";
 
 // context
 import { PostContext } from "../context/Post";
@@ -19,7 +19,7 @@ function Explore() {
   const { error } = useApiFetch(getPosts, setAllPosts);
 
   return (
-    <div className="">
+    <div className="max-w-3xl mx-auto sm:my-2">
       <ExplorePostsList />
     </div>
   );
