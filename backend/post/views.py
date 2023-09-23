@@ -1,27 +1,23 @@
 # django
-
 from django.contrib.auth import authenticate
 
 # rest_framework
-
 from rest_framework import viewsets, permissions, authentication, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
 # serializers
-
 from .serializers import UserSerializer
 from .serializers import PostSerializer
 
 # models
-
-from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from .models import CustomUser
 from .models import Post
 
 
 class UserViewset(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAdminUser]
