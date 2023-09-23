@@ -73,7 +73,7 @@ function navBar() {
             options={{ width: "32px", height: "32px" }}
           />
         </NavLink>
-        <NavLink to="/account" className="rounded-xl" onClick={handleModal}>
+        <NavLink to="/profile" className="rounded-xl" onClick={handleModal}>
           <UseSvgLoader
             name="user"
             options={{ width: "32px", height: "32px", color: "blue" }}
@@ -143,7 +143,7 @@ function navBar() {
           <span className="flex-grow hidden lg:block">Notificaciones</span>
         </NavLink>
         <NavLink
-          to="/account"
+          to="/profile"
           className={({ isActive }) =>
             `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl hover:text-primary hover:bg-gray-100 ${
               isActive && "font-semibold text-primary"

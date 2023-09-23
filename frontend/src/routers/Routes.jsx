@@ -8,7 +8,7 @@ import NotFound from "../components/routes/NotFound";
 // pages
 import Home from "../pages/Home";
 import Explore from "../pages/Explore";
-import Account from "../pages/Account";
+import Profile from "../pages/Profile";
 // import Dashboard from "../pages/Dashboard";
 
 function Rutas() {
@@ -23,7 +23,7 @@ function Rutas() {
           path="/notifications"
           element={<h1>notificaciones - private</h1>}
         />
-        <Route path="/account" element={<Account />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
