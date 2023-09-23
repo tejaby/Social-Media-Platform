@@ -2,7 +2,7 @@
 import { getPosts } from "../services/post";
 
 // components
-import PostsList from "../components/post/PostsList";
+import ExplorePostsList from "../components/post/ExplorePostsList";
 
 // context
 import { PostContext } from "../context/Post";
@@ -19,8 +19,8 @@ function Explore() {
   const { error } = useApiFetch(getPosts, setAllPosts);
 
   return (
-    <div className="container mx-auto">
-      <PostsList />
+    <div className="">
+      <ExplorePostsList />
     </div>
   );
 }

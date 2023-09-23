@@ -1,15 +1,26 @@
+// components
+import ProfilePostList from "../../components/post/ProfilePostList";
+
+// context
+import { UserContext } from "../../context/User";
+
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
 
+// react
+import { useContext } from "react";
+
 function UserProfile() {
+  const { user } = useContext(UserContext);
+
   return (
-    <div className="relative max-w-3xl mx-auto my-3">
+    <div className="max-w-3xl mx-auto my-3">
       <div className="flex justify-between items-center text-sm">
         <button>
           <UseSvgLoader options={{ width: "32px", height: "32px" }} />
         </button>
         <a href="#" className="flex gap-1 items-center">
-          <span className="font-bold">yostin tejaxun</span>
+          <span className="font-bold">@{user.username}</span>
           <UseSvgLoader
             name="chevron-down"
             options={{ width: "32px", height: "32px" }}
@@ -31,7 +42,7 @@ function UserProfile() {
               "url('https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1599&q=80')",
           }}
         ></div>
-        <span className="my-3">@yostintejaby</span>
+        <span className="my-3">{`${user.first_name} ${user.last_name}`}</span>
         <div className="flex gap-10 text-sm">
           <div className="flex flex-col items-center">
             <span className="font-bold">10</span>
@@ -51,6 +62,8 @@ function UserProfile() {
         </button>
         <p className="mb-3">not dark yet</p>
       </div>
+
+      <ProfilePostList />
     </div>
   );
 }

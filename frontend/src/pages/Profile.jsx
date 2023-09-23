@@ -3,7 +3,7 @@ import UserProfile from "../components/profile/UserProfile";
 
 function Profile() {
   return (
-    <div className="w-full">
+    <div className="">
       <UserProfile />
     </div>
   );

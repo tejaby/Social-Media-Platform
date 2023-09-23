@@ -3,7 +3,7 @@ import { user_posts } from "../services/post";
 
 // components
 import Form from "../components/form/user/Form";
-import UserPostsList from "../components/post/UserPostsList";
+import HomePostsList from "../components/post/HomePostsList";
 
 // context
 import { UserContext } from "../context/User";
@@ -26,8 +26,8 @@ function Home() {
   }
 
   return (
-    <div className="container mx-auto">
-      <UserPostsList />
+    <div className="">
+      <HomePostsList />
     </div>
   );
 }
