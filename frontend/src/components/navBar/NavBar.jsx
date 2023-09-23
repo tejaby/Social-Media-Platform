@@ -1,8 +1,8 @@
 // Libraries
 import { NavLink } from "react-router-dom";
 
-// services
-import { logoutUser } from "../../services/user";
+// components
+import OptionsModal from "../../components/Modal/navbar/OptionsModal";
 
 // context
 import { UserContext } from "../../context/User";
@@ -10,8 +10,6 @@ import { InterfaceContext } from "../../context/Interface";
 
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
-import useTokenLocalStorage from "../../hooks/user/useTokenLocalStorage";
-import useFormSubmit from "../../hooks/user/useFormSubmit";
 
 // react
 import { useContext, useState } from "react";
@@ -20,19 +18,15 @@ function navBar() {
   const { user } = useContext(UserContext);
   const { toggleShowModal } = useContext(InterfaceContext);
 
-  const { getToken } = useTokenLocalStorage("userToken");
-  const { onSubmit } = useFormSubmit(logoutUser);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleFormSubmit = () => {
-    const token = getToken();
-    onSubmit(token, "logout");
-  };
+  const { OptionsModalMobile, OptionsModalDesktop } = OptionsModal({
+    handleModal,
+  });
 
   return (
     <nav className="flex sm:flex-col items-center sm-items-start sm:justify-between sm:fixed sm:w-36 lg:w-80 h-16 sm:h-screen border-t-2 sm:border-t-0 sm:border-r-2 sm:py-4 sm:px-6">
@@ -79,25 +73,7 @@ function navBar() {
             options={{ width: "32px", height: "32px", color: "blue" }}
           />
         </NavLink>
-        {isModalOpen && (
-          <div
-            className="absolute flex flex-col w-1/2 p-2 border border-primary rounded-xl right-2 bottom-full bg-white z-10"
-            onClick={handleModal}
-          >
-            <button className="text-start rounded-xl py-2 px-3">
-              Configuración
-            </button>
-            <button className="text-start rounded-xl py-2 px-3">
-              Ver perfil
-            </button>
-            <button
-              className="text-start rounded-xl py-2 px-3"
-              onClick={handleFormSubmit}
-            >
-              Salir
-            </button>
-          </div>
-        )}
+        {isModalOpen && <OptionsModalMobile />}
       </div>
       <div className="hidden sm:flex flex-col items-start gap-2 w-full">
         <NavLink
@@ -193,25 +169,7 @@ function navBar() {
             options={{ width: "24px", height: "24px" }}
           />
         </div>
-        {isModalOpen && (
-          <div className="absolute flex flex-col w-48 p-2 border border-primary rounded-xl left-0 bottom-full bg-white z-10">
-            <button className="text-start rounded-xl py-2 px-3 hover:text-primary hover:bg-gray-100">
-              Configuración
-            </button>
-            <button className="text-start rounded-xl py-2 px-3 hover:text-primary hover:bg-gray-100">
-              Cambiar tema
-            </button>
-            <button className="text-start rounded-xl py-2 px-3 hover:text-primary hover:bg-gray-100">
-              Ver perfil
-            </button>
-            <button
-              className="text-start rounded-xl py-2 px-3 hover:text-primary hover:bg-gray-100"
-              onClick={handleFormSubmit}
-            >
-              Salir
-            </button>
-          </div>
-        )}
+        {isModalOpen && <OptionsModalDesktop />}
       </div>
     </nav>
   );
