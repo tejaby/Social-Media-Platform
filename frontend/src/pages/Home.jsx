@@ -3,7 +3,7 @@ import { user_posts } from "../services/post";
 
 // components
 import Form from "../components/form/user/Form";
-import HomePostsList from "../components/post/grid/HomePostsList";
+import PostCard from "../components/home/PostCard";
 
 // context
 import { UserContext } from "../context/User";
@@ -27,7 +27,7 @@ function Home() {
 
   return (
     <div className="max-w-lg sm:max-w-xl mx-auto sm:my-2">
-      <HomePostsList />
+      <PostCard />
     </div>
   );
 }
