@@ -26,7 +26,7 @@ function Home() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto sm:my-2">
+    <div className="max-w-lg sm:max-w-xl mx-auto sm:my-2">
       <HomePostsList />
     </div>
   );
