@@ -13,14 +13,13 @@ import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 // react
 import { useContext } from "react";
 
-function ImagePreviewAndCaption() {
+function ImagePreviewAndCaption({ cover, setCover }) {
   const { showModalPost, setShowModalPost, setCondition } =
     useContext(InterfaceContext);
 
   const { user } = useContext(UserContext);
 
-  const { cover, setCover, register, errors, reset, handleSubmit } =
-    useContext(PostContext);
+  const { register, errors, reset, handleSubmit } = useContext(PostContext);
 
   const { toggleShowModal } = useToggleModalPost(
     setShowModalPost,

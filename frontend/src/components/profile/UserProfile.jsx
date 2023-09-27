@@ -29,13 +29,13 @@ function UserProfile() {
         <button>
           <UseSvgLoader options={{ width: "32px", height: "32px" }} />
         </button>
-        <a href="#" className="flex gap-1 items-center">
+        <button className="flex gap-1 items-center">
           <span className="font-bold">@{user.username}</span>
           <UseSvgLoader
             name="chevron-down"
             options={{ width: "32px", height: "32px" }}
           />
-        </a>
+        </button>
         <button>
           <UseSvgLoader
             name="menu-2"
@@ -43,7 +43,6 @@ function UserProfile() {
           />
         </button>
       </div>
-
       <div className="flex flex-col justify-center items-center my-5">
         <div className="w-14 h-14 sm:w-16 sm:h-16">
           <img

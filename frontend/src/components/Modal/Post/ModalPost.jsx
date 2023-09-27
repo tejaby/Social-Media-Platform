@@ -11,7 +11,7 @@ import UseSvgLoader from "../../../hooks/useSvgLoader";
 import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 
 // react
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 function ModalPost() {
   const { showModalPost, setShowModalPost, setCondition, condition } =
@@ -24,6 +24,8 @@ function ModalPost() {
     showModalPost
   );
 
+  const [cover, setCover] = useState(null);
+
   return (
     <>
       <div
@@ -34,9 +36,11 @@ function ModalPost() {
         } xs:h-2/5 sm:h-1/2 lg:h-3/5 xs:rounded-lg bg-white`}
       >
         <div className={`basis-full ${condition ? "hidden" : "flex"} flex-col`}>
-          <ImageUploader />
+          <ImageUploader cover={cover} setCover={setCover} />
         </div>
-        {condition && <ImagePreviewAndCaption />}
+        {condition && (
+          <ImagePreviewAndCaption cover={cover} setCover={setCover} />
+        )}
       </div>
       <div
         className={`${

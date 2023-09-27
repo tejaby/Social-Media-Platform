@@ -1,11 +1,19 @@
 // context
+import { InterfaceContext } from "../../../context/Interface";
 import { PostContext } from "../../../context/Post";
+
+// hooks
+import useFileReader from "../../../hooks/post/useFileReader";
 
 // react
 import { useContext } from "react";
 
-function ImageUploader() {
-  const { register, errors, handleChangeFile } = useContext(PostContext);
+function ImageUploader({ cover, setCover }) {
+  const { setCondition } = useContext(InterfaceContext);
+
+  const { register, errors } = useContext(PostContext);
+
+  const { handleChangeFile } = useFileReader(cover, setCover);
 
   return (
     <>
@@ -23,7 +31,10 @@ function ImageUploader() {
             {...register("image")}
             accept=".png, .jpg, .webp"
             className="text-sm text-slate-500 file:mr-2 file:p-4 file:rounded-full file:border-0 file:font-semibold file:bg-violet-100 file:text-black hover:file:bg-primary hover:file:text-white"
-            onChange={handleChangeFile}
+            onChange={(v) => {
+              handleChangeFile(v);
+              setCondition(true);
+            }}
           />
           <p>{errors.image?.message}</p>
         </div>

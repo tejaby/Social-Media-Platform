@@ -10,7 +10,6 @@ export function InterfaceContextProvider({ children }) {
   // show showModal
   const [showModal, setShowModal] = useState(false);
 
-  //
   const [showModalProfile, setShowModalProfile] = useState(false);
   const [showModalPost, setShowModalPost] = useState(false);
 

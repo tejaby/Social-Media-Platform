@@ -1,20 +1,8 @@
-// context
-import { InterfaceContext } from "../../context/Interface";
-
-// react
-import { useContext, useState } from "react";
-
-function useFileReader() {
-  const { setCondition } = useContext(InterfaceContext);
-
-  const [cover, setCover] = useState(null);
-
+function useFileReader(cover, setCover) {
   const handleChangeFile = (e) => {
     const file = e.target.files[0];
 
     if (file) {
-      setCondition(true);
-
       const reader = new FileReader();
 
       reader.readAsDataURL(file);
@@ -25,7 +13,7 @@ function useFileReader() {
     }
   };
 
-  return { handleChangeFile, cover, setCover };
+  return { handleChangeFile };
 }
 
 export default useFileReader;
