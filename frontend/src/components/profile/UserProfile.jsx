@@ -72,7 +72,9 @@ function UserProfile() {
         >
           Editar perfil
         </button>
-        <p className="mb-3">not dark yet</p>
+        <p className="mb-3">
+          {user.biography ? user.biography : "Nada por aquí..."}
+        </p>
       </div>
 
       <ProfilePostList />

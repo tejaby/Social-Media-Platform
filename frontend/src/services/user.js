@@ -57,13 +57,13 @@ export const tokenValidation = async (userToken) => {
 
 export const updateProfile = async (userToken, data) => {
   try {
-    const response = await axios.patch(`${urlUsers}`, data, {
+    const response = await axios.patch(`${urlUsers}update_profile/`, data, {
       headers: {
         Authorization: `Token ${userToken}`,
       },
     });
     return response.data;
   } catch (e) {
-    console.log(e);
+    throw e.response;
   }
 };
