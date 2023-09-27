@@ -1,13 +1,8 @@
-// react
-import { useState } from "react";
-
-function useToggleModalPost() {
-  const [showModal, setShowModal] = useState(false);
-
+function useToggleModalPost(contextSetter, setterValue) {
   const toggleShowModal = () => {
-    setShowModal(!showModal);
+    contextSetter(!setterValue);
   };
-  return { toggleShowModal, showModal };
+  return { toggleShowModal };
 }
 
 export default useToggleModalPost;

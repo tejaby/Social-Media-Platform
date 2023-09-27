@@ -10,13 +10,16 @@ import { InterfaceContext } from "../../context/Interface";
 
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
+import useToggleModalPost from "../../hooks/interface/useToggleModalPost";
 
 // react
 import { useContext, useState } from "react";
 
 function navBar() {
   const { user } = useContext(UserContext);
-  const { toggleShowModal } = useContext(InterfaceContext);
+  const { showModal, setShowModal } = useContext(InterfaceContext);
+
+  const { toggleShowModal } = useToggleModalPost(setShowModal, showModal);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

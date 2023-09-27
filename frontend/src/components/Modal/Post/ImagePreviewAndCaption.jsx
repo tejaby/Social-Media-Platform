@@ -8,16 +8,21 @@ import { PostContext } from "../../../context/Post";
 
 // hooks
 import usePostActions from "../../../hooks/post/usePostActions";
+import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 
 // react
 import { useContext } from "react";
 
 function ImagePreviewAndCaption() {
-  const { toggleShowModal, condition, setCondition } =
+  const { showModal, setShowModal, setCondition } =
     useContext(InterfaceContext);
+
   const { user } = useContext(UserContext);
+
   const { cover, setCover, register, errors, reset, handleSubmit } =
     useContext(PostContext);
+
+  const { toggleShowModal } = useToggleModalPost(setShowModal, showModal);
 
   const { submitPost } = usePostActions();
 

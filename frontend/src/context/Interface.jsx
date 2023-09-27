@@ -1,17 +1,14 @@
-// hooks
-import useToggleModalPost from "../hooks/interface/useToggleModalPost";
-
 // react
 import { createContext, useState } from "react";
 
 export const InterfaceContext = createContext();
 
 export function InterfaceContextProvider({ children }) {
-  // componente mostrar modal createpost
-  const { toggleShowModal, showModal } = useToggleModalPost();
-
   // mostrar login o register
   const [showLogin, setShowLogin] = useState(true);
+
+  // show modalCreatePost
+  const [showModal, setShowModal] = useState(false);
 
   // mostrar ImagePreviewAndCaption
   const [condition, setCondition] = useState(false);
@@ -21,8 +18,8 @@ export function InterfaceContextProvider({ children }) {
       value={{
         showLogin,
         setShowLogin,
-        toggleShowModal,
         showModal,
+        setShowModal,
         condition,
         setCondition,
       }}

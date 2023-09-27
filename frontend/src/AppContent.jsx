@@ -2,7 +2,7 @@
 import { BrowserRouter } from "react-router-dom";
 
 // components
-import ModalPost from "./components/modal/post/ModalPost";
+import ShowModal from "./components/Modal/ShowModal";
 
 // pages
 import Rutas from "./routers/Routes";
@@ -20,7 +20,7 @@ import { useContext } from "react";
 
 function AppContent() {
   const { user } = useContext(UserContext);
-  const { showModal } = useContext(InterfaceContext);
+  const { showModal, showModalProfile } = useContext(InterfaceContext);
 
   const { error } = useAuthenticatedRequest();
 
@@ -41,7 +41,7 @@ function AppContent() {
             <div className="order-1 sm:order-2 w-full">
               <Rutas />
             </div>
-            {showModal && <ModalPost />}
+            {showModal && <ShowModal />}
           </>
         ) : (
           <div className="">
