@@ -54,3 +54,16 @@ export const tokenValidation = async (userToken) => {
     throw e.response;
   }
 };
+
+export const updateProfile = async (userToken, data) => {
+  try {
+    const response = await axios.patch(`${urlUsers}`, data, {
+      headers: {
+        Authorization: `Token ${userToken}`,
+      },
+    });
+    return response.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
