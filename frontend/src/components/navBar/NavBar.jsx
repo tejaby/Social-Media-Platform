@@ -17,9 +17,12 @@ import { useContext, useState } from "react";
 
 function navBar() {
   const { user } = useContext(UserContext);
-  const { showModal, setShowModal } = useContext(InterfaceContext);
+  const { showModalPost, setShowModalPost } = useContext(InterfaceContext);
 
-  const { toggleShowModal } = useToggleModalPost(setShowModal, showModal);
+  const { toggleShowModal } = useToggleModalPost(
+    setShowModalPost,
+    showModalPost
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

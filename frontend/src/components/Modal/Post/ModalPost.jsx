@@ -14,12 +14,15 @@ import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 import { useContext } from "react";
 
 function ModalPost() {
-  const { showModal, setShowModal, setCondition, condition } =
+  const { showModalPost, setShowModalPost, setCondition, condition } =
     useContext(InterfaceContext);
 
   const { reset } = useContext(PostContext);
 
-  const { toggleShowModal } = useToggleModalPost(setShowModal, showModal);
+  const { toggleShowModal } = useToggleModalPost(
+    setShowModalPost,
+    showModalPost
+  );
 
   return (
     <>

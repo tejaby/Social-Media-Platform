@@ -2,16 +2,26 @@
 import ProfilePostList from "../../components/post/grid/ProfilePostList";
 
 // context
+import { InterfaceContext } from "../../context/Interface";
 import { UserContext } from "../../context/User";
 
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
+import useToggleModalPost from "../../hooks/interface/useToggleModalPost";
 
 // react
 import { useContext } from "react";
 
 function UserProfile() {
+  const { showModalProfile, setShowModalProfile } =
+    useContext(InterfaceContext);
+
   const { user } = useContext(UserContext);
+
+  const { toggleShowModal } = useToggleModalPost(
+    setShowModalProfile,
+    showModalProfile
+  );
 
   return (
     <div className="flex flex-col gap-2">
@@ -57,7 +67,10 @@ function UserProfile() {
             <span>seguidos</span>
           </div>
         </div>
-        <button className="my-5 py-2 px-3 font-semibold text-sm border border-primary">
+        <button
+          className="my-5 py-2 px-3 font-semibold text-sm border border-primary"
+          onClick={toggleShowModal}
+        >
           Editar perfil
         </button>
         <p className="mb-3">not dark yet</p>
