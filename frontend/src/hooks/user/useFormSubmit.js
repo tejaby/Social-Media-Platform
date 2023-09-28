@@ -14,22 +14,30 @@ const useFormSubmit = (submitFunction) => {
 
   const [error, setError] = useState(null);
 
-  const onSubmit = async (data, action) => {
+  const onSubmit = async (action, token = null, data = null) => {
     try {
-      const response = await submitFunction(data);
-      if (action == "login") {
+      let response;
+      if (action == "login" || action == "create") {
+        response = await submitFunction(data);
         setToken(response.token);
         setUser(response.user);
-      } else if (action == "create") {
-        setToken(response.token);
-        setUser(response.user);
+      } else if (action == "update") {
+        if (!token || !data) {
+          throw new Error(
+            "Se requieren token y datos para la acción de actualización."
+          );
+        }
+        response = await submitFunction(token, data);
+        setUser(response);
       } else if (action == "logout") {
+        await submitFunction(token);
         removeToken();
         setUser(null);
       }
       setError(null);
     } catch (e) {
       setError(e);
+      throw new Error(e);
     }
   };
 

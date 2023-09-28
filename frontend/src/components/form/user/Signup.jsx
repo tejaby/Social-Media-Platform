@@ -17,7 +17,7 @@ function Signup() {
   const { schema, formData, headers } = getSignupConfig();
 
   const handleFormSubmit = (data) => {
-    onSubmit(data, "create");
+    onSubmit("create", null, data);
   };
 
   toast.error(`${error?.data.username}`);

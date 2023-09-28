@@ -17,7 +17,7 @@ function Signin() {
   const { schema, formData, headers } = getSigninConfig();
 
   const handleFormSubmit = (data) => {
-    onSubmit(data, "login");
+    onSubmit("login", null, data);
   };
 
   toast.error(`${error?.data.message}`);

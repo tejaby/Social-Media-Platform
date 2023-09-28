@@ -9,6 +9,8 @@ import { UserContext } from "../../../context/User";
 import UseSvgLoader from "../../../hooks/useSvgLoader";
 import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 import useFileReader from "../../../hooks/post/useFileReader";
+import useTokenValidation from "../../../hooks/user/useTokenValidation";
+import useFormSubmit from "../../../hooks/user/useFormSubmit";
 
 // react
 import { useContext, useState } from "react";
@@ -22,6 +24,10 @@ function ModalProfile() {
     setShowModalProfile,
     showModalProfile
   );
+
+  const token = useTokenValidation();
+
+  const { onSubmit } = useFormSubmit(updateProfile);
 
   const [cover, setCover] = useState(null);
   const [bio, setBio] = useState(null);
@@ -50,13 +56,11 @@ function ModalProfile() {
       biography: bio,
       website: sitio,
     };
+
     try {
-      const response = updateProfile(
-        "dc168a28fc3c02b0090baf36dce445663d50cc27",
-        data
-      );
+      onSubmit("update", token, data);
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
   };
 

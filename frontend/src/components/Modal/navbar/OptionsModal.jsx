@@ -10,7 +10,7 @@ function OptionsModal({ handleModal }) {
   const { onSubmit } = useFormSubmit(logoutUser);
 
   const handleFormSubmit = () => {
-    onSubmit(token, "logout");
+    onSubmit("logout", token);
   };
 
   const OptionsModalMobile = () => {
