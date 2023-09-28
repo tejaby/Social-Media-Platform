@@ -46,7 +46,9 @@ function UserProfile() {
       <div className="flex flex-col justify-center items-center my-5">
         <div className="w-14 h-14 sm:w-16 sm:h-16">
           <img
-            src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1599&q=80"
+            src={`${
+              user.profile_picture ? user.profile_picture : "/user-defect.png"
+            }`}
             alt=""
             className="w-full h-full object-cover rounded-full"
           />
@@ -75,6 +77,11 @@ function UserProfile() {
         <p className="mb-3">
           {user.biography ? user.biography : "Nada por aquí..."}
         </p>
+        {user.website && (
+          <a href={user.website} target="_blank">
+            {user.website}
+          </a>
+        )}
       </div>
 
       <ProfilePostList />

@@ -30,10 +30,11 @@ function ModalProfile() {
   const { onSubmit } = useFormSubmit(updateProfile);
 
   const [cover, setCover] = useState(null);
-  const [bio, setBio] = useState(null);
-  const [sitio, setSitio] = useState(null);
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [bio, setBio] = useState(user.biography);
+  const [sitio, setSitio] = useState(user.website);
 
-  const { handleChangeFile } = useFileReader(cover, setCover);
+  const { handleChangeFile } = useFileReader(setCover);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -46,19 +47,22 @@ function ModalProfile() {
     }
   };
 
+  const handleFile = (e) => {
+    const file = e.target.files[0];
+    setProfilePicture(file);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const data = new FormData();
-    // data.append("profile_picture", cover);
-    // data.append("biography", bio);
-    // data.append("website", sitio);
-    const data = {
-      biography: bio,
-      website: sitio,
-    };
+
+    const data = new FormData();
+    data.append("profile_picture", profilePicture);
+    data.append("biography", bio);
+    data.append("website", sitio);
 
     try {
       onSubmit("update", token, data);
+      toggleShowModal();
     } catch (e) {
       throw new Error(e);
     }
@@ -100,7 +104,10 @@ function ModalProfile() {
                   type="file"
                   accept=".png, .jpg, .webp"
                   className="text-sm text-slate-500 file:mr-2 file:p-4 file:rounded-full file:border-0 file:font-semibold file:bg-violet-100 file:text-black hover:file:bg-primary hover:file:text-white"
-                  onChange={handleChangeFile}
+                  onChange={(e) => {
+                    handleChangeFile(e);
+                    handleFile(e);
+                  }}
                 />
               ) : (
                 <img
@@ -119,6 +126,7 @@ function ModalProfile() {
               <textarea
                 name="biography"
                 className="grow w-4/5 border text-base text-center resize-none focus:outline-none focus:border-primary"
+                value={!!bio ? bio : ""}
                 onChange={handleChange}
               />
               <p className="text-xs text-gray-500 pb-2">
@@ -132,7 +140,8 @@ function ModalProfile() {
               <input
                 type="text"
                 name="website"
-                className="w-4/5 py-2 px-3 border rounded focus:outline-none focus:border-primary"
+                className="w-4/5 py-2 px-3 border rounded text-center focus:outline-none focus:border-primary"
+                value={!!sitio ? sitio : ""}
                 onChange={handleChange}
               />
               <p className="text-xs text-gray-500 pb-2">

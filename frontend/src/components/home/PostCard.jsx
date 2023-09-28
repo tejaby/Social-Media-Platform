@@ -20,8 +20,8 @@ function PostCard() {
               <img
                 src={`${
                   post.author.profile_picture
-                    ? profile_picture
-                    : "../../../public/user-defect.png"
+                    ? post.author.profile_picture
+                    : "/user-defect.png"
                 }`}
                 alt=""
                 className="w-10 h-10 object-cover rounded-full"

@@ -13,7 +13,7 @@ function ImageUploader({ cover, setCover }) {
 
   const { register, errors } = useContext(PostContext);
 
-  const { handleChangeFile } = useFileReader(cover, setCover);
+  const { handleChangeFile } = useFileReader(setCover);
 
   return (
     <>
@@ -31,8 +31,8 @@ function ImageUploader({ cover, setCover }) {
             {...register("image")}
             accept=".png, .jpg, .webp"
             className="text-sm text-slate-500 file:mr-2 file:p-4 file:rounded-full file:border-0 file:font-semibold file:bg-violet-100 file:text-black hover:file:bg-primary hover:file:text-white"
-            onChange={(v) => {
-              handleChangeFile(v);
+            onChange={(e) => {
+              handleChangeFile(e);
               setCondition(true);
             }}
           />

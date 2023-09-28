@@ -1,4 +1,4 @@
-function useFileReader(cover, setCover) {
+function useFileReader(setCover) {
   const handleChangeFile = (e) => {
     const file = e.target.files[0];
 
