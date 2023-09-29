@@ -20,7 +20,7 @@ const useFormSubmit = (submitFunction) => {
       if (action == "login" || action == "create") {
         response = await submitFunction(data);
         setToken(response.token);
-        setUser(response.user);
+        setUser(response);
       } else if (action == "update") {
         if (!token || !data) {
           throw new Error(

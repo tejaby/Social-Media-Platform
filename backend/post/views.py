@@ -28,10 +28,19 @@ class UserViewset(viewsets.ModelViewSet):
         if serializer.is_valid():
             user = serializer.save()
             token, _ = Token.objects.get_or_create(user=user)
+
+            profile_picture = UserSerializer(user).data.get('profile_picture')
+            if profile_picture:
+                profile_picture_url = request.build_absolute_uri(
+                    profile_picture)
+            else:
+                profile_picture_url = None
+
             response_data = {
                 "message": "Usuario creado exitosamente",
                 "token": token.key,
                 "user": serializer.data,
+                "profile_picture": profile_picture_url
 
             }
             return Response(response_data, status=201)
@@ -50,10 +59,19 @@ class UserViewset(viewsets.ModelViewSet):
         user = authenticate(username=username, password=password)
         if user is not None:
             token, _ = Token.objects.get_or_create(user=user)
+
+            profile_picture = UserSerializer(user).data.get('profile_picture')
+            if profile_picture:
+                profile_picture_url = request.build_absolute_uri(
+                    profile_picture)
+            else:
+                profile_picture_url = None
+
             return Response({
                 "message": "Inicio de sesión exitoso",
                 "token": token.key,
                 "user": UserSerializer(user).data,
+                "profile_picture": profile_picture_url
             }, status=status.HTTP_200_OK)
         else:
             return Response({
@@ -73,9 +91,17 @@ class UserViewset(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], authentication_classes=[authentication.TokenAuthentication], permission_classes=[permissions.IsAuthenticated])
     def validate_token(self, request):
         user = request.user
+
+        profile_picture = UserSerializer(user).data.get('profile_picture')
+        if profile_picture:
+            profile_picture_url = request.build_absolute_uri(profile_picture)
+        else:
+            profile_picture_url = None
+
         return Response({
             "message": "Token válido",
             "user": UserSerializer(user).data,
+            "profile_picture": profile_picture_url
         }, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['patch'], authentication_classes=[authentication.TokenAuthentication], permission_classes=[permissions.IsAuthenticated])
@@ -84,7 +110,19 @@ class UserViewset(viewsets.ModelViewSet):
         serializer = UserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+
+            profile_picture = serializer.data.get('profile_picture')
+            if profile_picture:
+                profile_picture_url = request.build_absolute_uri(
+                    profile_picture)
+            else:
+                profile_picture_url = None
+
+            return Response({
+                "message": "Perfil actualizado exitosamente",
+                "user": serializer.data,
+                "profile_picture": profile_picture_url,
+            }, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

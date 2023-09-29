@@ -31,8 +31,8 @@ function ModalProfile() {
 
   const [cover, setCover] = useState(null);
   const [profilePicture, setProfilePicture] = useState(null);
-  const [bio, setBio] = useState(user.biography);
-  const [sitio, setSitio] = useState(user.website);
+  const [bio, setBio] = useState(user.user.biography);
+  const [sitio, setSitio] = useState(user.user.website);
 
   const { handleChangeFile } = useFileReader(setCover);
 
@@ -56,9 +56,17 @@ function ModalProfile() {
     e.preventDefault();
 
     const data = new FormData();
-    data.append("profile_picture", profilePicture);
-    data.append("biography", bio);
-    data.append("website", sitio);
+    const fields = {
+      profile_picture: profilePicture,
+      biography: bio,
+      website: sitio,
+    };
+
+    for (const [fieldName, fieldValue] of Object.entries(fields)) {
+      if (fieldValue) {
+        data.append(fieldName, fieldValue);
+      }
+    }
 
     try {
       onSubmit("update", token, data);

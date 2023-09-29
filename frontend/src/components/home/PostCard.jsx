@@ -18,11 +18,12 @@ function PostCard() {
           <div className="flex justify-between items-center py-2">
             <div className="flex items-center gap-1">
               <img
-                src={`${
-                  post.author.profile_picture
-                    ? post.author.profile_picture
-                    : "/user-defect.png"
-                }`}
+                // src={`${
+                //   post.author.profile_picture
+                //     ? post.author.profile_picture
+                //     : "/user-defect.png"
+                // }`}
+                src="/user-defect.png"
                 alt=""
                 className="w-10 h-10 object-cover rounded-full"
               />

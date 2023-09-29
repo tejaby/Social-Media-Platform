@@ -157,9 +157,11 @@ function navBar() {
           {user && (
             <>
               <p className="text-sm">
-                {user.first_name.length < 1 ? "admin" : user.first_name}
+                {user.user.first_name.length < 1
+                  ? "admin"
+                  : user.user.first_name}
               </p>
-              <p className="text-sm">@{user.username}</p>
+              <p className="text-sm">@{user.user.username}</p>
             </>
           )}
         </div>

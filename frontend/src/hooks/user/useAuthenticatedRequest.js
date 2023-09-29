@@ -23,7 +23,7 @@ function useAuthenticatedRequest() {
     if (token) {
       try {
         const response = await tokenValidation(token);
-        setUser(response.user);
+        setUser(response);
         setError(null);
       } catch (e) {
         setError(e.data);
