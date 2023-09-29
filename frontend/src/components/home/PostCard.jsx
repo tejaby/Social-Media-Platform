@@ -9,21 +9,20 @@ import { PostContext } from "../../context/Post";
 import { useContext } from "react";
 
 function PostCard() {
-  const { followingPosts } = useContext(PostContext);
+  const { allPosts } = useContext(PostContext);
 
   return (
     <div className="flex flex-col gap-2">
-      {followingPosts.map((post) => (
+      {allPosts.map((post) => (
         <div key={post.id} className="flex flex-col border-b-2">
           <div className="flex justify-between items-center py-2">
             <div className="flex items-center gap-1">
               <img
-                // src={`${
-                //   post.author.profile_picture
-                //     ? post.author.profile_picture
-                //     : "/user-defect.png"
-                // }`}
-                src="/user-defect.png"
+                src={`${
+                  post.author.profile_picture
+                    ? post.author.profile_picture
+                    : "/user-defect.png"
+                }`}
                 alt=""
                 className="w-10 h-10 object-cover rounded-full"
               />

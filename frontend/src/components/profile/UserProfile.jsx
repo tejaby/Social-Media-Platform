@@ -1,5 +1,6 @@
 // components
 import ProfilePostList from "../../components/post/grid/ProfilePostList";
+import OptionsModal from "../../components/modal/navbar/OptionsModal";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
@@ -10,7 +11,7 @@ import UseSvgLoader from "../../hooks/useSvgLoader";
 import useToggleModalPost from "../../hooks/interface/useToggleModalPost";
 
 // react
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 function UserProfile() {
   const { showModalProfile, setShowModalProfile } =
@@ -22,6 +23,16 @@ function UserProfile() {
     setShowModalProfile,
     showModalProfile
   );
+
+  const [showAccountModal, setShowAccountModal] = useState(false);
+
+  const toggleAccountModal = () => {
+    setShowAccountModal(!showAccountModal);
+  };
+
+  const { OptionsModalMobile } = OptionsModal({
+    toggleAccountModal,
+  });
 
   return (
     <div className="flex flex-col gap-2">
@@ -36,12 +47,21 @@ function UserProfile() {
             options={{ width: "32px", height: "32px" }}
           />
         </button>
-        <button>
+        <button className="sm:hidden" onClick={toggleAccountModal}>
           <UseSvgLoader
             name="menu-2"
             options={{ width: "32px", height: "32px" }}
           />
         </button>
+        <button className="hidden sm:block">
+          <UseSvgLoader
+            name="menu-2"
+            options={{ width: "32px", height: "32px" }}
+          />
+        </button>
+      </div>
+      <div className="relative sm:hidden">
+        {showAccountModal && <OptionsModalMobile />}
       </div>
       <div className="flex flex-col justify-center items-center my-5">
         <div className="w-14 h-14 sm:w-16 sm:h-16">

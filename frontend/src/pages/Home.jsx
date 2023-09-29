@@ -1,5 +1,5 @@
 // services
-import { user_posts } from "../services/post";
+import { getPosts } from "../services/post";
 
 // components
 import Form from "../components/form/user/Form";
@@ -17,9 +17,9 @@ import { useContext } from "react";
 
 function Home() {
   const { user } = useContext(UserContext);
-  const { setFollowingPosts } = useContext(PostContext);
+  const { setAllPosts } = useContext(PostContext);
 
-  const { error } = useApiFetch(user_posts, setFollowingPosts);
+  const { error } = useApiFetch(getPosts, setAllPosts);
 
   if (!user) {
     return <Form />;

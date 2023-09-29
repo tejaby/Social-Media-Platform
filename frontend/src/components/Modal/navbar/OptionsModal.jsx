@@ -5,7 +5,7 @@ import { logoutUser } from "../../../services/user";
 import useTokenValidation from "../../../hooks/user/useTokenValidation";
 import useFormSubmit from "../../../hooks/user/useFormSubmit";
 
-function OptionsModal({ handleModal }) {
+function OptionsModal({ toggleAccountModal }) {
   const token = useTokenValidation();
   const { onSubmit } = useFormSubmit(logoutUser);
 
@@ -16,11 +16,14 @@ function OptionsModal({ handleModal }) {
   const OptionsModalMobile = () => {
     return (
       <div
-        className="absolute flex flex-col w-1/2 p-2 border border-primary rounded-xl right-2 bottom-full bg-white z-10"
-        onClick={handleModal}
+        className="absolute flex flex-col w-48 p-2 border border-primary rounded-xl right-2 top-full bg-white z-10"
+        onClick={toggleAccountModal}
       >
         <button className="text-start rounded-xl py-2 px-3">
           Configuración
+        </button>
+        <button className="text-start rounded-xl py-2 px-3">
+          Cambiar tema
         </button>
         <button className="text-start rounded-xl py-2 px-3">Ver perfil</button>
         <button

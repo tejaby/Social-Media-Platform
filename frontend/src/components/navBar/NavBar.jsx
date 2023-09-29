@@ -24,14 +24,14 @@ function navBar() {
     showModalPost
   );
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAccountModal, setShowAccountModal] = useState(false);
 
-  const handleModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const toggleAccountModal = () => {
+    setShowAccountModal(!showAccountModal);
   };
 
-  const { OptionsModalMobile, OptionsModalDesktop } = OptionsModal({
-    handleModal,
+  const { OptionsModalDesktop } = OptionsModal({
+    toggleAccountModal,
   });
 
   return (
@@ -73,13 +73,12 @@ function navBar() {
             options={{ width: "32px", height: "32px" }}
           />
         </NavLink>
-        <NavLink to="/profile" className="rounded-xl" onClick={handleModal}>
+        <NavLink to="/profile" className="rounded-xl">
           <UseSvgLoader
             name="user"
             options={{ width: "32px", height: "32px", color: "blue" }}
           />
         </NavLink>
-        {isModalOpen && <OptionsModalMobile />}
       </div>
       <div className="hidden sm:flex flex-col items-start gap-2 w-full">
         <NavLink
@@ -150,8 +149,8 @@ function navBar() {
         </button>
       </div>
       <div
-        className="hidden relative sm:flex justify-center lg:justify-between items-center gap-2 w-full py-2 px-3 cursor-pointer hover:bg-gray-100"
-        onClick={handleModal}
+        className="relative hidden sm:flex justify-center lg:justify-between items-center gap-2 w-full py-2 px-3 cursor-pointer hover:bg-gray-100"
+        onClick={toggleAccountModal}
       >
         <div className="hidden lg:flex flex-col">
           {user && (
@@ -177,7 +176,7 @@ function navBar() {
             options={{ width: "24px", height: "24px" }}
           />
         </div>
-        {isModalOpen && <OptionsModalDesktop />}
+        {showAccountModal && <OptionsModalDesktop />}
       </div>
     </nav>
   );

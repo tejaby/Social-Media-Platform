@@ -2,7 +2,7 @@
 import { BrowserRouter } from "react-router-dom";
 
 // components
-import ShowModal from "./components/Modal/ShowModal";
+import ShowModal from "./components/modal/ShowModal";
 
 // pages
 import Rutas from "./routers/Routes";
