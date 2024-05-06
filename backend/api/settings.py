@@ -50,6 +50,7 @@ THIRD_APPS = [
 
 LOCAL_APPS = [
     'apps.base',
+    'apps.user',
     'apps.post',
 ]
 
