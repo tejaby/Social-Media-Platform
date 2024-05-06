@@ -49,6 +49,7 @@ THIRD_APPS = [
 ]
 
 LOCAL_APPS = [
+    'apps.base',
     'apps.post',
 ]
 
