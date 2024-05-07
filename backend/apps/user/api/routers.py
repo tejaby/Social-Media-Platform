@@ -2,9 +2,9 @@
 from rest_framework import routers
 
 # views
-from .api import UserViewset, UserViewSets
+from .api import UserViewSet
 
 router = routers.DefaultRouter()
 
-router.register(r'users', UserViewset, 'user')
-router.register(r'user', UserViewSets, basename='users')
+
+router.register(r'user', UserViewSet, basename='user')
