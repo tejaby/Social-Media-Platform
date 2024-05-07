@@ -1,5 +1,5 @@
 # routers
-from .routers import router
+from apps.post.api.routers import router
 
 
 urlpatterns = [

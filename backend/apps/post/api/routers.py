@@ -2,9 +2,8 @@
 from rest_framework import routers
 
 # views
-from .views import UserViewset, PostViewset
+from .api import PostViewset
 
 router = routers.DefaultRouter()
 
-router.register(r'users', UserViewset, 'user')
 router.register(r'posts', PostViewset, 'post')

@@ -160,4 +160,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-AUTH_USER_MODEL = 'post.CustomUser'
+AUTH_USER_MODEL = 'user.CustomUser'
