@@ -9,6 +9,12 @@ from rest_framework.decorators import action
 # serializers
 from .serializers import UserSerializer
 
+# serializadores para el listado y obtencion de usuarios
+from .serializers import UserListSerializer
+
+# serializadores para la creacion de usuarios
+from .serializers import CustomUserSerializer
+
 # models
 from rest_framework.authtoken.models import Token
 from apps.user.models import CustomUser
@@ -122,3 +128,42 @@ class UserViewset(viewsets.ModelViewSet):
                 "profile_picture": profile_picture_url,
             }, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserViewSets(viewsets.GenericViewSet):
+    model = CustomUser
+    serializer_class = UserListSerializer
+
+    def get_queryset(self):
+        return self.model.objects.filter(is_active=True)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs):
+        user_serializer = CustomUserSerializer(data=request.data)
+        user_serializer.is_valid(raise_exception=True)
+        instance = user_serializer.save()
+        serializer = self.get_serializer(instance)
+        return Response({'message': 'Usuario creado con éxito', 'user': serializer.data}, status=status.HTTP_201_CREATED)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.is_active = False
+        instance.save()
+        return Response({'message': 'Usuario eliminado con éxito'}, status=status.HTTP_200_OK)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user_serializer = CustomUserSerializer(instance, data=request.data, partial=True)
+        user_serializer.is_valid(raise_exception=True)
+        user_instance = user_serializer.save()
+        serializer = self.get_serializer(user_instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
