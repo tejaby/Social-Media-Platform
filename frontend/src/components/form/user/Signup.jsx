@@ -2,7 +2,7 @@
 import toast, { Toaster } from "react-hot-toast";
 
 // services
-import { createUser } from "../../../services/user";
+import { createUserService } from "../../../services/user";
 
 // components
 import FormGenerator from "../FormGenerator";
@@ -12,7 +12,7 @@ import getSignupConfig from "./getSignupConfig";
 import useFormSubmit from "../../../hooks/user/useFormSubmit";
 
 function Signup() {
-  const { error, onSubmit } = useFormSubmit(createUser);
+  const { error, onSubmit } = useFormSubmit(createUserService);
 
   const { schema, formData, headers } = getSignupConfig();
 

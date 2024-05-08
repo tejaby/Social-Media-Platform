@@ -1,5 +1,5 @@
 // services
-import { updateProfile } from "../../../services/user";
+import { updateUserService } from "../../../services/user";
 
 // context
 import { InterfaceContext } from "../../../context/Interface";
@@ -9,7 +9,6 @@ import { UserContext } from "../../../context/User";
 import UseSvgLoader from "../../../hooks/useSvgLoader";
 import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 import useFileReader from "../../../hooks/post/useFileReader";
-import useTokenValidation from "../../../hooks/user/useTokenValidation";
 import useFormSubmit from "../../../hooks/user/useFormSubmit";
 
 // react
@@ -18,21 +17,19 @@ import { useContext, useState } from "react";
 function ModalProfile() {
   const { showModalProfile, setShowModalProfile } =
     useContext(InterfaceContext);
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
 
   const { toggleShowModal } = useToggleModalPost(
     setShowModalProfile,
     showModalProfile
   );
 
-  const token = useTokenValidation();
-
-  const { onSubmit } = useFormSubmit(updateProfile);
+  const { onSubmit } = useFormSubmit(updateUserService);
 
   const [cover, setCover] = useState(null);
   const [profilePicture, setProfilePicture] = useState(null);
-  const [bio, setBio] = useState(user.user.biography);
-  const [sitio, setSitio] = useState(user.user.website);
+  const [bio, setBio] = useState(user.biography);
+  const [sitio, setSitio] = useState(user.website);
 
   const { handleChangeFile } = useFileReader(setCover);
 
@@ -69,7 +66,7 @@ function ModalProfile() {
     }
 
     try {
-      onSubmit("update", token, data);
+      onSubmit("update", token.access, data, user.id);
       toggleShowModal();
     } catch (e) {
       throw new Error(e);

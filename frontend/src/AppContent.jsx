@@ -13,7 +13,6 @@ import { InterfaceContext } from "./context/Interface";
 import { UserContext } from "./context/User";
 
 // hooks
-import useAuthenticatedRequest from "./hooks/user/useAuthenticatedRequest";
 
 // react
 import { useContext } from "react";
@@ -21,8 +20,6 @@ import { useContext } from "react";
 function AppContent() {
   const { user } = useContext(UserContext);
   const { showModal, showModalProfile } = useContext(InterfaceContext);
-
-  const { error } = useAuthenticatedRequest();
 
   return (
     <BrowserRouter>

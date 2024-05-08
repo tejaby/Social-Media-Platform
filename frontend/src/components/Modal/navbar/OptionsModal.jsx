@@ -1,16 +1,22 @@
 // services
-import { logoutUser } from "../../../services/user";
+import { logoutService } from "../../../services/user";
+
+// context
+import { UserContext } from "../../../context/User";
 
 // hooks
-import useTokenValidation from "../../../hooks/user/useTokenValidation";
 import useFormSubmit from "../../../hooks/user/useFormSubmit";
 
+// react
+import { useContext } from "react";
+
 function OptionsModal({ toggleAccountModal }) {
-  const token = useTokenValidation();
-  const { onSubmit } = useFormSubmit(logoutUser);
+  const { onSubmit } = useFormSubmit(logoutService);
+
+  const { token } = useContext(UserContext);
 
   const handleFormSubmit = () => {
-    onSubmit("logout", token);
+    onSubmit("logout", null, { refresh: token.refresh });
   };
 
   const OptionsModalMobile = () => {

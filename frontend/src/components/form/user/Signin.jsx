@@ -2,7 +2,7 @@
 import toast, { Toaster } from "react-hot-toast";
 
 // services
-import { loginUser } from "../../../services/user";
+import { loginService } from "../../../services/user";
 
 // components
 import FormGenerator from "../FormGenerator";
@@ -12,7 +12,7 @@ import getSigninConfig from "./getSigninConfig";
 import useFormSubmit from "../../../hooks/user/useFormSubmit";
 
 function Signin() {
-  const { error, onSubmit } = useFormSubmit(loginUser);
+  const { error, onSubmit } = useFormSubmit(loginService);
 
   const { schema, formData, headers } = getSigninConfig();
 
@@ -20,7 +20,7 @@ function Signin() {
     onSubmit("login", null, data);
   };
 
-  toast.error(`${error?.data.message}`);
+  toast.error(`${error?.data.error}`);
 
   return (
     <>

@@ -41,7 +41,7 @@ function UserProfile() {
           <UseSvgLoader options={{ width: "32px", height: "32px" }} />
         </button>
         <button className="flex gap-1 items-center">
-          <span className="font-bold">@{user.user.username}</span>
+          <span className="font-bold">@{user.username}</span>
           <UseSvgLoader
             name="chevron-down"
             options={{ width: "32px", height: "32px" }}
@@ -73,7 +73,7 @@ function UserProfile() {
             className="w-full h-full object-cover rounded-full"
           />
         </div>
-        <span className="my-3">{`${user.user.first_name} ${user.user.last_name}`}</span>
+        <span className="my-3">{`${user.first_name} ${user.last_name}`}</span>
         <div className="flex gap-10 text-sm">
           <div className="flex flex-col items-center">
             <span className="font-bold">10</span>
@@ -95,11 +95,11 @@ function UserProfile() {
           Editar perfil
         </button>
         <p className="mb-3">
-          {user.user.biography ? user.user.biography : "Nada por aquí..."}
+          {user.biography ? user.biography : "Nada por aquí..."}
         </p>
-        {user.user.website && (
-          <a href={user.user.website} target="_blank">
-            {user.user.website}
+        {user.website && (
+          <a href={user.website} target="_blank">
+            {user.website}
           </a>
         )}
       </div>
