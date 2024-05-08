@@ -17,19 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-# modules
 
 from django.conf import settings
 from django.conf.urls.static import static
 
 
-from apps.authentication.views import CustomTokenObtainPairView, CustomTokenRefreshView, CustomTokenVerifyView, CustomLogoutView
+from apps.authentication.views import CustomTokenObtainPairView, CustomLogoutView
+
+from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/login/', CustomTokenObtainPairView.as_view(), name='login'),
-    path('api/token/refresh/', CustomTokenRefreshView.as_view(), name='refresh'),
-    path('api/token/verify/', CustomTokenVerifyView.as_view(), name='verify'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='verify'),
     path('api/token/logout/', CustomLogoutView.as_view(), name='logout'),
     path('api/', include('apps.post.urls')),
     path('api/', include('apps.user.urls')),

@@ -6,5 +6,4 @@ from .api import UserViewSet
 
 router = routers.DefaultRouter()
 
-
 router.register(r'user', UserViewSet, basename='user')

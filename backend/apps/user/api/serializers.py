@@ -4,6 +4,11 @@ from rest_framework import serializers
 # models
 from apps.user.models import CustomUser
 
+"""
+Serializador para el listado y obtencion de usuarios.
+
+"""
+
 
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,10 +17,19 @@ class UserListSerializer(serializers.ModelSerializer):
                   'last_name', 'profile_picture', 'biography', 'website']
 
 
+"""
+Serializador para la creacion y actualizacion de usuarios.
+
+Se sobrescribe el método create para encriptar la contraseña utilizando el método set_password
+
+"""
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = '__all__'
+        fields = ['id', 'username', 'email', 'password', 'first_name',
+                  'last_name', 'profile_picture', 'biography', 'website']
 
     def create(self, validated_data):
         user = CustomUser(**validated_data)

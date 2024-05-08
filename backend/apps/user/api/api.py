@@ -1,22 +1,25 @@
 # rest_framework
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.parsers import FormParser, MultiPartParser
 
-# serializadores para el listado y obtencion de usuarios
+# serializador para el listado y obtencion de usuarios.
 from .serializers import UserListSerializer
 
-# serializadores para la creacion de usuarios
+# serializador para la creacion y actualizacion de usuarios.
 from .serializers import UserSerializer
 
 # models
 from apps.user.models import CustomUser
 
+"""
+Vista basada en GenericViewSet para el listado, obtencion, crecion, actualizacion y eliminacion de usuarios
+
+"""
+
 
 class UserViewSet(viewsets.GenericViewSet):
     model = CustomUser
     serializer_class = UserListSerializer
-    parser_classes = [FormParser, MultiPartParser]
 
     def get_queryset(self):
         return self.model.objects.filter(is_active=True)

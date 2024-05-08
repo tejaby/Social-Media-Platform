@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 
+# rest_framework
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
@@ -7,9 +8,15 @@ from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from rest_framework_simplejwt.views import TokenObtainPairView
 
+# serializador para la obtencion de usuarios.
 from apps.user.api.serializers import UserListSerializer
+
+'''
+Vista basada en TokenObtainPairView para la autenticacion de usuarios y creacion de tokens con simplejwt
+
+'''
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -31,12 +38,10 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         return Response({'message': 'inicio de sesión exitosamente', 'token': serializer.validated_data, 'user': user_serializer.data}, status=status.HTTP_200_OK)
 
 
-class CustomTokenRefreshView(TokenRefreshView):
-    pass
+'''
+Vista basada en GenericAPIView para la validación del usuario y revocación del token de refresco.
 
-
-class CustomTokenVerifyView(TokenVerifyView):
-    pass
+'''
 
 
 class CustomLogoutView(GenericAPIView):
