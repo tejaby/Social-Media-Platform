@@ -1,7 +1,7 @@
 # rest_framework
-from rest_framework import viewsets, permissions, authentication, status
+from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.decorators import action
+from rest_framework.generics import ListAPIView
 
 # serializers
 from .serializers import PostSerializer
@@ -11,21 +11,19 @@ from apps.post.models import Post
 
 
 class PostViewset(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
     serializer_class = PostSerializer
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
 
-    @action(detail=False, methods=['get'], authentication_classes=[authentication.TokenAuthentication], permission_classes=[permissions.IsAuthenticated])
-    def user_posts(self, request):
-        user = request.user
-        posts = Post.objects.filter(author=user)
-        serializer = PostSerializer(posts, many=True)
+    def get_queryset(self):
+        return Post.objects.filter(state=True)
 
-        data = serializer.data
-        for post_data in data:
-            if 'image' in post_data:
-                post_data['image'] = request.build_absolute_uri(
-                    post_data['image'])
 
-        return Response(data, status=status.HTTP_200_OK)
+class UserPostsListView(ListAPIView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        return Post.objects.filter(state=True)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset().filter(author=request.user)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

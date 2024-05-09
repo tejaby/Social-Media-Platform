@@ -6,4 +6,4 @@ from .api import PostViewset
 
 router = routers.DefaultRouter()
 
-router.register(r'posts', PostViewset, 'post')
+router.register(r'post', PostViewset, 'post')

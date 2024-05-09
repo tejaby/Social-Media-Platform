@@ -33,7 +33,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user_serializer = UserListSerializer(user)
+        user_serializer = UserListSerializer(user, context={'request': request})
 
         return Response({'message': 'inicio de sesión exitosamente', 'token': serializer.validated_data, 'user': user_serializer.data}, status=status.HTTP_200_OK)
 
