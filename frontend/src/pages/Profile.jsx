@@ -1,5 +1,5 @@
 // services
-import { user_posts } from "../services/post";
+import { listUserPostService } from "../services/post";
 
 // components
 import UserProfile from "../components/profile/UserProfile";
@@ -14,9 +14,9 @@ import useApiFetch from "../hooks/post/useApiFetch";
 import { useContext } from "react";
 
 function Profile() {
-  const { setUserPosts } = useContext(PostContext);
+  const { setUserPost } = useContext(PostContext);
 
-  const { error } = useApiFetch(user_posts, setUserPosts);
+  const { error } = useApiFetch(listUserPostService, setUserPost);
 
   return (
     <div className="max-w-3xl mx-auto sm:my-2">

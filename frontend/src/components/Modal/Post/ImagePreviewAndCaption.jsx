@@ -34,6 +34,7 @@ function ImagePreviewAndCaption({ cover, setCover }) {
     const data = new FormData();
     data.append("content", v.content);
     data.append("image", v.image[0]);
+    data.append("state", true)
     try {
       submitPost(data);
       toggleShowModal();

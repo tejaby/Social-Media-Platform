@@ -1,5 +1,6 @@
 // services
-import { getPosts } from "../services/post";
+// import { getPosts } from "../services/post";
+import { listPostService } from "../services/post";
 
 // components
 import ExplorePostsList from "../components/post/grid/ExplorePostsList";
@@ -14,9 +15,9 @@ import useApiFetch from "../hooks/post/useApiFetch";
 import { useContext } from "react";
 
 function Explore() {
-  const { setAllPosts } = useContext(PostContext);
+  const { setPost } = useContext(PostContext);
 
-  const { error } = useApiFetch(getPosts, setAllPosts);
+  const { error } = useApiFetch(listPostService, setPost);
 
   return (
     <div className="max-w-3xl mx-auto sm:my-2">

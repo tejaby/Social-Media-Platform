@@ -9,11 +9,11 @@ import { PostContext } from "../../context/Post";
 import { useContext } from "react";
 
 function PostCard() {
-  const { allPosts } = useContext(PostContext);
+  const { post } = useContext(PostContext);
 
   return (
     <div className="flex flex-col gap-2">
-      {allPosts.map((post) => (
+      {post.map((post) => (
         <div key={post.id} className="flex flex-col border-b-2">
           <div className="flex justify-between items-center py-2">
             <div className="flex items-center gap-1">
