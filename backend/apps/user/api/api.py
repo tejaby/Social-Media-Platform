@@ -2,6 +2,8 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from rest_framework_simplejwt.tokens import RefreshToken
+
 # serializador para el listado y obtencion de usuarios.
 from .serializers import UserListSerializer
 
@@ -34,7 +36,15 @@ class UserViewSet(viewsets.GenericViewSet):
         user_serializer.is_valid(raise_exception=True)
         instance = user_serializer.save()
         serializer = self.get_serializer(instance)
-        return Response({'message': 'Usuario creado con éxito', 'user': serializer.data}, status=status.HTTP_201_CREATED)
+
+        refresh = RefreshToken.for_user(instance)
+        access = refresh.access_token
+        print(refresh, access)
+
+        return Response({'message': 'Usuario creado con éxito', 'token': {
+            'refresh': str(refresh),
+            'access': str(access)
+        }, 'user': serializer.data}, status=status.HTTP_201_CREATED)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
