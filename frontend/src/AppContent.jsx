@@ -1,6 +1,9 @@
 // libraries
 import { BrowserRouter } from "react-router-dom";
 
+// services
+import { refreshTokenService } from "./services/user";
+
 // components
 import ShowModal from "./components/modal/ShowModal";
 
@@ -15,11 +18,42 @@ import { UserContext } from "./context/User";
 // hooks
 
 // react
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function AppContent() {
-  const { user } = useContext(UserContext);
+  const { user, setUser, token, setToken } = useContext(UserContext);
   const { showModal, showModalProfile } = useContext(InterfaceContext);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const refreshAuthToken = async () => {
+      try {
+        const response = await refreshTokenService({ refresh: token.refresh });
+        setToken(response);
+        localStorage.setItem("authToken", JSON.stringify(response));
+      } catch (err) {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("authUser");
+        localStorage.removeItem("authToken");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (token && loading) {
+      refreshAuthToken();
+    }
+
+    const refreshPeriodically = setInterval(() => {
+      refreshAuthToken();
+    }, 240000);
+
+    return () => {
+      clearInterval(refreshPeriodically);
+    };
+  }, [token, loading]);
 
   return (
     <BrowserRouter>
