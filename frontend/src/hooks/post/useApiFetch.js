@@ -8,24 +8,28 @@ import { UserContext } from "../../context/User";
 import { useEffect, useState, useContext } from "react";
 
 function useApiFetch(fetchFunction, contextSetter) {
-  const { token } = useContext(UserContext);
+  const { setUser, token, setToken } = useContext(UserContext);
 
   const [error, setError] = useState(null);
 
-  const fetchDataFromApi = async () => {
-    if (token) {
+  useEffect(() => {
+    const fetchData = async () => {
       try {
         const response = await fetchFunction(token.access);
         contextSetter(response);
         setError(null);
-      } catch (e) {
-        setError(e.data);
+      } catch (err) {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("authUser");
+        localStorage.removeItem("authToken");
+        setError(err.data);
       }
-    }
-  };
+    };
 
-  useEffect(() => {
-    fetchDataFromApi();
+    if (token && token.access) {
+      fetchData();
+    }
   }, []);
 
   return { error };
