@@ -4,6 +4,12 @@ import { createContext, useState } from "react";
 export const InterfaceContext = createContext();
 
 export function InterfaceContextProvider({ children }) {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("darkMode")
+      ? localStorage.getItem("darkMode")
+      : "light";
+  });
+
   // mostrar login o register
   const [showLogin, setShowLogin] = useState(true);
 
@@ -29,6 +35,8 @@ export function InterfaceContextProvider({ children }) {
         setShowModalPost,
         condition,
         setCondition,
+        theme,
+        setTheme,
       }}
     >
       {children}

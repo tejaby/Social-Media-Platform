@@ -14,7 +14,7 @@ import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 import { useContext, useState } from "react";
 
 function ModalPost() {
-  const { showModalPost, setShowModalPost, setCondition, condition } =
+  const { theme, showModalPost, setShowModalPost, setCondition, condition } =
     useContext(InterfaceContext);
 
   const { reset } = useContext(PostContext);
@@ -33,7 +33,7 @@ function ModalPost() {
           !condition
             ? "w-4/5 xs:w-2/3 sm:w-3/5 md:w-1/2 lg:w-2/5 rounded-lg"
             : "w-full h-full xs:w-11/12 sm:w-4/5 md:w-3/4 lg:w-4/5"
-        } xs:h-2/5 sm:h-1/2 lg:h-3/5 xs:rounded-lg bg-white`}
+        } xs:h-2/5 sm:h-1/2 lg:h-3/5 xs:rounded-lg bg-white dark:bg-darkModeColor`}
       >
         <div className={`basis-full ${condition ? "hidden" : "flex"} flex-col`}>
           <ImageUploader cover={cover} setCover={setCover} />
@@ -63,7 +63,17 @@ function ModalPost() {
             }
           }}
         >
-          <UseSvgLoader name="x" options={{ width: "32px", height: "32px" }} />
+          {theme === "light" ? (
+            <UseSvgLoader
+              name="x"
+              options={{ width: "32px", height: "32px" }}
+            />
+          ) : (
+            <UseSvgLoader
+              name="xDark"
+              options={{ width: "32px", height: "32px" }}
+            />
+          )}
         </button>
       </div>
     </>

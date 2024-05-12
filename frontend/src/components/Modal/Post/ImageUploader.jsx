@@ -18,11 +18,11 @@ function ImageUploader({ cover, setCover }) {
   return (
     <>
       <div className="border-b-2 p-2">
-        <p className="text-base font-semibold">Crear nueva publicación</p>
+        <p className="text-base font-semibold text-black dark:text-white">Crear nueva publicación</p>
       </div>
       <div className="grow flex flex-col justify-center items-center flex-wrap gap-4 w-full">
         <div className="w-full p-2">
-          <p className="text-base sm:text-lg">Arrastra las fotos aquí</p>
+          <p className="text-base sm:text-lg text-black dark:text-white">Arrastra las fotos aquí</p>
         </div>
         <div className="w-full p-2 flex flex-wrap justify-center items-center">
           <input

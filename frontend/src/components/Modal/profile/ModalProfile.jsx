@@ -15,7 +15,7 @@ import useFormSubmit from "../../../hooks/user/useFormSubmit";
 import { useContext, useState } from "react";
 
 function ModalProfile() {
-  const { showModalProfile, setShowModalProfile } =
+  const { theme, showModalProfile, setShowModalProfile } =
     useContext(InterfaceContext);
   const { user, token } = useContext(UserContext);
 
@@ -76,18 +76,20 @@ function ModalProfile() {
   return (
     <>
       <div
-        className={`flex flex-col w-full h-full xs:max-w-xl xs:h-3/5 sm:h-3/4 xs:rounded-lg bg-white`}
+        className={`flex flex-col w-full h-full xs:max-w-xl xs:h-3/5 sm:h-3/4 xs:rounded-lg bg-white dark:bg-darkModeColor`}
       >
         <div className="flex border-b-2 p-2 ">
           <button
-            className="font-semibold hover:text-primary"
+            className="font-semibold text-black dark:text-white hover:text-primary dark:hover:text-primary"
             onClick={toggleShowModal}
           >
             salir
           </button>
-          <p className="grow text-base font-semibold">Editar perfil</p>
+          <p className="grow text-base font-semibold text-black dark:text-white">
+            Editar perfil
+          </p>
           <button
-            className="font-semibold hover:text-primary"
+            className="font-semibold text-black dark:text-white hover:text-primary dark:hover:text-primary"
             onClick={handleSubmit}
           >
             Guardar
@@ -97,7 +99,9 @@ function ModalProfile() {
         <form className="grow flex flex-col" onSubmit={handleSubmit}>
           <div className="basis-1/2 flex flex-col justify-center">
             <div className="py-2">
-              <p className="text-base sm:text-lg">Actualizar foto de perfil</p>
+              <p className="text-base sm:text-lg text-black dark:text-white">
+                Actualizar foto de perfil
+              </p>
             </div>
             <div
               className={`${
@@ -125,31 +129,31 @@ function ModalProfile() {
           </div>
           <div className="basis-1/2 flex flex-col justify-center">
             <div className="basis-1/2 flex flex-col justify-center items-center">
-              <label className="text-base font-semibold sm:text-lg">
+              <label className="text-base font-semibold sm:text-lg text-black dark:text-white">
                 Biografía
               </label>
               <textarea
                 name="biography"
-                className="grow w-4/5 border text-base text-center resize-none focus:outline-none focus:border-primary"
+                className="grow w-4/5 border rounded text-base text-center resize-none focus:outline-none text-black dark:text-white focus:border-primary bg-white dark:bg-darkColor"
                 value={!!bio ? bio : ""}
                 onChange={handleChange}
               />
-              <p className="text-xs text-gray-500 pb-2">
+              <p className="text-xs text-gray-600 dark:text-gray-300 pb-2">
                 Cuéntanos un poco sobre ti en unas pocas palabras.
               </p>
             </div>
             <div className="basis-1/2 flex flex-col justify-center items-center">
-              <label className="text-base font-semibold sm:text-lg">
+              <label className="text-base font-semibold sm:text-lg text-black dark:text-white">
                 Sitio Web
               </label>
               <input
                 type="text"
                 name="website"
-                className="w-4/5 py-2 px-3 border rounded text-center focus:outline-none focus:border-primary"
+                className="w-4/5 py-2 px-3 border rounded text-center focus:outline-none text-black dark:text-white focus:border-primary bg-white dark:bg-darkColor"
                 value={!!sitio ? sitio : ""}
                 onChange={handleChange}
               />
-              <p className="text-xs text-gray-500 pb-2">
+              <p className="text-xs text-gray-600 dark:text-gray-300 pb-2">
                 Agrega enlaces a tus perfiles en redes sociales y sitios web
                 aquí.
               </p>
@@ -164,7 +168,17 @@ function ModalProfile() {
             toggleShowModal();
           }}
         >
-          <UseSvgLoader name="x" options={{ width: "32px", height: "32px" }} />
+          {theme === "light" ? (
+            <UseSvgLoader
+              name="x"
+              options={{ width: "32px", height: "32px" }}
+            />
+          ) : (
+            <UseSvgLoader
+              name="xDark"
+              options={{ width: "32px", height: "32px" }}
+            />
+          )}
         </button>
       </div>
     </>

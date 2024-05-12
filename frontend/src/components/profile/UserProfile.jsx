@@ -14,7 +14,7 @@ import useToggleModalPost from "../../hooks/interface/useToggleModalPost";
 import { useContext, useState } from "react";
 
 function UserProfile() {
-  const { showModalProfile, setShowModalProfile } =
+  const { theme, showModalProfile, setShowModalProfile } =
     useContext(InterfaceContext);
 
   const { user } = useContext(UserContext);
@@ -38,26 +38,59 @@ function UserProfile() {
     <div className="flex flex-col gap-2">
       <div className="flex justify-between items-center text-sm">
         <button>
-          <UseSvgLoader options={{ width: "32px", height: "32px" }} />
+          {theme === "light" ? (
+            <UseSvgLoader
+              name="error-404"
+              options={{ width: "32px", height: "32px" }}
+            />
+          ) : (
+            <UseSvgLoader
+              name="error-404Dark"
+              options={{ width: "32px", height: "32px" }}
+            />
+          )}
         </button>
         <button className="flex gap-1 items-center">
-          <span className="font-bold">@{user.username}</span>
-          <UseSvgLoader
-            name="chevron-down"
-            options={{ width: "32px", height: "32px" }}
-          />
+          <span className="font-bold text-black dark:text-white">
+            @{user.username}
+          </span>
+          {theme === "light" ? (
+            <UseSvgLoader
+              name="chevron-down"
+              options={{ width: "32px", height: "32px" }}
+            />
+          ) : (
+            <UseSvgLoader
+              name="chevron-downDark"
+              options={{ width: "32px", height: "32px" }}
+            />
+          )}
         </button>
         <button className="sm:hidden" onClick={toggleAccountModal}>
-          <UseSvgLoader
-            name="menu-2"
-            options={{ width: "32px", height: "32px" }}
-          />
+          {theme === "light" ? (
+            <UseSvgLoader
+              name="menu-2"
+              options={{ width: "32px", height: "32px" }}
+            />
+          ) : (
+            <UseSvgLoader
+              name="menu-2Dark"
+              options={{ width: "32px", height: "32px" }}
+            />
+          )}
         </button>
         <button className="hidden sm:block">
-          <UseSvgLoader
-            name="menu-2"
-            options={{ width: "32px", height: "32px" }}
-          />
+          {theme === "light" ? (
+            <UseSvgLoader
+              name="menu-2"
+              options={{ width: "32px", height: "32px" }}
+            />
+          ) : (
+            <UseSvgLoader
+              name="menu-2Dark"
+              options={{ width: "32px", height: "32px" }}
+            />
+          )}
         </button>
       </div>
       <div className="relative sm:hidden">
@@ -73,32 +106,36 @@ function UserProfile() {
             className="w-full h-full object-cover rounded-full"
           />
         </div>
-        <span className="my-3">{`${user.first_name} ${user.last_name}`}</span>
+        <span className="my-3 text-black dark:text-white">{`${user.first_name} ${user.last_name}`}</span>
         <div className="flex gap-10 text-sm">
           <div className="flex flex-col items-center">
-            <span className="font-bold">10</span>
-            <span>Post</span>
+            <span className="font-bold text-black dark:text-white">10</span>
+            <span className="text-black dark:text-white">Post</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="font-bold">1.20 K</span>
-            <span>seguidores</span>
+            <span className="font-bold text-black dark:text-white">1.20 K</span>
+            <span className="text-black dark:text-white">seguidores</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="font-bold">300</span>
-            <span>seguidos</span>
+            <span className="font-bold text-black dark:text-white">300</span>
+            <span className="text-black dark:text-white">seguidos</span>
           </div>
         </div>
         <button
-          className="my-5 py-2 px-3 font-semibold text-sm border border-primary"
+          className="my-5 py-2 px-3 font-semibold text-sm border border-primary text-black dark:text-white"
           onClick={toggleShowModal}
         >
           Editar perfil
         </button>
-        <p className="mb-3">
+        <p className="mb-3 text-black dark:text-white">
           {user.biography ? user.biography : "Nada por aquí..."}
         </p>
         {user.website && (
-          <a href={user.website} target="_blank">
+          <a
+            href={user.website}
+            className="text-black dark:text-white hover:text-primary dark:hover:text-primary"
+            target="_blank"
+          >
             {user.website}
           </a>
         )}
