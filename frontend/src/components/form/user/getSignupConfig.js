@@ -24,7 +24,7 @@ function getSignupConfig() {
       name: "first_name",
       label: "Nombre",
       class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-primary",
+        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
       width: "md:w-1/2",
     },
     {
@@ -32,7 +32,7 @@ function getSignupConfig() {
       name: "last_name",
       label: "Apellido",
       class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-primary",
+        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
       width: "md:w-1/2",
     },
     {
@@ -40,7 +40,7 @@ function getSignupConfig() {
       name: "email",
       label: "Correo electrónico",
       class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-primary",
+        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
       width: "md:w-full",
     },
     {
@@ -48,7 +48,7 @@ function getSignupConfig() {
       name: "username",
       label: "Usuario",
       class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-primary",
+        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
       width: "md:w-full",
     },
     {
@@ -56,7 +56,7 @@ function getSignupConfig() {
       name: "password",
       label: "Contraseña",
       class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-primary",
+        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
       width: "md:w-full",
     },
   ];

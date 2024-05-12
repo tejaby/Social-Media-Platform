@@ -33,7 +33,7 @@ function ModalPost() {
           !condition
             ? "w-4/5 xs:w-2/3 sm:w-3/5 md:w-1/2 lg:w-2/5 rounded-lg"
             : "w-full h-full xs:w-11/12 sm:w-4/5 md:w-3/4 lg:w-4/5"
-        } xs:h-2/5 sm:h-1/2 lg:h-3/5 xs:rounded-lg bg-white dark:bg-darkModeColor`}
+        } xs:h-2/5 sm:h-1/2 lg:h-3/5 xs:rounded-lg bg-white dark:bg-DarkColor`}
       >
         <div className={`basis-full ${condition ? "hidden" : "flex"} flex-col`}>
           <ImageUploader cover={cover} setCover={setCover} />

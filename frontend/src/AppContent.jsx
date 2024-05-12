@@ -58,20 +58,18 @@ function AppContent() {
   return (
     <BrowserRouter>
       <div
-        className={`bg-white dark:bg-darkModeColor grid ${
-          showModal && "fixed"
-        } ${
+        className={`grid ${showModal && "fixed"} ${
           !!user
             ? "grid-cols-1 sm:grid-cols-[144px_1fr] lg:grid-cols-[320px_1fr] grid-rows-[1fr_64px] sm:grid-rows-1 grid-flow-row sm:grid-flow-col"
             : "grid-cols-1"
-        } gap-2 w-full h-full`}
+        } gap-2 w-full h-full bg-white dark:bg-DarkColor`}
       >
         {!!user ? (
           <>
-            <div className="fixed sm:static order-2 sm:order-1 w-full h-16 sm:h-full bottom-0">
+            <div className="fixed sm:static order-2 sm:order-1 w-full h-16 sm:h-full bottom-0 bg-white dark:bg-DarkColor">
               <Navbar />
             </div>
-            <div className="order-1 sm:order-2 w-full min-h-screen">
+            <div className="order-1 sm:order-2 w-full min-h-screen bg-white dark:bg-DarkColor">
               <Rutas />
             </div>
             {showModal && <ShowModal />}

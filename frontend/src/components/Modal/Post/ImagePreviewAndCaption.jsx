@@ -49,18 +49,18 @@ function ImagePreviewAndCaption({ cover, setCover }) {
 
   return (
     <div className="basis-full flex flex-col">
-      <div className="flex justify-between p-2">
+      <div className="flex justify-between border-b-2 border-colorHover dark:border-darkColorHover p-2">
         <button
-          className="font-semibold text-black dark:text-white hover:text-primary dark:hover:text-primary"
+          className="font-semibold text-black dark:text-white"
           onClick={() => {
             setCondition(false);
             reset();
           }}
         >
-          atras
+          Atras
         </button>
         <button
-          className="font-semibold text-black dark:text-white hover:text-primary dark:hover:text-primary"
+          className="font-semibold text-PrimaryColor hover:text-PrimaryColorHover"
           onClick={handleSubmit(onSubmit)}
         >
           Postear
@@ -96,7 +96,7 @@ function ImagePreviewAndCaption({ cover, setCover }) {
               </div>
               <div className="basis-5/6 sm:basis-3/4 flex justify-start">
                 <textarea
-                  className="w-full sm:w-11/12 border rounded text-base xs:text-sm md:text-base text-center font resize-none focus:outline-none text-black dark:text-white bg-white dark:bg-darkColor"
+                  className="w-full sm:w-11/12 border rounded text-base xs:text-sm md:text-base text-center font resize-none focus:outline-none border-colorHover dark:border-darkColorHover text-black dark:text-white bg-white dark:bg-DarkColor"
                   placeholder={`¡¿Qué está pasando ${user.first_name}?!`}
                   {...register("content")}
                 />
@@ -108,7 +108,7 @@ function ImagePreviewAndCaption({ cover, setCover }) {
             <div className="basis-1/5">
               <button
                 type="submit"
-                className="rounded py-2 px-3 hover:border-transparent text-black dark:text-white hover:text-white hover:bg-primary"
+                className="rounded py-2 px-3 mb-2 text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
               >
                 Postear
               </button>

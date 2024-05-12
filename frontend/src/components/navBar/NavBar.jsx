@@ -36,7 +36,7 @@ function navBar() {
   });
 
   return (
-    <nav className="flex sm:flex-col items-center sm-items-start sm:justify-between sm:fixed sm:w-36 lg:w-80 h-16 sm:h-screen border-t-2 sm:border-t-0 sm:border-r-2 border-gray-100 dark:border-darkHoverColor sm:py-4 sm:px-6">
+    <nav className="flex sm:flex-col items-center sm-items-start sm:justify-between sm:fixed sm:w-36 lg:w-80 h-16 sm:h-screen border-t-2 sm:border-t-0 sm:border-r-2 border-colorHover dark:border-darkColorHover sm:py-4 sm:px-6">
       <div className="hidden sm:block w-full">
         <NavLink
           to="/home"
@@ -46,7 +46,7 @@ function navBar() {
             name="logo"
             options={{ width: "48px", height: "48px" }}
           />
-          <span className="font-semibold text-xl tracking-tight text-dark dark:text-white">
+          <span className="font-semibold text-xl tracking-tight text-black dark:text-white">
             NotDark
           </span>
         </NavLink>
@@ -122,8 +122,8 @@ function navBar() {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-dark dark:text-white hover:text-primary hover:bg-gray-100 dark:hover:bg-darkModeHoverColor ${
-              isActive && "font-semibold text-primary dark:text-primary"
+            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover ${
+              isActive && "font-bold"
             }`
           }
         >
@@ -143,8 +143,8 @@ function navBar() {
         <NavLink
           to="/explore"
           className={({ isActive }) =>
-            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-dark dark:text-white hover:text-primary hover:bg-gray-100 dark:hover:bg-darkModeHoverColor ${
-              isActive && "font-semibold text-primary dark:text-primary"
+            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover ${
+              isActive && "font-bold"
             }`
           }
         >
@@ -164,8 +164,8 @@ function navBar() {
         <NavLink
           to="/notifications"
           className={({ isActive }) =>
-            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-dark dark:text-white hover:text-primary hover:bg-gray-100 dark:hover:bg-darkModeHoverColor ${
-              isActive && "font-semibold text-primary dark:text-primary"
+            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover ${
+              isActive && "font-bold"
             }`
           }
         >
@@ -185,8 +185,8 @@ function navBar() {
         <NavLink
           to="/profile"
           className={({ isActive }) =>
-            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-dark dark:text-white  hover:text-primary hover:bg-gray-100 dark:hover:bg-darkModeHoverColor ${
-              isActive && "font-semibold text-primary dark:text-primary"
+            `flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover ${
+              isActive && "font-bold"
             }`
           }
         >
@@ -204,7 +204,7 @@ function navBar() {
           <span className="flex-grow hidden lg:block">Perfil</span>
         </NavLink>
         <button
-          className="flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-dark dark:text-white hover:text-primary hover:bg-gray-100 dark:hover:bg-darkModeHoverColor"
+          className="flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
           onClick={toggleShowModal}
         >
           {theme === "light" ? (
@@ -222,7 +222,7 @@ function navBar() {
         </button>
       </div>
       <div
-        className="relative hidden sm:flex justify-center lg:justify-between items-center gap-2 w-full py-2 px-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-darkModeHoverColor"
+        className="relative hidden sm:flex justify-center lg:justify-between items-center gap-2 w-full py-2 px-3 cursor-pointer hover:bg-colorHover dark:hover:bg-darkColorHover"
         onClick={toggleAccountModal}
       >
         <div className="hidden lg:flex flex-col">

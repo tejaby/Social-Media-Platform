@@ -65,7 +65,7 @@ function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
       <div className="w-full px-3 md:w-auto md:px-12 mb-4">
         <button
           type="submit"
-          className="border rounded border-primary w-full py-2 px-3 hover:border-transparent hover:text-white hover:bg-primary"
+          className="rounded w-full py-2 px-3 text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
         >
           {headers.button_submit}
         </button>
@@ -74,7 +74,7 @@ function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
         <p className="font-extralight">{headers.message}</p>
         <button
           type="button"
-          className="font-semibold text-primary"
+          className="font-semibold text-PrimaryColor hover:text-PrimaryColorHover"
           onClick={toggleForm}
         >
           {headers.button_form}

@@ -4,14 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#8511fa",
-        darkColor: "#2C2C2C",
-        darkHoverColor: "#1c1c1c",
-      },
-      backgroundColor: {
-        "black-rgba": "rgba(0, 0, 0, .6)",
-        darkModeColor: "#202020",
-        darkModeHoverColor: "#1c1c1c",
+        colorHover: "#e7e7e8",
+        DarkColor: "#15202B",
+        darkColorHover: "#2C3640",
+        PrimaryColor: "#7856FF",
+        PrimaryColorHover: "#6C4DE6",
+        SecondaryColor: "#463B95",
+        lightOverlayColor: "rgba(153, 153, 153, 0.6)",
+        darkOverlayColor: "rgba(49, 64, 78, 0.6)",
       },
       screens: {
         xs: "425px",

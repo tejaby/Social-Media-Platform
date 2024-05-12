@@ -76,20 +76,20 @@ function ModalProfile() {
   return (
     <>
       <div
-        className={`flex flex-col w-full h-full xs:max-w-xl xs:h-3/5 sm:h-3/4 xs:rounded-lg bg-white dark:bg-darkModeColor`}
+        className={`flex flex-col w-full h-full xs:max-w-xl xs:h-3/5 sm:h-3/4 xs:rounded-lg bg-white dark:bg-DarkColor`}
       >
-        <div className="flex border-b-2 p-2 ">
+        <div className="flex border-b-2 border-colorHover dark:border-darkColorHover p-2">
           <button
-            className="font-semibold text-black dark:text-white hover:text-primary dark:hover:text-primary"
+            className="font-semibold text-black dark:text-white"
             onClick={toggleShowModal}
           >
-            salir
+            Salir
           </button>
           <p className="grow text-base font-semibold text-black dark:text-white">
             Editar perfil
           </p>
           <button
-            className="font-semibold text-black dark:text-white hover:text-primary dark:hover:text-primary"
+            className="font-bold text-PrimaryColor hover:text-PrimaryColorHover"
             onClick={handleSubmit}
           >
             Guardar
@@ -112,7 +112,7 @@ function ModalProfile() {
                 <input
                   type="file"
                   accept=".png, .jpg, .webp"
-                  className="text-sm text-slate-500 file:mr-2 file:p-4 file:rounded-full file:border-0 file:font-semibold file:bg-violet-100 file:text-black hover:file:bg-primary hover:file:text-white"
+                  className="text-sm file:mr-2 file:p-4 file:rounded-full file:border-0 file:font-semibold text-darkColorHover dark:text-colorHover file:text-white file:bg-PrimaryColor hover:file:bg-PrimaryColorHover"
                   onChange={(e) => {
                     handleChangeFile(e);
                     handleFile(e);
@@ -134,7 +134,7 @@ function ModalProfile() {
               </label>
               <textarea
                 name="biography"
-                className="grow w-4/5 border rounded text-base text-center resize-none focus:outline-none text-black dark:text-white focus:border-primary bg-white dark:bg-darkColor"
+                className="grow w-4/5 border rounded text-base text-center resize-none focus:outline-none border-colorHover dark:border-darkColorHover text-black dark:text-white bg-white dark:bg-DarkColor"
                 value={!!bio ? bio : ""}
                 onChange={handleChange}
               />
@@ -149,7 +149,7 @@ function ModalProfile() {
               <input
                 type="text"
                 name="website"
-                className="w-4/5 py-2 px-3 border rounded text-center focus:outline-none text-black dark:text-white focus:border-primary bg-white dark:bg-darkColor"
+                className="w-4/5 py-2 px-3 border rounded text-center focus:outline-none border-colorHover dark:border-darkColorHover text-black dark:text-white bg-white dark:bg-DarkColor"
                 value={!!sitio ? sitio : ""}
                 onChange={handleChange}
               />

@@ -12,7 +12,7 @@ function ShowModal() {
   const { showModalProfile, showModalPost } = useContext(InterfaceContext);
 
   return (
-    <div className="absolute flex justify-center items-center w-full h-full bg-black-rgba text-center z-50">
+    <div className="absolute flex justify-center items-center w-full h-full text-center bg-lightOverlayColor dark:bg-darkOverlayColor z-50">
       {showModalProfile && <ModalProfile />}
       {showModalPost && <ModalPost />}
     </div>

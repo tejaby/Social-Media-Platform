@@ -122,7 +122,7 @@ function UserProfile() {
           </div>
         </div>
         <button
-          className="my-5 py-2 px-3 font-semibold text-sm border border-primary text-black dark:text-white"
+          className="my-5 py-2 px-3 font-semibold text-sm xs:text-base rounded text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
           onClick={toggleShowModal}
         >
           Editar perfil
@@ -133,7 +133,7 @@ function UserProfile() {
         {user.website && (
           <a
             href={user.website}
-            className="text-black dark:text-white hover:text-primary dark:hover:text-primary"
+            className="text-black dark:text-white hover:text-PrimaryColor dark:hover:text-PrimaryColor"
             target="_blank"
           >
             {user.website}

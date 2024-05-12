@@ -17,12 +17,16 @@ function ImageUploader({ cover, setCover }) {
 
   return (
     <>
-      <div className="border-b-2 p-2">
-        <p className="text-base font-semibold text-black dark:text-white">Crear nueva publicación</p>
+      <div className="border-b-2 border-colorHover dark:border-darkColorHover p-2">
+        <p className="text-base font-semibold text-black dark:text-white">
+          Crear nueva publicación
+        </p>
       </div>
       <div className="grow flex flex-col justify-center items-center flex-wrap gap-4 w-full">
         <div className="w-full p-2">
-          <p className="text-base sm:text-lg text-black dark:text-white">Arrastra las fotos aquí</p>
+          <p className="text-base sm:text-lg text-black dark:text-white">
+            Seleccionar foto para publicar
+          </p>
         </div>
         <div className="w-full p-2 flex flex-wrap justify-center items-center">
           <input
@@ -30,7 +34,7 @@ function ImageUploader({ cover, setCover }) {
             id="file"
             {...register("image")}
             accept=".png, .jpg, .webp"
-            className="text-sm text-slate-500 file:mr-2 file:p-4 file:rounded-full file:border-0 file:font-semibold file:bg-violet-100 file:text-black hover:file:bg-primary hover:file:text-white"
+            className="text-sm file:mr-2 file:p-4 file:rounded-full file:border-0 file:font-semibold text-darkColorHover dark:text-colorHover file:text-white file:bg-PrimaryColor hover:file:bg-PrimaryColorHover"
             onChange={(e) => {
               handleChangeFile(e);
               setCondition(true);

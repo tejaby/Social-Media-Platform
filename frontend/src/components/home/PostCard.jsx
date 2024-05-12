@@ -18,7 +18,7 @@ function PostCard() {
       {post.map((post) => (
         <div
           key={post.id}
-          className="flex flex-col border-b-2 border-gray-200 dark:border-darkHoverColor"
+          className="flex flex-col border-b-2 border-colorHover dark:border-darkColorHover"
         >
           <div className="flex justify-between items-center py-2">
             <div className="flex items-center gap-1">
