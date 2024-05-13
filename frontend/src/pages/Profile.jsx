@@ -14,9 +14,13 @@ import useApiFetch from "../hooks/post/useApiFetch";
 import { useContext } from "react";
 
 function Profile() {
-  const { setUserPost, setNextPagePost } = useContext(PostContext);
+  const { setUserPost, setNextPagePostUser } = useContext(PostContext);
 
-  const { error } = useApiFetch(listUserPostService, setUserPost, setNextPagePost);
+  const { error } = useApiFetch(
+    listUserPostService,
+    setUserPost,
+    setNextPagePostUser
+  );
 
   return (
     <div className="max-w-3xl mx-auto sm:my-2">

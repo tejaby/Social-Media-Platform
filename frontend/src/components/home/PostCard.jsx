@@ -1,21 +1,60 @@
+// libraries
+import { useInView } from "react-intersection-observer";
+import axios from "axios";
+
 // components
 import HomePostsList from "../../components/post/grid/HomePostsList";
 import SvgButton from "../../components/ui/SvgButton";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
+import { UserContext } from "../../context/User";
 import { PostContext } from "../../context/Post";
 
 // react
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function PostCard() {
   const { theme } = useContext(InterfaceContext);
-  const { post } = useContext(PostContext);
+  const { setUser, token, setToken } = useContext(UserContext);
+  const { userPost, setUserPost, nextPagePostUser, setNextPagePostUser } =
+    useContext(PostContext);
+
+  const { ref, inView } = useInView();
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!nextPagePostUser || loading) return;
+
+    const loadMorePosts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(nextPagePostUser, {
+          headers: {
+            Authorization: `Bearer ${token.access}`,
+          },
+        });
+        setUserPost([...userPost, ...response.data.results]);
+        setNextPagePostUser(response.data.next);
+      } catch (err) {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("authUser");
+        localStorage.removeItem("authToken");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (inView) {
+      loadMorePosts();
+    }
+  }, [inView]);
 
   return (
     <div className="flex flex-col gap-2">
-      {post.map((post) => (
+      {userPost.map((post, index) => (
         <div
           key={post.id}
           className="flex flex-col border-b-2 border-colorHover dark:border-darkColorHover"
@@ -104,8 +143,10 @@ function PostCard() {
               )}
             </div>
           </div>
+          {index === userPost.length - 1 && <div ref={ref} />}
         </div>
       ))}
+      {nextPagePostUser && <div className="flex justify-center text-black dark:text-white">Loading...</div>}
     </div>
   );
 }
