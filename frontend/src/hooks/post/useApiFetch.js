@@ -7,7 +7,7 @@ import { UserContext } from "../../context/User";
 // react
 import { useEffect, useState, useContext } from "react";
 
-function useApiFetch(fetchFunction, contextSetter) {
+function useApiFetch(fetchFunction, contextSetter, contextSetterPage) {
   const { setUser, token, setToken } = useContext(UserContext);
 
   const [error, setError] = useState(null);
@@ -16,7 +16,8 @@ function useApiFetch(fetchFunction, contextSetter) {
     const fetchData = async () => {
       try {
         const response = await fetchFunction(token.access);
-        contextSetter(response);
+        contextSetter(response.results);
+        contextSetterPage(response.next);
         setError(null);
       } catch (err) {
         setUser(null);

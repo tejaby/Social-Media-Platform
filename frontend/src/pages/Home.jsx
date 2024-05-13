@@ -18,9 +18,9 @@ import { useContext } from "react";
 
 function Home() {
   const { user } = useContext(UserContext);
-  const { setPost } = useContext(PostContext);
+  const { setPost, setNextPagePost } = useContext(PostContext);
 
-  const { error } = useApiFetch(listUserPostService, setPost);
+  const { error } = useApiFetch(listUserPostService, setPost, setNextPagePost);
 
   if (!user) {
     return <Form />;
