@@ -1,3 +1,7 @@
+// libraries
+import { useInView } from "react-intersection-observer";
+import axios from "axios";
+
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
 import OptionsModal from "../../components/modal/navbar/OptionsModal";
@@ -12,22 +16,26 @@ import UseSvgLoader from "../../hooks/useSvgLoader";
 import useToggleModalPost from "../../hooks/interface/useToggleModalPost";
 
 // react
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 
 function UserProfile() {
   const { theme, showModalProfile, setShowModalProfile } =
     useContext(InterfaceContext);
 
-  const { user } = useContext(UserContext);
+  const { user, setUser, token, setToken } = useContext(UserContext);
 
-  const { userPost } = useContext(PostContext);
+  const { userPost, setUserPost, nextPagePostUser, setNextPagePostUser } =
+    useContext(PostContext);
+
+  const { inView, ref } = useInView();
+
+  const [showAccountModal, setShowAccountModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { toggleShowModal } = useToggleModalPost(
     setShowModalProfile,
     showModalProfile
   );
-
-  const [showAccountModal, setShowAccountModal] = useState(false);
 
   const toggleAccountModal = () => {
     setShowAccountModal(!showAccountModal);
@@ -36,6 +44,34 @@ function UserProfile() {
   const { OptionsModalMobile } = OptionsModal({
     toggleAccountModal,
   });
+
+  useEffect(() => {
+    if (!nextPagePostUser || loading) return;
+
+    const loadMorePosts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(nextPagePostUser, {
+          headers: {
+            Authorization: `Bearer ${token.access}`,
+          },
+        });
+        setUserPost([...userPost, ...response.data.results]);
+        setNextPagePostUser(response.data.next);
+      } catch (err) {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("authUser");
+        localStorage.removeItem("authToken");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (inView) {
+      loadMorePosts();
+    }
+  }, [inView]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -145,15 +181,12 @@ function UserProfile() {
       </div>
 
       <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
-        {userPost.map((post) => {
-          return (
-            <UserPostGrid
-              key={post.id}
-              src={post.image}
-              alt={post.author.username}
-            />
-          );
-        })}
+        {userPost.map((p, index) => (
+          <div key={p.id}>
+            <UserPostGrid src={p.image} alt={p.author.username} />
+            {index === userPost.length - 1 && <div ref={ref} />}
+          </div>
+        ))}
       </div>
     </div>
   );
