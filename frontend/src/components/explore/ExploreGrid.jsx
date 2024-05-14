@@ -14,7 +14,7 @@ import { useContext, useEffect, useState } from "react";
 
 function ExploreGrid() {
   const { setUser, token, setToken } = useContext(UserContext);
-  const { post, setPost, nextPagePost, setNextPagePost } =
+  const { posts, setPosts, nextPagePosts, setNextPagePosts } =
     useContext(PostContext);
 
   const { inView, ref } = useInView();
@@ -22,18 +22,18 @@ function ExploreGrid() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!nextPagePost || loading) return;
+    if (!nextPagePosts || loading) return;
 
     const loadMorePosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(nextPagePost, {
+        const response = await axios.get(nextPagePosts, {
           headers: {
             Authorization: `Bearer ${token.access}`,
           },
         });
-        setPost([...post, ...response.data.results]);
-        setNextPagePost(response.data.next);
+        setPosts([...posts, ...response.data.results]);
+        setNextPagePosts(response.data.next);
       } catch (err) {
         setUser(null);
         setToken(null);
@@ -50,10 +50,10 @@ function ExploreGrid() {
   }, [inView]);
   return (
     <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
-      {post.map((p, index) => (
-        <div key={p.id}>
-          <PostGrid src={p.image} alt={p.author.username} />
-          {index === post.length - 1 && <div ref={ref} />}
+      {posts.map((post, index) => (
+        <div key={post.id}>
+          <PostGrid src={post.image} alt={post.author.username} />
+          {index === posts.length - 1 && <div ref={ref} />}
         </div>
       ))}
     </div>

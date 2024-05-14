@@ -17,7 +17,7 @@ import { useContext, useEffect, useState } from "react";
 function PostCard() {
   const { theme } = useContext(InterfaceContext);
   const { setUser, token, setToken } = useContext(UserContext);
-  const { userPost, setUserPost, nextPagePostUser, setNextPagePostUser } =
+  const { followedPosts, setFollowedPosts, nextPageFollowedPosts, setNextPageFollowedPosts } =
     useContext(PostContext);
 
   const { ref, inView } = useInView();
@@ -25,18 +25,18 @@ function PostCard() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!nextPagePostUser || loading) return;
+    if (!nextPageFollowedPosts || loading) return;
 
     const loadMorePosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(nextPagePostUser, {
+        const response = await axios.get(nextPageFollowedPosts, {
           headers: {
             Authorization: `Bearer ${token.access}`,
           },
         });
-        setUserPost([...userPost, ...response.data.results]);
-        setNextPagePostUser(response.data.next);
+        setFollowedPosts([...followedPosts, ...response.data.results]);
+        setNextPageFollowedPosts(response.data.next);
       } catch (err) {
         setUser(null);
         setToken(null);
@@ -54,7 +54,7 @@ function PostCard() {
 
   return (
     <div className="flex flex-col gap-2">
-      {userPost.map((post, index) => (
+      {followedPosts.map((post, index) => (
         <div
           key={post.id}
           className="flex flex-col border-b-2 border-colorHover dark:border-darkColorHover"
@@ -143,10 +143,10 @@ function PostCard() {
               )}
             </div>
           </div>
-          {index === userPost.length - 1 && <div ref={ref} />}
+          {index === followedPosts.length - 1 && <div ref={ref} />}
         </div>
       ))}
-      {nextPagePostUser && (
+      {nextPageFollowedPosts && (
         <div className="flex justify-center text-black dark:text-white">
           Loading...
         </div>

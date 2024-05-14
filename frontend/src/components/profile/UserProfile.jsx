@@ -24,7 +24,7 @@ function UserProfile() {
 
   const { user, setUser, token, setToken } = useContext(UserContext);
 
-  const { userPost, setUserPost, nextPagePostUser, setNextPagePostUser } =
+  const { userPosts, setUserPosts, nextPageUserPosts, setNextPageUserPosts } =
     useContext(PostContext);
 
   const { inView, ref } = useInView();
@@ -46,18 +46,18 @@ function UserProfile() {
   });
 
   useEffect(() => {
-    if (!nextPagePostUser || loading) return;
+    if (!nextPageUserPosts || loading) return;
 
     const loadMorePosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(nextPagePostUser, {
+        const response = await axios.get(nextPageUserPosts, {
           headers: {
             Authorization: `Bearer ${token.access}`,
           },
         });
-        setUserPost([...userPost, ...response.data.results]);
-        setNextPagePostUser(response.data.next);
+        setUserPosts([...userPosts, ...response.data.results]);
+        setNextPageUserPosts(response.data.next);
       } catch (err) {
         setUser(null);
         setToken(null);
@@ -181,10 +181,10 @@ function UserProfile() {
       </div>
 
       <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
-        {userPost.map((p, index) => (
+        {userPosts.map((p, index) => (
           <div key={p.id}>
             <UserPostGrid src={p.image} alt={p.author.username} />
-            {index === userPost.length - 1 && <div ref={ref} />}
+            {index === userPosts.length - 1 && <div ref={ref} />}
           </div>
         ))}
       </div>

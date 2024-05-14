@@ -14,12 +14,12 @@ import useApiFetch from "../hooks/post/useApiFetch";
 import { useContext } from "react";
 
 function Profile() {
-  const { setUserPost, setNextPagePostUser } = useContext(PostContext);
+  const { setUserPosts, setNextPageUserPosts } = useContext(PostContext);
 
   const { error } = useApiFetch(
     listUserPostService,
-    setUserPost,
-    setNextPagePostUser
+    setUserPosts,
+    setNextPageUserPosts
   );
 
   return (

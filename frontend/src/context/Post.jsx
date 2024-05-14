@@ -9,25 +9,33 @@ export const PostContext = createContext();
 export function PostContextProvider({ children }) {
   const { register, errors, reset, handleSubmit } = createPostConfig();
 
-  const [post, setPost] = useState([]);
-  const [nextPagePost, setNextPagePost] = useState(null);
-  const [userPost, setUserPost] = useState([]);
-  const [nextPagePostUser, setNextPagePostUser] = useState(null);
-  const [followingPosts, setFollowingPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [nextPagePosts, setNextPagePosts] = useState(null);
+
+  const [userPosts, setUserPosts] = useState([]);
+  const [nextPageUserPosts, setNextPageUserPosts] = useState(null);
+
+  const [followedPosts, setFollowedPosts] = useState([]);
+  const [nextPageFollowedPosts, setNextPageFollowedPosts] = useState(null);
 
   return (
     <PostContext.Provider
       value={{
-        post,
-        setPost,
-        nextPagePost,
-        setNextPagePost,
-        userPost,
-        setUserPost,
-        nextPagePostUser,
-        setNextPagePostUser,
-        followingPosts,
-        setFollowingPosts,
+        posts,
+        setPosts,
+        nextPagePosts,
+        setNextPagePosts,
+
+        userPosts,
+        setUserPosts,
+        nextPageUserPosts,
+        setNextPageUserPosts,
+
+        followedPosts,
+        setFollowedPosts,
+        nextPageFollowedPosts,
+        setNextPageFollowedPosts,
+
         register,
         errors,
         reset,

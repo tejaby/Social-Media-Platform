@@ -17,12 +17,12 @@ import { useContext } from "react";
 
 function Home() {
   const { user } = useContext(UserContext);
-  const { setUserPost, setNextPagePostUser } = useContext(PostContext);
+  const { setFollowedPosts, setNextPageFollowedPosts } = useContext(PostContext);
 
   const { error } = useApiFetch(
     listUserPostService,
-    setUserPost,
-    setNextPagePostUser
+    setFollowedPosts,
+    setNextPageFollowedPosts
   );
 
   if (!user) {

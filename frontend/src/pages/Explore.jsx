@@ -14,9 +14,9 @@ import useApiFetch from "../hooks/post/useApiFetch";
 import { useContext } from "react";
 
 function Explore() {
-  const { setPost, setNextPagePost } = useContext(PostContext);
+  const { setPosts, setNextPagePosts } = useContext(PostContext);
 
-  const { error } = useApiFetch(listPostService, setPost, setNextPagePost);
+  const { error } = useApiFetch(listPostService, setPosts, setNextPagePosts);
 
   return (
     <div className="max-w-3xl mx-auto sm:my-2">
