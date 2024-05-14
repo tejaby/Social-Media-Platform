@@ -1,6 +1,7 @@
 // libraries
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
+import { format } from "date-fns";
 
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
@@ -44,6 +45,8 @@ function UserProfile() {
   const { OptionsModalMobile } = OptionsModal({
     toggleAccountModal,
   });
+
+  const formattedDate = format(new Date(user.date_joined), "dd MMMM yyyy");
 
   useEffect(() => {
     if (!nextPageUserPosts || loading) return;
@@ -145,7 +148,10 @@ function UserProfile() {
             className="w-full h-full object-cover rounded-full"
           />
         </div>
-        <span className="my-3 text-black dark:text-white">{`${user.first_name} ${user.last_name}`}</span>
+        <span className="mt-3 text-black dark:text-white">{`${user.first_name} ${user.last_name}`}</span>
+        <span className="mb-3 text-secondaryText dark:text-secondaryTextDark">
+          @{user.username}
+        </span>
         <div className="flex gap-10 text-sm">
           <div className="flex flex-col items-center">
             <span className="font-bold text-black dark:text-white">10</span>
@@ -172,12 +178,15 @@ function UserProfile() {
         {user.website && (
           <a
             href={user.website}
-            className="text-black dark:text-white hover:text-PrimaryColor dark:hover:text-PrimaryColor"
+            className="mb-3 text-black dark:text-white hover:text-PrimaryColor dark:hover:text-PrimaryColor"
             target="_blank"
           >
             {user.website}
           </a>
         )}
+        <p className="text-secondaryText dark:text-secondaryTextDark">
+          {user.date_joined && `Se unió: ${formattedDate}`}
+        </p>
       </div>
 
       <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">

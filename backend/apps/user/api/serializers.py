@@ -14,7 +14,7 @@ class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'username', 'email', 'first_name',
-                  'last_name', 'profile_picture', 'biography', 'website']
+                  'last_name', 'profile_picture', 'biography', 'website', 'date_joined']
 
 
 """

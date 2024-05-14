@@ -1,6 +1,15 @@
 // libraries
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
+import { formatDistanceToNow, parseISO } from "date-fns";
+import {
+  differenceInSeconds,
+  differenceInMinutes,
+  differenceInHours,
+  differenceInDays,
+  differenceInMonths,
+  differenceInYears,
+} from "date-fns";
 
 // components
 import PostImage from "../../components/post/image/PostImage";
@@ -17,8 +26,42 @@ import { useContext, useEffect, useState } from "react";
 function PostCard() {
   const { theme } = useContext(InterfaceContext);
   const { setUser, token, setToken } = useContext(UserContext);
-  const { followedPosts, setFollowedPosts, nextPageFollowedPosts, setNextPageFollowedPosts } =
-    useContext(PostContext);
+  const {
+    followedPosts,
+    setFollowedPosts,
+    nextPageFollowedPosts,
+    setNextPageFollowedPosts,
+  } = useContext(PostContext);
+
+  const formatTimeAgo = (date) => {
+    const seconds = differenceInSeconds(new Date(), date);
+    if (seconds < 60) {
+      return `${seconds} segundo${seconds === 1 ? "" : "s"}`;
+    }
+
+    const minutes = differenceInMinutes(new Date(), date);
+    if (minutes < 60) {
+      return `${minutes} minuto${minutes === 1 ? "" : "s"}`;
+    }
+
+    const hours = differenceInHours(new Date(), date);
+    if (hours < 24) {
+      return `${hours} hora${hours === 1 ? "" : "s"}`;
+    }
+
+    const days = differenceInDays(new Date(), date);
+    if (days < 30) {
+      return `${days} dia${days === 1 ? "" : "s"}`;
+    }
+
+    const months = differenceInMonths(new Date(), date);
+    if (months < 12) {
+      return `${months} mes${months === 1 ? "" : "es"}`;
+    }
+
+    const years = differenceInYears(new Date(), date);
+    return `${years} año${years === 1 ? "" : "s"}`;
+  };
 
   const { ref, inView } = useInView();
 
@@ -72,6 +115,9 @@ function PostCard() {
               />
               <span className="font-bold text-black dark:text-white">
                 {post.author.username}
+              </span>
+              <span className="text-secondaryText dark:text-secondaryTextDark">
+                {formatTimeAgo(new Date(post.created_at))}
               </span>
             </div>
             {theme === "light" ? (
@@ -129,7 +175,6 @@ function PostCard() {
               </div>
             </div>
             <div className="flex items-center">
-              <span className="text-black dark:text-white">54</span>
               {theme === "light" ? (
                 <SvgButton
                   name="chart-line"
@@ -141,6 +186,7 @@ function PostCard() {
                   options={{ width: "24px", height: "24px" }}
                 />
               )}
+              <span className="text-black dark:text-white">54</span>
             </div>
           </div>
           {index === followedPosts.length - 1 && <div ref={ref} />}

@@ -138,7 +138,7 @@ function ModalProfile() {
                 value={!!bio ? bio : ""}
                 onChange={handleChange}
               />
-              <p className="text-xs text-gray-600 dark:text-gray-300 pb-2">
+              <p className="text-xs text-secondaryText dark:text-secondaryTextDark pb-2">
                 Cuéntanos un poco sobre ti en unas pocas palabras.
               </p>
             </div>
@@ -153,7 +153,7 @@ function ModalProfile() {
                 value={!!sitio ? sitio : ""}
                 onChange={handleChange}
               />
-              <p className="text-xs text-gray-600 dark:text-gray-300 pb-2">
+              <p className="text-xs text-secondaryText dark:text-secondaryTextDark pb-2">
                 Agrega enlaces a tus perfiles en redes sociales y sitios web
                 aquí.
               </p>
