@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer";
 import axios from "axios";
 
 // components
-import HomePostsList from "../../components/post/grid/HomePostsList";
+import PostImage from "../../components/post/image/PostImage";
 import SvgButton from "../../components/ui/SvgButton";
 
 // context
@@ -87,7 +87,7 @@ function PostCard() {
             )}
           </div>
           <div>
-            <HomePostsList username={post.author.username} image={post.image} />
+            <PostImage src={post.image} alt={post.author.username} />
             <div className="flex gap-1">
               <span className="font-semibold text-black dark:text-white">
                 {post.author.username}
@@ -146,7 +146,11 @@ function PostCard() {
           {index === userPost.length - 1 && <div ref={ref} />}
         </div>
       ))}
-      {nextPagePostUser && <div className="flex justify-center text-black dark:text-white">Loading...</div>}
+      {nextPagePostUser && (
+        <div className="flex justify-center text-black dark:text-white">
+          Loading...
+        </div>
+      )}
     </div>
   );
 }

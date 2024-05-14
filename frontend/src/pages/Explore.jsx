@@ -1,9 +1,8 @@
 // services
-// import { getPosts } from "../services/post";
 import { listPostService } from "../services/post";
 
 // components
-import ExplorePostsList from "../components/post/grid/ExplorePostsList";
+import ExploreGrid from "../components/explore/ExploreGrid";
 
 // context
 import { PostContext } from "../context/Post";
@@ -21,7 +20,7 @@ function Explore() {
 
   return (
     <div className="max-w-3xl mx-auto sm:my-2">
-      <ExplorePostsList />
+      <ExploreGrid />
     </div>
   );
 }

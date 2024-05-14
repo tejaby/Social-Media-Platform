@@ -1,5 +1,4 @@
 // services
-// import { getPosts } from "../services/post";
 import { listUserPostService } from "../services/post";
 
 // components

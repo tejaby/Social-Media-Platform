@@ -1,10 +1,11 @@
 // components
-import ProfilePostList from "../../components/post/grid/ProfilePostList";
+import UserPostGrid from "../../components/post/grid/UserPostGrid";
 import OptionsModal from "../../components/modal/navbar/OptionsModal";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
 import { UserContext } from "../../context/User";
+import { PostContext } from "../../context/Post";
 
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
@@ -18,6 +19,8 @@ function UserProfile() {
     useContext(InterfaceContext);
 
   const { user } = useContext(UserContext);
+
+  const { userPost } = useContext(PostContext);
 
   const { toggleShowModal } = useToggleModalPost(
     setShowModalProfile,
@@ -141,7 +144,17 @@ function UserProfile() {
         )}
       </div>
 
-      <ProfilePostList />
+      <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
+        {userPost.map((post) => {
+          return (
+            <UserPostGrid
+              key={post.id}
+              src={post.image}
+              alt={post.author.username}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
