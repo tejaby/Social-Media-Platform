@@ -25,7 +25,7 @@ function Rutas() {
           element={<h1>notificaciones - private</h1>}
         />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/profile/:user_id" element={<UserDetail />} />
+        <Route path="/profile/:username" element={<UserDetail />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

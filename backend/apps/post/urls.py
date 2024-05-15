@@ -8,7 +8,7 @@ from apps.post.api.api import UserPostsListView, UserPostsByUserListView
 
 urlpatterns = [
     path('post/user/', UserPostsListView.as_view(), name='user_post'),
-    path('post/user/<int:user_id>/',
+    path('post/user/<str:username>/',
          UserPostsByUserListView.as_view(), name='user_posts_list'),
 ]
 

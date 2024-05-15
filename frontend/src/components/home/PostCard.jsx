@@ -68,8 +68,8 @@ function PostCard() {
     return `${years} año${years === 1 ? "" : "s"}`;
   };
 
-  const handleUserPage = (user_id) => {
-    navigate(`/profile/${user_id}`);
+  const handleUserPage = (username) => {
+    navigate(`/profile/${username}`);
   };
 
   useEffect(() => {
@@ -118,13 +118,13 @@ function PostCard() {
                 alt=""
                 className="w-10 h-10 object-cover rounded-full cursor-pointer"
                 onClick={() => {
-                  handleUserPage(post.author.id);
+                  handleUserPage(post.author.username);
                 }}
               />
               <span
                 className="font-bold text-black dark:text-white cursor-pointer"
                 onClick={() => {
-                  handleUserPage(post.author.id);
+                  handleUserPage(post.author.username);
                 }}
               >
                 {post.author.username}

@@ -14,7 +14,7 @@ import { useContext, useState, useEffect } from "react";
 function UserDetail() {
   const { token } = useContext(UserContext);
 
-  const { user_id } = useParams();
+  const { username } = useParams();
 
   const [currentPosts, setCurrentPosts] = useState([]);
   const [nextPageCurrentPosts, setNextPageCurrentPosts] = useState(null);
@@ -23,7 +23,7 @@ function UserDetail() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await listPostsByUseridService(user_id, token.access);
+        const response = await listPostsByUseridService(username, token.access);
         setCurrentPosts(response.results);
         setNextPageCurrentPosts(response.next);
         setUser(response.results[0].author);

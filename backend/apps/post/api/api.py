@@ -9,6 +9,7 @@ from .serializers import PostSerializer
 
 # models
 from apps.post.models import Post
+from apps.post.models import CustomUser
 
 
 class CustomPagination(PageNumberPagination):
@@ -35,5 +36,6 @@ class UserPostsByUserListView(ListAPIView):
     pagination_class = CustomPagination
 
     def get_queryset(self):
-        user_id = self.kwargs['user_id']
-        return Post.objects.filter(state=True, author__id=user_id).order_by('-created_at')
+        username = self.kwargs['username']
+        user = CustomUser.objects.get(username=username)
+        return Post.objects.filter(state=True, author=user).order_by('-created_at')
