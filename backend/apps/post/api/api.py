@@ -12,7 +12,7 @@ from apps.post.models import Post
 
 
 class CustomPagination(PageNumberPagination):
-    page_size = 5
+    page_size = 9
 
 
 class PostViewset(viewsets.ModelViewSet):
@@ -29,7 +29,11 @@ class UserPostsListView(ListAPIView):
     def get_queryset(self):
         return Post.objects.filter(state=True).filter(author=self.request.user).order_by('-created_at')
 
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.get_queryset().filter(author=request.user)
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     return Response(serializer.data, status=status.HTTP_200_OK)
+
+class UserPostsByUserListView(ListAPIView):
+    serializer_class = PostSerializer
+    pagination_class = CustomPagination
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return Post.objects.filter(state=True, author__id=user_id).order_by('-created_at')
