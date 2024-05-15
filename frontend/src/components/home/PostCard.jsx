@@ -1,7 +1,6 @@
 // libraries
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
-import { formatDistanceToNow, parseISO } from "date-fns";
 import {
   differenceInSeconds,
   differenceInMinutes,
@@ -10,6 +9,7 @@ import {
   differenceInMonths,
   differenceInYears,
 } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 // components
 import PostImage from "../../components/post/image/PostImage";
@@ -32,6 +32,11 @@ function PostCard() {
     nextPageFollowedPosts,
     setNextPageFollowedPosts,
   } = useContext(PostContext);
+
+  const { ref, inView } = useInView();
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
 
   const formatTimeAgo = (date) => {
     const seconds = differenceInSeconds(new Date(), date);
@@ -63,9 +68,9 @@ function PostCard() {
     return `${years} año${years === 1 ? "" : "s"}`;
   };
 
-  const { ref, inView } = useInView();
-
-  const [loading, setLoading] = useState(false);
+  const handleUserPage = (user_id) => {
+    navigate(`/profile/${user_id}`);
+  };
 
   useEffect(() => {
     if (!nextPageFollowedPosts || loading) return;
@@ -111,9 +116,17 @@ function PostCard() {
                     : "/user-defect.png"
                 }`}
                 alt=""
-                className="w-10 h-10 object-cover rounded-full"
+                className="w-10 h-10 object-cover rounded-full cursor-pointer"
+                onClick={() => {
+                  handleUserPage(post.author.id);
+                }}
               />
-              <span className="font-bold text-black dark:text-white">
+              <span
+                className="font-bold text-black dark:text-white cursor-pointer"
+                onClick={() => {
+                  handleUserPage(post.author.id);
+                }}
+              >
                 {post.author.username}
               </span>
               <span className="text-secondaryText dark:text-secondaryTextDark">

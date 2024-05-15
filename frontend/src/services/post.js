@@ -43,3 +43,17 @@ export const listUserPostService = async (access) => {
     throw err.response;
   }
 };
+
+export const listPostsByUseridService = async (data, access) => {
+  try {
+    const response = await axios.get(`${POST_API_BASE_URL}post/user/${data}`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.error("Error getting post:", err);
+    throw err.response;
+  }
+};

@@ -9,6 +9,7 @@ import NotFound from "../components/routes/NotFound";
 import Home from "../pages/Home";
 import Explore from "../pages/Explore";
 import Profile from "../pages/Profile";
+import UserDetail from "../pages/UserDetail";
 // import Dashboard from "../pages/Dashboard";
 
 function Rutas() {
@@ -24,6 +25,7 @@ function Rutas() {
           element={<h1>notificaciones - private</h1>}
         />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:user_id" element={<UserDetail />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
