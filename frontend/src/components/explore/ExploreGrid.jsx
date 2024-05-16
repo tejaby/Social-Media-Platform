@@ -1,6 +1,11 @@
 // libraries
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
+import { useDebounce } from "use-debounce";
+import { useNavigate } from "react-router-dom";
+
+// services
+import { listUsersService } from "../../services/user";
 
 // components
 import PostGrid from "../../components/post/grid/PostGrid";
@@ -23,14 +28,42 @@ function ExploreGrid() {
     useContext(PostContext);
 
   const { inView, ref } = useInView();
+  const navigate = useNavigate();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [value, setValue] = useState(null);
+
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 300);
 
   const handleInputChange = (e) => {
-    setValue(e.target.value);
+    setSearchTerm(e.target.value);
+    setSearchResults([]);
   };
+
+  const handleUserPage = (username) => {
+    navigate(`/profile/${username}`);
+  };
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await listUsersService(
+          debouncedSearchTerm,
+          token.access
+        );
+        setSearchResults(response.results);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    if (debouncedSearchTerm.length > 0 && token.access) {
+      fetchUsers();
+    }
+  }, [debouncedSearchTerm]);
 
   useEffect(() => {
     if (!nextPagePosts || loading) return;
@@ -110,59 +143,50 @@ function ExploreGrid() {
         </div>
         {isFocused && (
           <div className="fixed xs:absolute flex flex-col xs:top-full w-full h-screen xs:left-1/2 xs:transform xs:-translate-x-1/2 xs:w-3/4 xs:h-auto xs:rounded shadow shadow-colorHover dark:shadow-darkColorHover bg-white dark:bg-DarkColor p-2">
-            {!value ? (
-              <div className="p-2 text-center">
-                <span className="text-secondaryText dark:text-secondaryTextDark">
-                  Prueba a buscar personas
-                </span>
-              </div>
+            {searchResults.length === 0 ? (
+              searchTerm ? (
+                <div className="p-2 text-center">
+                  <span className="text-secondaryText dark:text-secondaryTextDark">
+                    No se encontraron usuarios
+                  </span>
+                </div>
+              ) : (
+                <div className="p-2 text-center">
+                  <span className="text-secondaryText dark:text-secondaryTextDark">
+                    Prueba a buscar personas
+                  </span>
+                </div>
+              )
             ) : (
-              <>
+              searchResults.map((user) => (
                 <div
                   className="flex justify-start rounded sm:hover:bg-colorHover sm:dark:hover:bg-darkColorHover p-2 cursor-pointer"
                   onClick={() => {
-                    setIsFocused(false);
+                    handleUserPage(user.username);
                   }}
+                  key={user.id}
                 >
                   <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden">
                     <img
                       className="w-full h-full object-cover"
-                      src="https://avatars.githubusercontent.com/u/123685633?v=4"
+                      src={`${
+                        user.profile_picture
+                          ? user.profile_picture
+                          : "/user-defect.png"
+                      }`}
                       alt="Avatar"
                     />
                   </div>
                   <div className="">
                     <p className="text-black dark:text-white">
-                      Nombre Apellido
+                      {`${user.first_name} ${user.last_name}`}
                     </p>
                     <p className="text-secondaryText dark:text-secondaryTextDark">
-                      @username
+                      {user.username}
                     </p>
                   </div>
                 </div>
-                <div
-                  className="flex justify-start rounded sm:hover:bg-colorHover sm:dark:hover:bg-darkColorHover p-2 cursor-pointer"
-                  onClick={() => {
-                    setIsFocused(false);
-                  }}
-                >
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden">
-                    <img
-                      className="w-full h-full object-cover"
-                      src="https://avatars.githubusercontent.com/u/123685633?v=4"
-                      alt="Avatar"
-                    />
-                  </div>
-                  <div className="">
-                    <p className="text-black dark:text-white">
-                      Nombre Apellido
-                    </p>
-                    <p className="text-secondaryText dark:text-secondaryTextDark">
-                      @username
-                    </p>
-                  </div>
-                </div>
-              </>
+              ))
             )}
           </div>
         )}
