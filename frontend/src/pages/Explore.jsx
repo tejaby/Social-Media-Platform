@@ -19,7 +19,7 @@ function Explore() {
   const { error } = useApiFetch(listPostService, setPosts, setNextPagePosts);
 
   return (
-    <div className="max-w-3xl mx-auto sm:my-2">
+    <div className="max-w-3xl mx-auto">
       <ExploreGrid />
     </div>
   );
