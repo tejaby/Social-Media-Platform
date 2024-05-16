@@ -73,6 +73,12 @@ class UserViewSet(viewsets.GenericViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+"""
+Vista basada en ListAPIView para listar usuarios filtrados por parámetros de la URL
+
+"""
+
+
 class UserListView(generics.ListAPIView):
     model = CustomUser
     serializer_class = UserListSerializer

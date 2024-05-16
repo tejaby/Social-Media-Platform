@@ -7,6 +7,10 @@ from apps.user.api.serializers import UserListSerializer
 # models
 from apps.post.models import Post
 
+"""
+Serializador para el listado, obtencion, creacion y actualizacion de posts
+
+"""
 
 class PostSerializer(serializers.ModelSerializer):
     author = UserListSerializer(read_only=True)

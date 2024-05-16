@@ -82,7 +82,7 @@ export const verifyTokenService = async (access) => {
 
 export const listUsersService = async (data, access) => {
   try {
-    let url = `${USER_API_BASE_URL}user/`;
+    let url = `${USER_API_BASE_URL}user/list/`;
     if (data) {
       url += `?username=${data}`;
     }
