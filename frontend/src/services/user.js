@@ -79,3 +79,21 @@ export const verifyTokenService = async (access) => {
     throw err.response;
   }
 };
+
+export const listUsersService = async (data, access) => {
+  try {
+    let url = `${USER_API_BASE_URL}user/`;
+    if (data) {
+      url += `?username=${data}`;
+    }
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.error("Error verifying token:", err);
+    throw err.response;
+  }
+};

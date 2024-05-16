@@ -1,6 +1,7 @@
 # rest_framework
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -12,6 +13,11 @@ from .serializers import UserSerializer
 
 # models
 from apps.user.models import CustomUser
+
+
+class CustomPagination(PageNumberPagination):
+    page_size = 3
+
 
 """
 Vista basada en GenericViewSet para el listado, obtencion, crecion, actualizacion y eliminacion de usuarios
@@ -65,3 +71,15 @@ class UserViewSet(viewsets.GenericViewSet):
         user_instance = user_serializer.save()
         serializer = self.get_serializer(user_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserListView(generics.ListAPIView):
+    model = CustomUser
+    serializer_class = UserListSerializer
+    pagination_class = CustomPagination
+
+    def get_queryset(self):
+        query_params = self.request.query_params
+        username = query_params.get('username', '')
+
+        return self.model.objects.filter(username__startswith=username).filter(is_active=True)
