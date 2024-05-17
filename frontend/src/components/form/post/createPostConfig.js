@@ -16,7 +16,10 @@ function createPostConfig() {
           value[0].type === "image/webp"
         );
       }),
-    content: yup.string().required("El campo de texto es obligatorio").max(200),
+    content: yup
+      .string()
+      .required("El comentario es obligatorio")
+      .max(200, "El comentario no puede tener más de 200 caracteres"),
   });
 
   const {

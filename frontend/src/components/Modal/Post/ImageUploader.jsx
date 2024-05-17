@@ -4,29 +4,55 @@ import { PostContext } from "../../../context/Post";
 
 // hooks
 import useFileReader from "../../../hooks/post/useFileReader";
+import UseSvgLoader from "../../../hooks/useSvgLoader";
+import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 
 // react
 import { useContext } from "react";
 
-function ImageUploader({ cover, setCover }) {
-  const { setCondition } = useContext(InterfaceContext);
+function ImageUploader({ setCover, condition }) {
+  const { theme, setCondition, showModalPost, setShowModalPost } =
+    useContext(InterfaceContext);
 
   const { register, errors } = useContext(PostContext);
 
   const { handleChangeFile } = useFileReader(setCover);
 
+  const { toggleShowModal } = useToggleModalPost(
+    setShowModalPost,
+    showModalPost
+  );
+
   return (
-    <>
-      <div className="border-b-2 border-colorHover dark:border-darkColorHover p-2">
-        <p className="text-base font-semibold text-black dark:text-white">
+    <div className={`basis-full ${!condition ? "flex flex-col" : "hidden"}`}>
+      <div className="flex justify-between items-center border-b-2 border-colorHover dark:border-darkColorHover p-2">
+        <button
+          onClick={() => {
+            toggleShowModal();
+          }}
+        >
+          {theme === "light" ? (
+            <UseSvgLoader
+              name="arrow-left"
+              options={{ width: "32px", height: "32px" }}
+            />
+          ) : (
+            <UseSvgLoader
+              name="arrow-leftDark"
+              options={{ width: "32px", height: "32px" }}
+            />
+          )}
+        </button>
+        <span className="text-base font-semibold text-black dark:text-white">
           Crear nueva publicación
-        </p>
+        </span>
+        <span />
       </div>
       <div className="grow flex flex-col justify-center items-center flex-wrap gap-4 w-full">
         <div className="w-full p-2">
-          <p className="text-base sm:text-lg text-black dark:text-white">
+          <span className="text-base sm:text-lg text-black dark:text-white">
             Seleccionar foto para publicar
-          </p>
+          </span>
         </div>
         <div className="w-full p-2 flex flex-wrap justify-center items-center">
           <input
@@ -43,7 +69,7 @@ function ImageUploader({ cover, setCover }) {
           <p>{errors.image?.message}</p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

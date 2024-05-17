@@ -29,38 +29,21 @@ function ModalPost() {
   return (
     <>
       <div
-        className={`flex flex-col h-2/5 ${
-          !condition
-            ? "w-4/5 xs:w-2/3 sm:w-3/5 md:w-1/2 lg:w-2/5 rounded-lg"
-            : "w-full h-full xs:w-11/12 sm:w-4/5 md:w-3/4 lg:w-4/5"
-        } xs:h-2/5 sm:h-1/2 lg:h-3/5 xs:rounded-lg bg-white dark:bg-DarkColor`}
+        className={`flex flex-col ${
+          !condition ? "w-full h-full" : "w-full h-full"
+        } xs:max-w-xl xs:h-5/6 xs:rounded-lg bg-white dark:bg-DarkColor`}
       >
-        <div className={`basis-full ${condition ? "hidden" : "flex"} flex-col`}>
-          <ImageUploader cover={cover} setCover={setCover} />
-        </div>
+        <ImageUploader setCover={setCover} condition={condition} />
         {condition && (
           <ImagePreviewAndCaption cover={cover} setCover={setCover} />
         )}
       </div>
-      <div
-        className={`${
-          condition ? "hidden" : "block"
-        } xs:block absolute top-0 right-0 p-4`}
-      >
+      <div className="hidden xs:block absolute top-0 right-0 p-4">
         <button
           onClick={() => {
-            const text = "¿Descartar post?";
-            if (condition) {
-              if (confirm(text)) {
-                setCondition(false);
-                toggleShowModal();
-                reset();
-              }
-            } else if (!condition) {
-              setCondition(false);
-              toggleShowModal();
-              reset();
-            }
+            setCondition(false);
+            toggleShowModal();
+            reset();
           }}
         >
           {theme === "light" ? (
