@@ -76,32 +76,42 @@ function ModalProfile() {
   return (
     <>
       <div
-        className={`flex flex-col w-full h-full xs:max-w-xl xs:h-3/5 sm:h-3/4 xs:rounded-lg bg-white dark:bg-DarkColor`}
+        className={`flex flex-col w-full h-full xs:max-w-xl xs:h-5/6 xs:rounded-lg bg-white dark:bg-DarkColor`}
       >
-        <div className="flex border-b-2 border-colorHover dark:border-darkColorHover p-2">
+        <div className="flex items-center p-2 border-b-2 border-colorHover dark:border-darkColorHover">
           <button
-            className="font-semibold text-black dark:text-white"
-            onClick={toggleShowModal}
+            onClick={() => {
+              toggleShowModal();
+            }}
           >
-            Salir
+            {theme === "light" ? (
+              <UseSvgLoader
+                name="arrow-left"
+                options={{ width: "32px", height: "32px" }}
+              />
+            ) : (
+              <UseSvgLoader
+                name="arrow-leftDark"
+                options={{ width: "32px", height: "32px" }}
+              />
+            )}
           </button>
           <p className="grow text-base font-semibold text-black dark:text-white">
             Editar perfil
           </p>
           <button
-            className="font-bold text-PrimaryColor hover:text-PrimaryColorHover"
+            className="rounded-full px-4 py-2 font-semibold text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
             onClick={handleSubmit}
           >
             Guardar
           </button>
         </div>
-
         <form className="grow flex flex-col" onSubmit={handleSubmit}>
           <div className="basis-1/2 flex flex-col justify-center">
             <div className="py-2">
-              <p className="text-base sm:text-lg text-black dark:text-white">
+              <label className="text-base sm:text-lg font-semibold text-black dark:text-white">
                 Actualizar foto de perfil
-              </p>
+              </label>
             </div>
             <div
               className={`${
@@ -122,14 +132,26 @@ function ModalProfile() {
                 <img
                   src={cover}
                   alt=""
-                  className="absolute w-full h-full xs:w-32 xs:h-32 sm:w-44 sm:h-44 object-cover xs:rounded-full"
+                  className="absolute w-44 h-44 rounded-full object-cover"
                 />
               )}
             </div>
+            {cover && (
+              <div className="p-2">
+                <label
+                  className="text-xs  text-PrimaryColor hover:text-PrimaryColorHover cursor-pointer"
+                  onClick={() => {
+                    setCover(null);
+                  }}
+                >
+                  Seleccionar otra foto
+                </label>
+              </div>
+            )}
           </div>
           <div className="basis-1/2 flex flex-col justify-center">
             <div className="basis-1/2 flex flex-col justify-center items-center">
-              <label className="text-base font-semibold sm:text-lg text-black dark:text-white">
+              <label className="text-base sm:text-lg font-semibold text-black dark:text-white">
                 Biografía
               </label>
               <textarea
@@ -143,13 +165,13 @@ function ModalProfile() {
               </p>
             </div>
             <div className="basis-1/2 flex flex-col justify-center items-center">
-              <label className="text-base font-semibold sm:text-lg text-black dark:text-white">
+              <label className="text-base sm:text-lg font-semibold text-black dark:text-white">
                 Sitio Web
               </label>
               <input
                 type="text"
                 name="website"
-                className="w-4/5 py-2 px-3 border rounded text-center focus:outline-none border-colorHover dark:border-darkColorHover text-black dark:text-white bg-white dark:bg-DarkColor"
+                className="w-4/5 py-2 px-3 border rounded text-sm xs:text-base text-center focus:outline-none border-colorHover dark:border-darkColorHover text-black dark:text-white bg-white dark:bg-DarkColor"
                 value={!!sitio ? sitio : ""}
                 onChange={handleChange}
               />
