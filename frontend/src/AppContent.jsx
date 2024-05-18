@@ -75,7 +75,7 @@ function AppContent() {
             {showModal && <ShowModal />}
           </>
         ) : (
-          <div className="">
+          <div>
             <Rutas />
           </div>
         )}

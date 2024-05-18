@@ -21,6 +21,9 @@ export default {
       screens: {
         xs: "425px",
       },
+      flexBasis: {
+        '30': '30%',
+      },
     },
   },
   darkMode: "class",

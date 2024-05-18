@@ -18,6 +18,7 @@ export function InterfaceContextProvider({ children }) {
 
   const [showModalProfile, setShowModalProfile] = useState(false);
   const [showModalPost, setShowModalPost] = useState(false);
+  const [showViewPost, setShowViewPost] = useState(false);
 
   // mostrar ImagePreviewAndCaption
   const [condition, setCondition] = useState(false);
@@ -33,6 +34,8 @@ export function InterfaceContextProvider({ children }) {
         setShowModalProfile,
         showModalPost,
         setShowModalPost,
+        showViewPost,
+        setShowViewPost,
         condition,
         setCondition,
         theme,
