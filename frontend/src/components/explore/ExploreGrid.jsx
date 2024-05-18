@@ -194,7 +194,7 @@ function ExploreGrid() {
       <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
         {posts.map((post, index) => (
           <div key={post.id}>
-            <PostGrid src={post.image} alt={post.author.username} />
+            <PostGrid src={post.image} alt={post.author.username} post={post} />
             {index === posts.length - 1 && <div ref={ref} />}
           </div>
         ))}
