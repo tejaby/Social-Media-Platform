@@ -1,5 +1,6 @@
 // context
 import { InterfaceContext } from "../../../context/Interface";
+import { PostContext } from "../../../context/Post";
 
 // hooks
 import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
@@ -7,8 +8,9 @@ import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 // react
 import { useContext } from "react";
 
-function UserPostGrid({ src, alt }) {
+function UserPostGrid({ src, alt, post }) {
   const { showViewPost, setShowViewPost } = useContext(InterfaceContext);
+  const { setViewPost } = useContext(PostContext);
 
   const { toggleShowModal } = useToggleModalPost(setShowViewPost, showViewPost);
   return (
@@ -17,7 +19,8 @@ function UserPostGrid({ src, alt }) {
       src={src}
       alt={alt}
       onClick={() => {
-        toggleShowModal()
+        setViewPost(post);
+        toggleShowModal();
       }}
     />
   );

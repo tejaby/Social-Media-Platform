@@ -190,9 +190,9 @@ function UserProfile() {
       </div>
 
       <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
-        {userPosts.map((p, index) => (
-          <div key={p.id}>
-            <UserPostGrid src={p.image} alt={p.author.username} />
+        {userPosts.map((post, index) => (
+          <div key={post.id}>
+            <UserPostGrid src={post.image} alt={post.author.username} post={post} />
             {index === userPosts.length - 1 && <div ref={ref} />}
           </div>
         ))}

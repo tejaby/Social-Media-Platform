@@ -180,7 +180,7 @@ function UserDetailProfile({
       <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
         {statePosts.map((post, index) => (
           <div key={post.id}>
-            <UserPostGrid src={post.image} alt={post.author.username} />
+            <UserPostGrid src={post.image} alt={post.author.username} post={post} />
             {index === statePosts.length - 1 && <div ref={ref} />}
           </div>
         ))}

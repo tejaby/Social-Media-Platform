@@ -18,6 +18,8 @@ export function PostContextProvider({ children }) {
   const [followedPosts, setFollowedPosts] = useState([]);
   const [nextPageFollowedPosts, setNextPageFollowedPosts] = useState(null);
 
+  const [viewPost, setViewPost] = useState(null);
+
   return (
     <PostContext.Provider
       value={{
@@ -35,6 +37,9 @@ export function PostContextProvider({ children }) {
         setFollowedPosts,
         nextPageFollowedPosts,
         setNextPageFollowedPosts,
+
+        viewPost,
+        setViewPost,
 
         register,
         errors,
