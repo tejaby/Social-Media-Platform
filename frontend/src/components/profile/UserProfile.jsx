@@ -30,7 +30,10 @@ function UserProfile() {
 
   const { inView, ref } = useInView();
 
+  // Estado para mostrar u el modal de configuración del perfil
   const [showAccountModal, setShowAccountModal] = useState(false);
+
+  // Estado para indicar si los datos están siendo cargados
   const [loading, setLoading] = useState(false);
 
   const { toggleShowModal } = useToggleModalPost(

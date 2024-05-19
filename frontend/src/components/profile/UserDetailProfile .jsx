@@ -32,6 +32,7 @@ function UserDetailProfile({
     ? format(new Date(viewUser.date_joined), "dd MMMM yyyy")
     : "";
 
+  // Estado para indicar si los datos están siendo cargados
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

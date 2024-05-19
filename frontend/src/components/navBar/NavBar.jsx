@@ -25,6 +25,7 @@ function navBar() {
     showModalPost
   );
 
+  // Estado para mostrar u el modal de configuración del perfil
   const [showAccountModal, setShowAccountModal] = useState(false);
 
   const toggleAccountModal = () => {

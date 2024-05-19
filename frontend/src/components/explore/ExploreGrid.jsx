@@ -30,10 +30,16 @@ function ExploreGrid() {
   const { inView, ref } = useInView();
   const navigate = useNavigate();
 
+  // Estado para almacenar los términos del input para buscar usuarios
   const [searchTerm, setSearchTerm] = useState("");
+
+  // Estado para almacenar los resultados de la búsqueda de usuarios
   const [searchResults, setSearchResults] = useState([]);
 
+  // Estado para indicar si los datos están siendo cargados
   const [loading, setLoading] = useState(false);
+
+  // Estado para indicar si el input del buscador de usuarios tiene el foco
   const [isFocused, setIsFocused] = useState(false);
 
   const [debouncedSearchTerm] = useDebounce(searchTerm, 300);

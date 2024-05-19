@@ -1,15 +1,13 @@
 // context
 import { UserContext } from "../../context/User";
 
-// hooks
-// import useTokenValidation from "../user/useTokenValidation";
-
 // react
 import { useEffect, useState, useContext } from "react";
 
 function useApiFetch(fetchFunction, contextSetter, contextSetterPage) {
   const { setUser, token, setToken } = useContext(UserContext);
 
+  // Estado para almacenar un error en caso de que ocurra durante la llamada a la API
   const [error, setError] = useState(null);
 
   useEffect(() => {

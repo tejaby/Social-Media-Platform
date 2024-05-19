@@ -1,17 +1,13 @@
 // context
 import { UserContext } from "../../context/User";
 
-// hooks
-// import useTokenLocalStorage from "./useTokenLocalStorage";
-
 // react
 import { useState, useContext } from "react";
 
 const useFormSubmit = (submitFunction) => {
   const { setUser, setToken } = useContext(UserContext);
 
-  // const { setToken, removeToken } = useTokenLocalStorage("authToken");
-
+  // Estado para almacenar errores en la operación de envío del formulario
   const [error, setError] = useState(null);
 
   const onSubmit = async (action, token = null, data = null, user = null) => {

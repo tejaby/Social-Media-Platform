@@ -24,6 +24,7 @@ function AppContent() {
   const { user, setUser, token, setToken } = useContext(UserContext);
   const { showModal, showModalProfile } = useContext(InterfaceContext);
 
+  // Estado para indicar si los datos están siendo cargados
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

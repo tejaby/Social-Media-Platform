@@ -26,9 +26,13 @@ function ModalProfile() {
 
   const { onSubmit } = useFormSubmit(updateUserService);
 
+  // Estado para almacenar la imagen de previsualización de la foto de perfil
   const [cover, setCover] = useState(null);
+  // Estado para almacenar la foto de perfil del usuario
   const [profilePicture, setProfilePicture] = useState(null);
+  // Estado para almacenar la biografía del usuario
   const [bio, setBio] = useState(user.biography);
+  // Estado para almacenar el sitio web del usuario
   const [sitio, setSitio] = useState(user.website);
 
   const { handleChangeFile } = useFileReader(setCover);

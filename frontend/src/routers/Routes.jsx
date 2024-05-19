@@ -1,4 +1,4 @@
-// Libraries
+// libraries
 import { Routes, Route, redirect } from "react-router-dom";
 
 // components

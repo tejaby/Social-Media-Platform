@@ -1,12 +1,8 @@
 // services
-// import { createPost } from "../../services/post";
 import { createPostService } from "../../services/post";
 
 // context
 import { UserContext } from "../../context/User";
-
-// hooks
-// import useTokenValidation from "../user/useTokenValidation";
 
 // react
 import { useState, useContext } from "react";
@@ -14,8 +10,7 @@ import { useState, useContext } from "react";
 function usePostActions() {
   const { token } = useContext(UserContext);
 
-  // const token = useTokenValidation();
-
+  // Estado para almacenar un error en caso de que ocurra durante la creación de un post
   const [error, setError] = useState(null);
 
   const submitPost = async (data) => {

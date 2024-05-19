@@ -24,15 +24,12 @@ function ModalPost() {
     showModalPost
   );
 
+  // Estado para guardar la imagen de previsualización del post al publicar una imagen
   const [cover, setCover] = useState(null);
 
   return (
     <>
-      <div
-        className={`flex flex-col ${
-          !condition ? "w-full h-full" : "w-full h-full"
-        } xs:max-w-xl xs:h-5/6 xs:rounded-lg bg-white dark:bg-DarkColor`}
-      >
+      <div className="flex flex-col w-full h-full xs:max-w-xl xs:h-5/6 xs:rounded-lg bg-white dark:bg-DarkColor">
         <ImageUploader setCover={setCover} condition={condition} />
         {condition && (
           <ImagePreviewAndCaption cover={cover} setCover={setCover} />

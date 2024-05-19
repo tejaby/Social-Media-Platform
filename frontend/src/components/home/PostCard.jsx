@@ -36,6 +36,7 @@ function PostCard() {
   const { ref, inView } = useInView();
   const navigate = useNavigate();
 
+  // Estado para indicar si los datos están siendo cargados
   const [loading, setLoading] = useState(false);
 
   const formatTimeAgo = (date) => {
@@ -69,7 +70,7 @@ function PostCard() {
   };
 
   const handleUserPage = (user) => {
-    setViewUser(user)
+    setViewUser(user);
     navigate(`/profile/${user.username}`);
   };
 
