@@ -15,8 +15,12 @@ export function UserContextProvider({ children }) {
       : null;
   });
 
+  const [viewUser, setViewUser] = useState(null);
+
   return (
-    <UserContext.Provider value={{ user, setUser, token, setToken }}>
+    <UserContext.Provider
+      value={{ user, setUser, token, setToken, viewUser, setViewUser }}
+    >
       {children}
     </UserContext.Provider>
   );

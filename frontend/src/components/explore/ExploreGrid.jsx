@@ -23,7 +23,7 @@ import { useContext, useEffect, useState } from "react";
 
 function ExploreGrid() {
   const { theme } = useContext(InterfaceContext);
-  const { setUser, token, setToken } = useContext(UserContext);
+  const { setUser, token, setToken, setViewUser } = useContext(UserContext);
   const { posts, setPosts, nextPagePosts, setNextPagePosts } =
     useContext(PostContext);
 
@@ -43,8 +43,9 @@ function ExploreGrid() {
     setSearchResults([]);
   };
 
-  const handleUserPage = (username) => {
-    navigate(`/profile/${username}`);
+  const handleUserPage = (user) => {
+    setViewUser(user);
+    navigate(`/profile/${user.username}`);
   };
 
   useEffect(() => {
@@ -162,7 +163,7 @@ function ExploreGrid() {
                 <div
                   className="flex justify-start rounded sm:hover:bg-colorHover sm:dark:hover:bg-darkColorHover p-2 cursor-pointer"
                   onClick={() => {
-                    handleUserPage(user.username);
+                    handleUserPage(user);
                   }}
                   key={user.id}
                 >
@@ -194,7 +195,7 @@ function ExploreGrid() {
       <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
         {posts.map((post, index) => (
           <div key={post.id}>
-            <PostGrid src={post.image} alt={post.author.username} post={post} />
+            <PostGrid post={post} />
             {index === posts.length - 1 && <div ref={ref} />}
           </div>
         ))}

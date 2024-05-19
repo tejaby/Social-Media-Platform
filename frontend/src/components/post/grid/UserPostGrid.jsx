@@ -8,7 +8,7 @@ import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 // react
 import { useContext } from "react";
 
-function UserPostGrid({ src, alt, post }) {
+function UserPostGrid({ post }) {
   const { showViewPost, setShowViewPost } = useContext(InterfaceContext);
   const { setViewPost } = useContext(PostContext);
 
@@ -16,8 +16,8 @@ function UserPostGrid({ src, alt, post }) {
   return (
     <img
       className="h-48 sm:h-60 lg:h-72 w-full max-w-full object-cover object-center cursor-pointer"
-      src={src}
-      alt={alt}
+      src={post.image}
+      alt={post.author.username}
       onClick={() => {
         setViewPost(post);
         toggleShowModal();

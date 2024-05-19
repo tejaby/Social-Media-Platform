@@ -1,6 +1,9 @@
+// libraries
+import { useParams } from "react-router-dom";
+
 // services
 import { listPostsByUseridService } from "../services/post";
-import { useParams } from "react-router-dom";
+import { listUsersService } from "../services/user";
 
 // components
 import UserDetailProfile from "../components/profile/UserDetailProfile ";
@@ -12,21 +15,29 @@ import { UserContext } from "../context/User";
 import { useContext, useState, useEffect } from "react";
 
 function UserDetail() {
-  const { token } = useContext(UserContext);
+  const { token, setViewUser } = useContext(UserContext);
 
   const { username } = useParams();
 
   const [currentPosts, setCurrentPosts] = useState([]);
   const [nextPageCurrentPosts, setNextPageCurrentPosts] = useState(null);
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await listPostsByUseridService(username, token.access);
-        setCurrentPosts(response.results);
-        setNextPageCurrentPosts(response.next);
-        setUser(response.results[0].author);
+        const userResponse = await listUsersService(username, token.access);
+        const user = userResponse.results.find(
+          (user) => user.username === username
+        );
+        if (user) {
+          setViewUser(user);
+        }
+        const postsResponse = await listPostsByUseridService(
+          username,
+          token.access
+        );
+        setCurrentPosts(postsResponse.results);
+        setNextPageCurrentPosts(postsResponse.next);
       } catch (err) {
         console.error(err);
         return;
@@ -45,7 +56,6 @@ function UserDetail() {
         setStatePosts={setCurrentPosts}
         statePage={nextPageCurrentPosts}
         setStatePage={setNextPageCurrentPosts}
-        stateUser={user}
       />
     </div>
   );

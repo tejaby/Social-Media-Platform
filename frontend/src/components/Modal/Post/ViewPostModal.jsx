@@ -14,6 +14,7 @@ import SvgButton from "../../../components/ui/SvgButton";
 
 // context
 import { InterfaceContext } from "../../../context/Interface";
+import { UserContext } from "../../../context/User";
 import { PostContext } from "../../../context/Post";
 
 // hooks
@@ -25,6 +26,8 @@ import { useContext } from "react";
 
 function ViewPostModal() {
   const { theme, showViewPost, setShowViewPost } = useContext(InterfaceContext);
+
+  const { setViewUser } = useContext(UserContext);
 
   const { viewPost, setViewPost } = useContext(PostContext);
 
@@ -62,8 +65,9 @@ function ViewPostModal() {
     return `${years} año${years === 1 ? "" : "s"}`;
   };
 
-  const handleUserPage = (username) => {
-    navigate(`/profile/${username}`);
+  const handleUserPage = (post) => {
+    setViewUser(post.author);
+    navigate(`/profile/${post.author.username}`);
   };
 
   return (
@@ -182,7 +186,7 @@ function ViewPostModal() {
                   onClick={() => {
                     setViewPost(null);
                     toggleShowModal();
-                    handleUserPage(viewPost.author.username);
+                    handleUserPage(viewPost);
                   }}
                 />
               </div>
@@ -191,7 +195,7 @@ function ViewPostModal() {
                 onClick={() => {
                   setViewPost(null);
                   toggleShowModal();
-                  handleUserPage(viewPost.author.username);
+                  handleUserPage(viewPost);
                 }}
               >
                 <span className="text-dark dark:text-white">{`${viewPost.author.first_name} ${viewPost.author.last_name}`}</span>

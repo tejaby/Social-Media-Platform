@@ -25,7 +25,7 @@ import { useContext, useEffect, useState } from "react";
 
 function PostCard() {
   const { theme } = useContext(InterfaceContext);
-  const { setUser, token, setToken } = useContext(UserContext);
+  const { setUser, token, setToken, setViewUser } = useContext(UserContext);
   const {
     followedPosts,
     setFollowedPosts,
@@ -68,8 +68,9 @@ function PostCard() {
     return `${years} año${years === 1 ? "" : "s"}`;
   };
 
-  const handleUserPage = (username) => {
-    navigate(`/profile/${username}`);
+  const handleUserPage = (user) => {
+    setViewUser(user)
+    navigate(`/profile/${user.username}`);
   };
 
   useEffect(() => {
@@ -118,13 +119,13 @@ function PostCard() {
                 alt=""
                 className="w-10 h-10 object-cover rounded-full cursor-pointer"
                 onClick={() => {
-                  handleUserPage(post.author.username);
+                  handleUserPage(post.author);
                 }}
               />
               <span
                 className="font-bold text-black dark:text-white cursor-pointer"
                 onClick={() => {
-                  handleUserPage(post.author.username);
+                  handleUserPage(post.author);
                 }}
               >
                 {post.author.username}

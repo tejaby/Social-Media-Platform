@@ -21,16 +21,15 @@ function UserDetailProfile({
   setStatePosts,
   statePage,
   setStatePage,
-  stateUser,
 }) {
   const { theme } = useContext(InterfaceContext);
 
-  const { token } = useContext(UserContext);
+  const { token, viewUser } = useContext(UserContext);
 
   const { inView, ref } = useInView();
 
-  const formattedDate = stateUser
-    ? format(new Date(stateUser.date_joined), "dd MMMM yyyy")
+  const formattedDate = viewUser
+    ? format(new Date(viewUser.date_joined), "dd MMMM yyyy")
     : "";
 
   const [loading, setLoading] = useState(false);
@@ -77,9 +76,9 @@ function UserDetailProfile({
           )}
         </button>
         <button className="flex gap-1 items-center">
-          {stateUser && (
+          {viewUser && (
             <span className="font-bold text-black dark:text-white">
-              {stateUser.username}
+              {viewUser.username}
             </span>
           )}
           {theme === "light" ? (
@@ -123,11 +122,11 @@ function UserDetailProfile({
       </div>
       <div className="flex flex-col justify-center items-center my-5">
         <div className="w-14 h-14 sm:w-16 sm:h-16">
-          {stateUser && (
+          {viewUser && (
             <img
               src={`${
-                stateUser.profile_picture
-                  ? stateUser.profile_picture
+                viewUser.profile_picture
+                  ? viewUser.profile_picture
                   : "/user-defect.png"
               }`}
               alt=""
@@ -135,12 +134,12 @@ function UserDetailProfile({
             />
           )}
         </div>
-        {stateUser && (
-          <span className="mt-3 text-black dark:text-white">{`${stateUser.first_name} ${stateUser.last_name}`}</span>
+        {viewUser && (
+          <span className="mt-3 text-black dark:text-white">{`${viewUser.first_name} ${viewUser.last_name}`}</span>
         )}
-        {stateUser && (
+        {viewUser && (
           <span className="mb-3 text-secondaryText dark:text-secondaryTextDark">
-            @{stateUser.username}
+            @{viewUser.username}
           </span>
         )}
         <div className="flex gap-10 text-sm">
@@ -157,30 +156,34 @@ function UserDetailProfile({
             <span className="text-black dark:text-white">seguidos</span>
           </div>
         </div>
-        {stateUser && (
+        {viewUser && (
           <p className="my-3 text-black dark:text-white">
-            {stateUser.biography ? stateUser.biography : "Nada por aquí..."}
+            {viewUser.biography ? viewUser.biography : "Nada por aquí..."}
           </p>
         )}
-        {stateUser && stateUser.website && (
+        {viewUser && viewUser.website && (
           <a
-            href={stateUser.website}
+            href={viewUser.website}
             className="mb-3 text-black dark:text-white hover:text-PrimaryColor dark:hover:text-PrimaryColor"
             target="_blank"
           >
-            {stateUser.website}
+            {viewUser.website}
           </a>
         )}
-        {stateUser && (
+        {viewUser && (
           <p className="text-secondaryText dark:text-secondaryTextDark">
-            {stateUser.date_joined && `Se unió: ${formattedDate}`}
+            {viewUser.date_joined && `Se unió: ${formattedDate}`}
           </p>
         )}
       </div>
       <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
         {statePosts.map((post, index) => (
           <div key={post.id}>
-            <UserPostGrid src={post.image} alt={post.author.username} post={post} />
+            <UserPostGrid
+              src={post.image}
+              alt={post.author.username}
+              post={post}
+            />
             {index === statePosts.length - 1 && <div ref={ref} />}
           </div>
         ))}
