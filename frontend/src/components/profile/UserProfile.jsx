@@ -1,7 +1,6 @@
 // libraries
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
-import { format } from "date-fns";
 
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
@@ -16,6 +15,9 @@ import { PostContext } from "../../context/Post";
 import UseSvgLoader from "../../hooks/useSvgLoader";
 import useToggleModalPost from "../../hooks/interface/useToggleModalPost";
 
+// utils
+import { formatDate } from "../../utils/dateUtils";
+
 // react
 import { useContext, useState, useEffect } from "react";
 
@@ -29,6 +31,8 @@ function UserProfile() {
     useContext(PostContext);
 
   const { inView, ref } = useInView();
+
+  const formattedDate = formatDate(user.date_joined);
 
   // Estado para mostrar u el modal de configuración del perfil
   const [showAccountModal, setShowAccountModal] = useState(false);
@@ -48,8 +52,6 @@ function UserProfile() {
   const { OptionsModalMobile } = OptionsModal({
     toggleAccountModal,
   });
-
-  const formattedDate = format(new Date(user.date_joined), "dd MMMM yyyy");
 
   useEffect(() => {
     if (!nextPageUserPosts || loading) return;

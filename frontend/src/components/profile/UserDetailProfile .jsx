@@ -1,7 +1,6 @@
 // libraries
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
-import { format } from "date-fns";
 
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
@@ -12,6 +11,9 @@ import { UserContext } from "../../context/User";
 
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
+
+// utils
+import { formatDate } from "../../utils/dateUtils";
 
 // react
 import { useState, useEffect, useContext } from "react";
@@ -28,9 +30,7 @@ function UserDetailProfile({
 
   const { inView, ref } = useInView();
 
-  const formattedDate = viewUser
-    ? format(new Date(viewUser.date_joined), "dd MMMM yyyy")
-    : "";
+  const formattedDate = viewUser ? formatDate(viewUser.date_joined) : "";
 
   // Estado para indicar si los datos están siendo cargados
   const [loading, setLoading] = useState(false);

@@ -1,14 +1,6 @@
 // libraries
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
-import {
-  differenceInSeconds,
-  differenceInMinutes,
-  differenceInHours,
-  differenceInDays,
-  differenceInMonths,
-  differenceInYears,
-} from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 // components
@@ -19,6 +11,9 @@ import SvgButton from "../../components/ui/SvgButton";
 import { InterfaceContext } from "../../context/Interface";
 import { UserContext } from "../../context/User";
 import { PostContext } from "../../context/Post";
+
+// utils
+import { formatTimeAgo } from "../../utils/dateUtils";
 
 // react
 import { useContext, useEffect, useState } from "react";
@@ -38,36 +33,6 @@ function PostCard() {
 
   // Estado para indicar si los datos están siendo cargados
   const [loading, setLoading] = useState(false);
-
-  const formatTimeAgo = (date) => {
-    const seconds = differenceInSeconds(new Date(), date);
-    if (seconds < 60) {
-      return `${seconds} segundo${seconds === 1 ? "" : "s"}`;
-    }
-
-    const minutes = differenceInMinutes(new Date(), date);
-    if (minutes < 60) {
-      return `${minutes} minuto${minutes === 1 ? "" : "s"}`;
-    }
-
-    const hours = differenceInHours(new Date(), date);
-    if (hours < 24) {
-      return `${hours} hora${hours === 1 ? "" : "s"}`;
-    }
-
-    const days = differenceInDays(new Date(), date);
-    if (days < 30) {
-      return `${days} dia${days === 1 ? "" : "s"}`;
-    }
-
-    const months = differenceInMonths(new Date(), date);
-    if (months < 12) {
-      return `${months} mes${months === 1 ? "" : "es"}`;
-    }
-
-    const years = differenceInYears(new Date(), date);
-    return `${years} año${years === 1 ? "" : "s"}`;
-  };
 
   const handleUserPage = (user) => {
     setViewUser(user);
