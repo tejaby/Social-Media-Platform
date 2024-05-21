@@ -8,7 +8,6 @@ export const loginService = async (data) => {
     const response = await axios.post(`${USER_API_BASE_URL}login/`, data);
     return response.data;
   } catch (err) {
-    console.error("Error logging:", err);
     throw err.response;
   }
 };
@@ -21,7 +20,6 @@ export const logoutService = async (refresh) => {
     );
     return response.data;
   } catch (err) {
-    console.error("Error logging out:", err);
     throw err.response;
   }
 };
@@ -34,7 +32,6 @@ export const refreshTokenService = async (refresh) => {
     );
     return response.data;
   } catch (err) {
-    console.error("Error refreshing token:", err);
     throw err.response;
   }
 };
@@ -47,7 +44,6 @@ export const verifyTokenService = async (access) => {
     );
     return response.data;
   } catch (err) {
-    console.error("Error verifying token:", err);
     throw err.response;
   }
 };

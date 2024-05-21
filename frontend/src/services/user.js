@@ -8,7 +8,6 @@ export const createUserService = async (data) => {
     const response = await axios.post(`${USER_API_BASE_URL}`, data);
     return response.data;
   } catch (err) {
-    console.error("Error creating user:", err);
     throw err.response;
   }
 };
@@ -22,7 +21,6 @@ export const updateUserService = async (user, data, access) => {
     });
     return response.data;
   } catch (err) {
-    console.error("Error updating user:", err);
     throw err.response;
   }
 };
@@ -40,7 +38,6 @@ export const listUsersService = async (data, access) => {
     });
     return response.data;
   } catch (err) {
-    console.error("Error verifying token:", err);
     throw err.response;
   }
 };

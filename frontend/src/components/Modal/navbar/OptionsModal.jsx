@@ -12,7 +12,7 @@ import { useAuthRequest } from "../../../hooks/user/useAuthRequest";
 import { useContext, useEffect } from "react";
 
 function OptionsModal({ toggleAccountModal }) {
-  const { executeRequest, error } = useAuthRequest(logoutService);
+  const { executeRequest } = useAuthRequest(logoutService);
 
   const { token } = useContext(UserContext);
 

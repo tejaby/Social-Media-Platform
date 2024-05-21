@@ -1,4 +1,7 @@
 // libraries
+import toast from "react-hot-toast";
+
+// libraries
 import { useParams } from "react-router-dom";
 
 // services
@@ -39,7 +42,7 @@ function UserDetail() {
         setCurrentPosts(postsResponse.results);
         setNextPageCurrentPosts(postsResponse.next);
       } catch (err) {
-        console.error(err);
+        toast.error(err.data.detail);
         return;
       }
     };

@@ -1,6 +1,3 @@
-// libraries
-import toast, { Toaster } from "react-hot-toast";
-
 // services
 import { createUserService } from "../../../services/user";
 
@@ -12,7 +9,7 @@ import getSignupConfig from "./getSignupConfig";
 import { useUserRequest } from "../../../hooks/user/useUserRequest";
 
 function Signup() {
-  const { executeRequest, error } = useUserRequest(createUserService);
+  const { executeRequest } = useUserRequest(createUserService);
 
   const { schema, formData, headers } = getSignupConfig();
 
@@ -20,18 +17,13 @@ function Signup() {
     executeRequest("create", data);
   };
 
-  // toast.error(`${error?.data.username}`);
-
   return (
-    <>
-      <FormGenerator
-        schema={schema}
-        formData={formData}
-        headers={headers}
-        handleFormSubmit={handleFormSubmit}
-      />
-      {/* {error && <Toaster position="bottom-center" reverseOrder={false} />} */}
-    </>
+    <FormGenerator
+      schema={schema}
+      formData={formData}
+      headers={headers}
+      handleFormSubmit={handleFormSubmit}
+    />
   );
 }
 

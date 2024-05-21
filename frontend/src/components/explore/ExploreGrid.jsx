@@ -3,6 +3,7 @@ import { useInView } from "react-intersection-observer";
 import axios from "axios";
 import { useDebounce } from "use-debounce";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 // services
 import { listUsersService } from "../../services/user";
@@ -63,6 +64,7 @@ function ExploreGrid() {
         );
         setSearchResults(response.results);
       } catch (err) {
+        toast.error(err.data.detail);
         console.error(err);
       }
     };

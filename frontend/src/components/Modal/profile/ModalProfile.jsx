@@ -25,7 +25,7 @@ function ModalProfile() {
     showModalProfile
   );
 
-  const { executeRequest, error } = useUserRequest(updateUserService);
+  const { executeRequest } = useUserRequest(updateUserService);
 
   // Estado para almacenar la imagen de previsualización de la foto de perfil
   const [cover, setCover] = useState(null);

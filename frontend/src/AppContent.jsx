@@ -1,5 +1,6 @@
 // libraries
 import { BrowserRouter } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 // services
 import { refreshTokenService } from "./services/auth";
@@ -71,6 +72,7 @@ function AppContent() {
           <Rutas />
         )}
       </div>
+      <Toaster position="bottom-center" reverseOrder={false} />
     </BrowserRouter>
   );
 }

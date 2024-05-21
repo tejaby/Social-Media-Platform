@@ -1,13 +1,17 @@
+// libraries
+import toast from "react-hot-toast";
+
 // context
 import { UserContext } from "../../context/User";
 
+// utils
+import { getErrorMessage } from "../../utils/getErrorMessage";
+
 // react
-import { useState, useContext } from "react";
+import { useContext } from "react";
 
 export const useAuthRequest = (service) => {
   const { setUser, setToken } = useContext(UserContext);
-
-  const [error, setError] = useState(null);
 
   const executeRequest = async (method, data = null, token = null) => {
     let response;
@@ -30,9 +34,10 @@ export const useAuthRequest = (service) => {
         localStorage.setItem("authToken", JSON.stringify(response));
       }
     } catch (err) {
-      setError(err);
+      const errorMessage = getErrorMessage(err);
+      toast.error(errorMessage);
     }
   };
 
-  return { executeRequest, error };
+  return { executeRequest };
 };
