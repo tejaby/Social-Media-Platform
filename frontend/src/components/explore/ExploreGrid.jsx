@@ -1,12 +1,12 @@
 // libraries
 import { useInView } from "react-intersection-observer";
-import axios from "axios";
 import { useDebounce } from "use-debounce";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 // services
 import { listUsersService } from "../../services/user";
+import { loadMorePostsService } from "../../services/post";
 
 // components
 import PostGrid from "../../components/post/grid/PostGrid";
@@ -24,7 +24,7 @@ import { useContext, useEffect, useState } from "react";
 
 function ExploreGrid() {
   const { theme } = useContext(InterfaceContext);
-  const { setUser, token, setToken, setViewUser } = useContext(UserContext);
+  const { token, setViewUser } = useContext(UserContext);
   const { posts, setPosts, nextPagePosts, setNextPagePosts } =
     useContext(PostContext);
 
@@ -64,8 +64,7 @@ function ExploreGrid() {
         );
         setSearchResults(response.results);
       } catch (err) {
-        toast.error(err.data.detail);
-        console.error(err);
+        toast.error(err.data.messages[0].message);
       }
     };
 
@@ -80,18 +79,14 @@ function ExploreGrid() {
     const loadMorePosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(nextPagePosts, {
-          headers: {
-            Authorization: `Bearer ${token.access}`,
-          },
-        });
-        setPosts([...posts, ...response.data.results]);
-        setNextPagePosts(response.data.next);
+        const response = await loadMorePostsService(
+          nextPagePosts,
+          token.access
+        );
+        setPosts([...posts, ...response.results]);
+        setNextPagePosts(response.next);
       } catch (err) {
-        setUser(null);
-        setToken(null);
-        localStorage.removeItem("authUser");
-        localStorage.removeItem("authToken");
+        toast.error(err.data.messages[0].message);
       } finally {
         setLoading(false);
       }
@@ -101,6 +96,7 @@ function ExploreGrid() {
       loadMorePosts();
     }
   }, [inView]);
+
   return (
     <>
       <div className="fixed xs:relative xs:py-2 min-w-full bg-white dark:bg-DarkColor">

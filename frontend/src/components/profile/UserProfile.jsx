@@ -1,6 +1,8 @@
 // libraries
 import { useInView } from "react-intersection-observer";
-import axios from "axios";
+import toast from "react-hot-toast";
+
+import { loadMorePostsService } from "../../services/post";
 
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
@@ -25,7 +27,7 @@ function UserProfile() {
   const { theme, showModalProfile, setShowModalProfile } =
     useContext(InterfaceContext);
 
-  const { user, setUser, token, setToken } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
 
   const { userPosts, setUserPosts, nextPageUserPosts, setNextPageUserPosts } =
     useContext(PostContext);
@@ -59,18 +61,15 @@ function UserProfile() {
     const loadMorePosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(nextPageUserPosts, {
-          headers: {
-            Authorization: `Bearer ${token.access}`,
-          },
-        });
-        setUserPosts([...userPosts, ...response.data.results]);
-        setNextPageUserPosts(response.data.next);
+        const response = await loadMorePostsService(
+          nextPageUserPosts,
+          token.access
+        );
+        setUserPosts([...userPosts, ...response.results]);
+        setNextPageUserPosts(response.next);
+        console.log(response);
       } catch (err) {
-        setUser(null);
-        setToken(null);
-        localStorage.removeItem("authUser");
-        localStorage.removeItem("authToken");
+        toast.error(err.data.messages[0].message);
       } finally {
         setLoading(false);
       }

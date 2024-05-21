@@ -1,6 +1,9 @@
 // libraries
 import { useInView } from "react-intersection-observer";
-import axios from "axios";
+import toast from "react-hot-toast";
+
+// services
+import { loadMorePostsService } from "../../services/post";
 
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
@@ -41,15 +44,11 @@ function UserDetailProfile({
     const loadMorePosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(statePage, {
-          headers: {
-            Authorization: `Bearer ${token.access}`,
-          },
-        });
-        setStatePosts([...statePosts, ...response.data.results]);
-        setStatePage(response.data.next);
+        const response = await loadMorePostsService(statePage, token.access);
+        setStatePosts([...statePosts, ...response.results]);
+        setStatePage(response.next);
       } catch (err) {
-        console.error(err);
+        toast.error(err.data.messages[0].message);
       } finally {
         setLoading(false);
       }

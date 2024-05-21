@@ -1,7 +1,10 @@
 // libraries
 import { useInView } from "react-intersection-observer";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
+// services
+import { loadMorePostsService } from "../../services/post";
 
 // components
 import PostImage from "../../components/post/image/PostImage";
@@ -20,7 +23,7 @@ import { useContext, useEffect, useState } from "react";
 
 function PostCard() {
   const { theme } = useContext(InterfaceContext);
-  const { setUser, token, setToken, setViewUser } = useContext(UserContext);
+  const { token, setViewUser } = useContext(UserContext);
   const {
     followedPosts,
     setFollowedPosts,
@@ -45,18 +48,14 @@ function PostCard() {
     const loadMorePosts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(nextPageFollowedPosts, {
-          headers: {
-            Authorization: `Bearer ${token.access}`,
-          },
-        });
-        setFollowedPosts([...followedPosts, ...response.data.results]);
-        setNextPageFollowedPosts(response.data.next);
+        const response = await loadMorePostsService(
+          nextPageFollowedPosts,
+          token.access
+        );
+        setFollowedPosts([...followedPosts, ...response.results]);
+        setNextPageFollowedPosts(response.next);
       } catch (err) {
-        setUser(null);
-        setToken(null);
-        localStorage.removeItem("authUser");
-        localStorage.removeItem("authToken");
+        toast.error(err.data.messages[0].message);
       } finally {
         setLoading(false);
       }

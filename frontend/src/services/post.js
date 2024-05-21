@@ -58,3 +58,16 @@ export const listPostsByUseridService = async (data, access) => {
     throw err.response;
   }
 };
+
+export const loadMorePostsService = async (nextPageUrl, access) => {
+  try {
+    const response = await axios.get(nextPageUrl, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};
