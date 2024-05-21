@@ -5,18 +5,26 @@ import { listPostService } from "../services/post";
 import ExploreGrid from "../components/explore/ExploreGrid";
 
 // context
+import { UserContext } from "../context/User";
 import { PostContext } from "../context/Post";
 
 // hooks
-import useApiFetch from "../hooks/post/useApiFetch";
+import { usePostRequest } from "../hooks/post/usePostRequest";
 
 // react
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 function Explore() {
+  const { token } = useContext(UserContext);
   const { setPosts, setNextPagePosts } = useContext(PostContext);
 
-  const { error } = useApiFetch(listPostService, setPosts, setNextPagePosts);
+  const { executeRequest } = usePostRequest(listPostService);
+
+  useEffect(() => {
+    if (token) {
+      executeRequest(setPosts, setNextPagePosts, token.access);
+    }
+  }, []);
 
   return (
     <div className="max-w-3xl mx-auto">

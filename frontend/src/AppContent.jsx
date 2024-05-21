@@ -26,7 +26,7 @@ function AppContent() {
   const { showModal } = useContext(InterfaceContext);
   const { token } = useContext(UserContext);
 
-  const { executeRequest, error } = useAuthRequest(refreshTokenService);
+  const { executeRequest } = useAuthRequest(refreshTokenService);
 
   // Estado para indicar si los datos están siendo cargados
   const [loading, setLoading] = useState(true);

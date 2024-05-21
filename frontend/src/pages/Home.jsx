@@ -10,25 +10,28 @@ import { UserContext } from "../context/User";
 import { PostContext } from "../context/Post";
 
 // hooks
-import useApiFetch from "../hooks/post/useApiFetch";
+import { usePostRequest } from "../hooks/post/usePostRequest";
 
 // react
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 function Home() {
   const { token } = useContext(UserContext);
+
   const { setFollowedPosts, setNextPageFollowedPosts } =
     useContext(PostContext);
 
-  const { error } = useApiFetch(
-    listUserPostService,
-    setFollowedPosts,
-    setNextPageFollowedPosts
-  );
+  const { executeRequest } = usePostRequest(listUserPostService);
 
   if (!token) {
     return <Form />;
   }
+
+  useEffect(() => {
+    if (token) {
+      executeRequest(setFollowedPosts, setNextPageFollowedPosts, token.access);
+    }
+  }, []);
 
   return (
     <div className="max-w-lg sm:max-w-xl mx-auto sm:my-2">
