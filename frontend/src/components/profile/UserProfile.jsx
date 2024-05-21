@@ -1,6 +1,5 @@
 // libraries
 import { useInView } from "react-intersection-observer";
-import toast from "react-hot-toast";
 
 import { loadMorePostsService } from "../../services/post";
 
@@ -16,6 +15,7 @@ import { PostContext } from "../../context/Post";
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
 import useToggleModalPost from "../../hooks/interface/useToggleModalPost";
+import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
 
 // utils
 import { formatDate } from "../../utils/dateUtils";
@@ -36,11 +36,10 @@ function UserProfile() {
 
   const formattedDate = formatDate(user.date_joined);
 
+  const { executeRequest, loading } = useMorePostRequest(loadMorePostsService);
+
   // Estado para mostrar u el modal de configuración del perfil
   const [showAccountModal, setShowAccountModal] = useState(false);
-
-  // Estado para indicar si los datos están siendo cargados
-  const [loading, setLoading] = useState(false);
 
   const { toggleShowModal } = useToggleModalPost(
     setShowModalProfile,
@@ -58,25 +57,14 @@ function UserProfile() {
   useEffect(() => {
     if (!nextPageUserPosts || loading) return;
 
-    const loadMorePosts = async () => {
-      try {
-        setLoading(true);
-        const response = await loadMorePostsService(
-          nextPageUserPosts,
-          token.access
-        );
-        setUserPosts([...userPosts, ...response.results]);
-        setNextPageUserPosts(response.next);
-        console.log(response);
-      } catch (err) {
-        toast.error(err.data.messages[0].message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (inView) {
-      loadMorePosts();
+      executeRequest(
+        userPosts,
+        setUserPosts,
+        setNextPageUserPosts,
+        nextPageUserPosts,
+        token.access
+      );
     }
   }, [inView]);
 

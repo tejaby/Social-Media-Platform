@@ -18,6 +18,7 @@ import { PostContext } from "../../context/Post";
 
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
+import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
 
 // react
 import { useContext, useEffect, useState } from "react";
@@ -31,14 +32,13 @@ function ExploreGrid() {
   const { inView, ref } = useInView();
   const navigate = useNavigate();
 
+  const { executeRequest, loading } = useMorePostRequest(loadMorePostsService);
+
   // Estado para almacenar los términos del input para buscar usuarios
   const [searchTerm, setSearchTerm] = useState("");
 
   // Estado para almacenar los resultados de la búsqueda de usuarios
   const [searchResults, setSearchResults] = useState([]);
-
-  // Estado para indicar si los datos están siendo cargados
-  const [loading, setLoading] = useState(false);
 
   // Estado para indicar si el input del buscador de usuarios tiene el foco
   const [isFocused, setIsFocused] = useState(false);
@@ -76,24 +76,14 @@ function ExploreGrid() {
   useEffect(() => {
     if (!nextPagePosts || loading) return;
 
-    const loadMorePosts = async () => {
-      try {
-        setLoading(true);
-        const response = await loadMorePostsService(
-          nextPagePosts,
-          token.access
-        );
-        setPosts([...posts, ...response.results]);
-        setNextPagePosts(response.next);
-      } catch (err) {
-        toast.error(err.data.messages[0].message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (inView) {
-      loadMorePosts();
+      executeRequest(
+        posts,
+        setPosts,
+        setNextPagePosts,
+        nextPagePosts,
+        token.access
+      );
     }
   }, [inView]);
 

@@ -1,7 +1,6 @@
 // libraries
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 
 // services
 import { loadMorePostsService } from "../../services/post";
@@ -15,11 +14,14 @@ import { InterfaceContext } from "../../context/Interface";
 import { UserContext } from "../../context/User";
 import { PostContext } from "../../context/Post";
 
+// hooks
+import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
+
 // utils
 import { formatTimeAgo } from "../../utils/dateUtils";
 
 // react
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 function PostCard() {
   const { theme } = useContext(InterfaceContext);
@@ -34,35 +36,24 @@ function PostCard() {
   const { ref, inView } = useInView();
   const navigate = useNavigate();
 
-  // Estado para indicar si los datos están siendo cargados
-  const [loading, setLoading] = useState(false);
-
   const handleUserPage = (user) => {
     setViewUser(user);
     navigate(`/profile/${user.username}`);
   };
 
+  const { executeRequest, loading } = useMorePostRequest(loadMorePostsService);
+
   useEffect(() => {
     if (!nextPageFollowedPosts || loading) return;
 
-    const loadMorePosts = async () => {
-      try {
-        setLoading(true);
-        const response = await loadMorePostsService(
-          nextPageFollowedPosts,
-          token.access
-        );
-        setFollowedPosts([...followedPosts, ...response.results]);
-        setNextPageFollowedPosts(response.next);
-      } catch (err) {
-        toast.error(err.data.messages[0].message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (inView) {
-      loadMorePosts();
+      executeRequest(
+        followedPosts,
+        setFollowedPosts,
+        setNextPageFollowedPosts,
+        nextPageFollowedPosts,
+        token.access
+      );
     }
   }, [inView]);
 

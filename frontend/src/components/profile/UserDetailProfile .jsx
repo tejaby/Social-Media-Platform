@@ -14,12 +14,13 @@ import { UserContext } from "../../context/User";
 
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
+import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
 
 // utils
 import { formatDate } from "../../utils/dateUtils";
 
 // react
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 
 function UserDetailProfile({
   statePosts,
@@ -35,27 +36,19 @@ function UserDetailProfile({
 
   const formattedDate = viewUser ? formatDate(viewUser.date_joined) : "";
 
-  // Estado para indicar si los datos están siendo cargados
-  const [loading, setLoading] = useState(false);
+  const { executeRequest, loading } = useMorePostRequest(loadMorePostsService);
 
   useEffect(() => {
     if (!statePage || loading) return;
 
-    const loadMorePosts = async () => {
-      try {
-        setLoading(true);
-        const response = await loadMorePostsService(statePage, token.access);
-        setStatePosts([...statePosts, ...response.results]);
-        setStatePage(response.next);
-      } catch (err) {
-        toast.error(err.data.messages[0].message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (inView) {
-      loadMorePosts();
+      executeRequest(
+        statePosts,
+        setStatePosts,
+        setStatePage,
+        statePage,
+        token.access
+      );
     }
   }, [inView]);
 
