@@ -7,13 +7,13 @@ import { UserContext } from "../../context/User";
 // react
 import { useContext } from "react";
 
-function ProtectedRoute({ children, isAllowed, redirectTo = "/home" }) {
-  const { user } = useContext(UserContext);
+const ProtectedRoute = ({ children }) => {
+  const { token } = useContext(UserContext);
 
-  if (!user) {
-    return <Navigate to={redirectTo} />;
+  if (!token) {
+    return <Navigate to="/home" />;
   }
   return children ? children : <Outlet />;
-}
+};
 
 export default ProtectedRoute;

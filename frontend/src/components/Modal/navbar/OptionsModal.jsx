@@ -1,18 +1,18 @@
 // services
-import { logoutService } from "../../../services/user";
+import { logoutService } from "../../../services/auth";
 
 // context
 import { UserContext } from "../../../context/User";
 import { InterfaceContext } from "../../../context/Interface";
 
 // hooks
-import useFormSubmit from "../../../hooks/user/useFormSubmit";
+import { useAuthRequest } from "../../../hooks/user/useAuthRequest";
 
 // react
 import { useContext, useEffect } from "react";
 
 function OptionsModal({ toggleAccountModal }) {
-  const { onSubmit } = useFormSubmit(logoutService);
+  const { executeRequest, error } = useAuthRequest(logoutService);
 
   const { token } = useContext(UserContext);
 
@@ -21,7 +21,7 @@ function OptionsModal({ toggleAccountModal }) {
   const handleFormSubmit = () => {
     setTheme("light");
     localStorage.removeItem("darkMode");
-    onSubmit("logout", null, { refresh: token.refresh });
+    executeRequest("logout", null, { refresh: token.refresh });
   };
 
   const handleChangeTheme = () => {

@@ -9,18 +9,18 @@ import FormGenerator from "../FormGenerator";
 import getSignupConfig from "./getSignupConfig";
 
 // hooks
-import useFormSubmit from "../../../hooks/user/useFormSubmit";
+import { useUserRequest } from "../../../hooks/user/useUserRequest";
 
 function Signup() {
-  const { error, onSubmit } = useFormSubmit(createUserService);
+  const { executeRequest, error } = useUserRequest(createUserService);
 
   const { schema, formData, headers } = getSignupConfig();
 
   const handleFormSubmit = (data) => {
-    onSubmit("create", null, data);
+    executeRequest("create", data);
   };
 
-  toast.error(`${error?.data.username}`);
+  // toast.error(`${error?.data.username}`);
 
   return (
     <>
@@ -30,7 +30,7 @@ function Signup() {
         headers={headers}
         handleFormSubmit={handleFormSubmit}
       />
-      {error && <Toaster position="bottom-center" reverseOrder={false} />}
+      {/* {error && <Toaster position="bottom-center" reverseOrder={false} />} */}
     </>
   );
 }

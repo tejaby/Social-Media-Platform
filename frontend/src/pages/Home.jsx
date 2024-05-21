@@ -16,8 +16,9 @@ import useApiFetch from "../hooks/post/useApiFetch";
 import { useContext } from "react";
 
 function Home() {
-  const { user } = useContext(UserContext);
-  const { setFollowedPosts, setNextPageFollowedPosts } = useContext(PostContext);
+  const { token } = useContext(UserContext);
+  const { setFollowedPosts, setNextPageFollowedPosts } =
+    useContext(PostContext);
 
   const { error } = useApiFetch(
     listUserPostService,
@@ -25,7 +26,7 @@ function Home() {
     setNextPageFollowedPosts
   );
 
-  if (!user) {
+  if (!token) {
     return <Form />;
   }
 

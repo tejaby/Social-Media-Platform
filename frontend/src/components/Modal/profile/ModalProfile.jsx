@@ -9,7 +9,8 @@ import { UserContext } from "../../../context/User";
 import UseSvgLoader from "../../../hooks/useSvgLoader";
 import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 import useFileReader from "../../../hooks/post/useFileReader";
-import useFormSubmit from "../../../hooks/user/useFormSubmit";
+
+import { useUserRequest } from "../../../hooks/user/useUserRequest";
 
 // react
 import { useContext, useState } from "react";
@@ -24,7 +25,7 @@ function ModalProfile() {
     showModalProfile
   );
 
-  const { onSubmit } = useFormSubmit(updateUserService);
+  const { executeRequest, error } = useUserRequest(updateUserService);
 
   // Estado para almacenar la imagen de previsualización de la foto de perfil
   const [cover, setCover] = useState(null);
@@ -69,12 +70,8 @@ function ModalProfile() {
       }
     }
 
-    try {
-      onSubmit("update", token.access, data, user.id);
-      toggleShowModal();
-    } catch (e) {
-      throw new Error(e);
-    }
+    executeRequest("update", data, token.access, user.id);
+    toggleShowModal();
   };
 
   return (
