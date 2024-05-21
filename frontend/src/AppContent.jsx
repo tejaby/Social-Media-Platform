@@ -15,38 +15,32 @@ import Navbar from "./components/navBar/NavBar";
 import { InterfaceContext } from "./context/Interface";
 import { UserContext } from "./context/User";
 
+// hooks
+import { useAuthRequest } from "./hooks/user/useAuthRequest";
+
 // react
 import { useContext, useEffect, useState } from "react";
 
 function AppContent() {
   const { showModal } = useContext(InterfaceContext);
-  const { setUser, token, setToken } = useContext(UserContext);
+  const { token } = useContext(UserContext);
+
+  const { executeRequest, error } = useAuthRequest(refreshTokenService);
 
   // Estado para indicar si los datos están siendo cargados
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const refreshAuthToken = async () => {
-      try {
-        const response = await refreshTokenService({ refresh: token.refresh });
-        setToken(response);
-        localStorage.setItem("authToken", JSON.stringify(response));
-      } catch (err) {
-        setUser(null);
-        setToken(null);
-        localStorage.removeItem("authUser");
-        localStorage.removeItem("authToken");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (token && loading) {
-      refreshAuthToken();
+      executeRequest("refresh", null, { refresh: token.refresh }).finally(
+        () => {
+          setLoading(false);
+        }
+      );
     }
 
     const refreshPeriodically = setInterval(() => {
-      refreshAuthToken();
+      executeRequest("refresh", null, { refresh: token.refresh });
     }, 240000);
 
     return () => {

@@ -24,6 +24,10 @@ export const useAuthRequest = (service) => {
         setToken(null);
         localStorage.removeItem("authUser");
         localStorage.removeItem("authToken");
+      } else if (method === "refresh") {
+        response = await service(token);
+        setToken(response);
+        localStorage.setItem("authToken", JSON.stringify(response));
       }
     } catch (err) {
       setError(err);
