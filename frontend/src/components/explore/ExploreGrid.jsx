@@ -20,12 +20,15 @@ import { PostContext } from "../../context/Post";
 import UseSvgLoader from "../../hooks/useSvgLoader";
 import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
 
+// utils
+import { getUserErrorMessage } from "../../utils/getErrorMessage";
+
 // react
 import { useContext, useEffect, useState } from "react";
 
 function ExploreGrid() {
   const { theme } = useContext(InterfaceContext);
-  const { token, setViewUser } = useContext(UserContext);
+  const { setUser, token, setToken, setViewUser } = useContext(UserContext);
   const { posts, setPosts, nextPagePosts, setNextPagePosts } =
     useContext(PostContext);
 
@@ -64,7 +67,14 @@ function ExploreGrid() {
         );
         setSearchResults(response.results);
       } catch (err) {
-        toast.error(err.data.messages[0].message);
+        const errorMessage = getUserErrorMessage(err, "search");
+        toast.error(errorMessage);
+        setTimeout(() => {
+          setUser(null);
+          setToken(null);
+          localStorage.removeItem("authUser");
+          localStorage.removeItem("authToken");
+        }, 5000);
       }
     };
 

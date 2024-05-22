@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { UserContext } from "../../context/User";
 
 // utils
-import { getErrorMessage } from "../../utils/getErrorMessage";
+import { getUserErrorMessage } from "../../utils/getErrorMessage";
 
 // react
 import { useContext } from "react";
@@ -33,8 +33,14 @@ export const useUserRequest = (service) => {
         localStorage.setItem("authUser", JSON.stringify(response));
       }
     } catch (err) {
-      const errorMessage = getErrorMessage(err);
+      const errorMessage = getUserErrorMessage(err, method);
       toast.error(errorMessage);
+      setTimeout(() => {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("authUser");
+        localStorage.removeItem("authToken");
+      }, 5000);
     }
   };
 

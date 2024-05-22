@@ -1,7 +1,18 @@
 // libraries
 import toast from "react-hot-toast";
 
+// context
+import { UserContext } from "../../context/User";
+
+// utils
+import { getPostErrorMessage } from "../../utils/getErrorMessage";
+
+// react
+import { useContext } from "react";
+
 export const usePostRequest = (service) => {
+  const { setUser, setToken } = useContext(UserContext);
+
   const executeRequest = async (
     contextSetter,
     contextSetterPage,
@@ -12,7 +23,14 @@ export const usePostRequest = (service) => {
       contextSetter(response.results);
       contextSetterPage(response.next);
     } catch (err) {
-      toast.error(err.data.detail);
+      const errorMessage = getPostErrorMessage(err);
+      toast.error(errorMessage);
+      setTimeout(() => {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("authUser");
+        localStorage.removeItem("authToken");
+      }, 5000);
     }
   };
 
