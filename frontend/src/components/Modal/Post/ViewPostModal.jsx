@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 
 // components
-import SvgButton from "../../../components/ui/SvgButton";
+import OptionsMenu from "../../../components/modal/post/OptionsMenu";
 
 // context
 import { InterfaceContext } from "../../../context/Interface";
@@ -17,7 +17,7 @@ import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
 import { formatTimeAgo } from "../../../utils/dateUtils";
 
 // react
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 function ViewPostModal() {
   const { theme, showViewPost, setShowViewPost } = useContext(InterfaceContext);
@@ -30,6 +30,13 @@ function ViewPostModal() {
 
   const navigate = useNavigate();
 
+  // Estado para mostrar u ocultar el menú de opciones abierto
+  const [openDropdown, setOpenDropdown] = useState(false);
+
+  const toggleDropdown = () => {
+    setOpenDropdown(!openDropdown);
+  };
+
   const handleUserPage = (post) => {
     setViewUser(post.author);
     navigate(`/profile/${post.author.username}`);
@@ -38,7 +45,7 @@ function ViewPostModal() {
   return (
     <>
       <div className="absolute w-full top-0 lg:hidden">
-        <div className="flex justify-between p-2">
+        <div className="relative flex justify-between p-2">
           <button
             onClick={() => {
               setViewPost(null);
@@ -57,7 +64,7 @@ function ViewPostModal() {
               />
             )}
           </button>
-          <button>
+          <button onClick={toggleDropdown}>
             {theme === "light" ? (
               <UseSvgLoader
                 name="dots"
@@ -71,6 +78,11 @@ function ViewPostModal() {
             )}
           </button>
         </div>
+        <div className="relative lg:hidden">
+          {openDropdown && (
+            <OptionsMenu toggleDropdown={toggleDropdown} viewPost={viewPost} />
+          )}
+        </div>
       </div>
 
       <div className="lg:hidden w-full h-full xs:max-w-xl xs:h-full flex flex-col justify-between bg-white dark:bg-DarkColor">
@@ -81,47 +93,73 @@ function ViewPostModal() {
             className="w-full h-full object-contain"
           />
         </div>
-        <div className="flex justify-evenly items-center p-2">
+        <div className="flex flex-col p-2">
+          <div className="flex gap-2 items-center">
+            <span
+              className="font-semibold text-black dark:text-white cursor-pointer"
+              onClick={() => {
+                setViewPost(null);
+                toggleShowModal();
+                handleUserPage(viewPost);
+              }}
+            >
+              {viewPost.author.username}
+            </span>
+            <span className="text-secondaryText dark:text-secondaryTextDark">
+              {formatTimeAgo(new Date(viewPost.created_at))}
+            </span>
+          </div>
+          <p className="text-sm xs:text-base text-justify text-black dark:text-white">
+            {viewPost.content}
+          </p>
+        </div>
+        <div className="flex justify-evenly items-center p-2 border-t-2 border-colorHover dark:border-darkColorHover">
           <div className="flex items-center">
-            {theme === "light" ? (
-              <SvgButton
-                name="heart"
-                options={{ width: "32px", height: "32px" }}
-              />
-            ) : (
-              <SvgButton
-                name="heartDark"
-                options={{ width: "32px", height: "32px" }}
-              />
-            )}
+            <button>
+              {theme === "light" ? (
+                <UseSvgLoader
+                  name="heart"
+                  options={{ width: "32px", height: "32px" }}
+                />
+              ) : (
+                <UseSvgLoader
+                  name="heartDark"
+                  options={{ width: "32px", height: "32px" }}
+                />
+              )}
+            </button>
             <span className="text-black dark:text-white">0</span>
           </div>
           <div className="flex items-center">
-            {theme === "light" ? (
-              <SvgButton
-                name="message-circle-2"
-                options={{ width: "32px", height: "32px" }}
-              />
-            ) : (
-              <SvgButton
-                name="message-circle-2Dark"
-                options={{ width: "32px", height: "32px" }}
-              />
-            )}
+            <button>
+              {theme === "light" ? (
+                <UseSvgLoader
+                  name="message-circle-2"
+                  options={{ width: "32px", height: "32px" }}
+                />
+              ) : (
+                <UseSvgLoader
+                  name="message-circle-2Dark"
+                  options={{ width: "32px", height: "32px" }}
+                />
+              )}
+            </button>
             <span className="text-black dark:text-white">3</span>
           </div>
           <div className="flex items-center">
-            {theme === "light" ? (
-              <SvgButton
-                name="chart-line"
-                options={{ width: "32px", height: "32px" }}
-              />
-            ) : (
-              <SvgButton
-                name="chart-lineDark"
-                options={{ width: "32px", height: "32px" }}
-              />
-            )}
+            <button>
+              {theme === "light" ? (
+                <UseSvgLoader
+                  name="chart-line"
+                  options={{ width: "32px", height: "32px" }}
+                />
+              ) : (
+                <UseSvgLoader
+                  name="chart-lineDark"
+                  options={{ width: "32px", height: "32px" }}
+                />
+              )}
+            </button>
             <span className="text-black dark:text-white">54</span>
           </div>
         </div>
@@ -129,14 +167,14 @@ function ViewPostModal() {
 
       <div className="hidden lg:flex lg:justify-between w-full h-full">
         <div className="xl:block"></div>
-        <div className="basis-2/4 xl:basis-2/5 h-full bg-white dark:bg-DarkColor">
+        <div className="max-w-2xl xl:max-w-3xl h-full bg-white dark:bg-DarkColor">
           <img
             src={viewPost.image}
             alt=""
             className="w-full h-full object-contain"
           />
         </div>
-        <div className="basis-30 xl:basis-1/5 h-full flex flex-col bg-white dark:bg-DarkColor border-l-2 border-colorHover dark:border-darkColorHover">
+        <div className="w-80 h-full flex flex-col bg-white dark:bg-DarkColor border-l-2 border-colorHover dark:border-darkColorHover">
           <div className="basis-1/10 flex justify-between p-2 border-b-2 border-colorHover dark:border-darkColorHover">
             <div className="flex items-center gap-2 cursor-pointer">
               <div className="w-12 h-12 rounded-full overflow-hidden">
@@ -170,7 +208,7 @@ function ViewPostModal() {
               </div>
             </div>
             <div>
-              <button>
+              <button onClick={toggleDropdown}>
                 {theme === "light" ? (
                   <UseSvgLoader
                     name="dots"
@@ -185,6 +223,14 @@ function ViewPostModal() {
               </button>
             </div>
           </div>
+          <div className="relative">
+            {openDropdown && (
+              <OptionsMenu
+                toggleDropdown={toggleDropdown}
+                viewPost={viewPost}
+              />
+            )}
+          </div>
           <div className="basis-30 flex flex-col gap-2 items-start justify-center p-2 border-b-2 border-colorHover dark:border-darkColorHover">
             <p className="text-black dark:text-white text-justify">
               {viewPost.content}
@@ -196,45 +242,51 @@ function ViewPostModal() {
           <div className="basis-1/10 border-b-2 border-colorHover dark:border-darkColorHover">
             <div className="h-full flex justify-evenly items-center">
               <div className="flex items-center">
-                {theme === "light" ? (
-                  <SvgButton
-                    name="heart"
-                    options={{ width: "32px", height: "32px" }}
-                  />
-                ) : (
-                  <SvgButton
-                    name="heartDark"
-                    options={{ width: "32px", height: "32px" }}
-                  />
-                )}
+                <button>
+                  {theme === "light" ? (
+                    <UseSvgLoader
+                      name="heart"
+                      options={{ width: "32px", height: "32px" }}
+                    />
+                  ) : (
+                    <UseSvgLoader
+                      name="heartDark"
+                      options={{ width: "32px", height: "32px" }}
+                    />
+                  )}
+                </button>
                 <span className="text-black dark:text-white">0</span>
               </div>
               <div className="flex items-center">
-                {theme === "light" ? (
-                  <SvgButton
-                    name="message-circle-2"
-                    options={{ width: "32px", height: "32px" }}
-                  />
-                ) : (
-                  <SvgButton
-                    name="message-circle-2Dark"
-                    options={{ width: "32px", height: "32px" }}
-                  />
-                )}
+                <button>
+                  {theme === "light" ? (
+                    <UseSvgLoader
+                      name="message-circle-2"
+                      options={{ width: "32px", height: "32px" }}
+                    />
+                  ) : (
+                    <UseSvgLoader
+                      name="message-circle-2Dark"
+                      options={{ width: "32px", height: "32px" }}
+                    />
+                  )}
+                </button>
                 <span className="text-black dark:text-white">3</span>
               </div>
               <div className="flex items-center">
-                {theme === "light" ? (
-                  <SvgButton
-                    name="chart-line"
-                    options={{ width: "32px", height: "32px" }}
-                  />
-                ) : (
-                  <SvgButton
-                    name="chart-lineDark"
-                    options={{ width: "32px", height: "32px" }}
-                  />
-                )}
+                <button>
+                  {theme === "light" ? (
+                    <UseSvgLoader
+                      name="chart-line"
+                      options={{ width: "32px", height: "32px" }}
+                    />
+                  ) : (
+                    <UseSvgLoader
+                      name="chart-lineDark"
+                      options={{ width: "32px", height: "32px" }}
+                    />
+                  )}
+                </button>
                 <span className="text-black dark:text-white">54</span>
               </div>
             </div>

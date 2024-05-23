@@ -111,9 +111,12 @@ function ImagePreviewAndCaption({ cover, setCover }) {
                   />
                 </div>
               </div>
-              <div className="w-full p-2">
+              <div className="w-full flex flex-col p-2">
                 <span className="font-semibold text-black dark:text-white">
                   {errors.content?.message}
+                </span>
+                <span className="font-semibold text-black dark:text-white">
+                  {errors.image?.message}
                 </span>
               </div>
             </div>

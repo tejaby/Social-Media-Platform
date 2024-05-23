@@ -2,7 +2,7 @@
 import { NavLink } from "react-router-dom";
 
 // components
-import OptionsModal from "../../components/Modal/navbar/OptionsModal";
+import OptionsModal from "../../components/modal/navbar/OptionsModal";
 
 // context
 import { UserContext } from "../../context/User";

@@ -19,8 +19,6 @@ function OptionsModal({ toggleAccountModal }) {
   const { theme, setTheme } = useContext(InterfaceContext);
 
   const handleFormSubmit = () => {
-    // setTheme("light");
-    // localStorage.removeItem("darkMode");
     executeRequest("logout", null, { refresh: token.refresh });
   };
 
