@@ -43,5 +43,9 @@ export const getPostErrorMessage = (error, method) => {
     if (error.data.detail) {
       return "Token inválido o caducado al intentar archivar post";
     }
+  } else if (method === "activate") {
+    if (error.data.detail) {
+      return "Token inválido o caducado al intentar hacer visible el post";
+    }
   }
 };

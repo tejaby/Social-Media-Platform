@@ -54,6 +54,11 @@ function usePostActions() {
         toast.success("El post ha sido archivado con éxito");
         toggleModal(setShowViewPost, showViewPost);
         navigate("/explore");
+      } else if (method === "activate") {
+        await service(id, token);
+        toast.success("El post ahora es visible para todos");
+        toggleModal(setShowViewPost, showViewPost);
+        navigate("/explore");
       }
     } catch (err) {
       const errorMessage = getPostErrorMessage(err, method);

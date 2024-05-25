@@ -109,3 +109,20 @@ export const deactivatePostService = async (post_id, access) => {
     throw err.response;
   }
 };
+
+export const activatePostService = async (post_id, access) => {
+  try {
+    const response = await axios.put(
+      `${POST_API_BASE_URL}activate/${post_id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err.response;
+  }
+};

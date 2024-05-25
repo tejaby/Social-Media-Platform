@@ -3,6 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView
 from rest_framework.pagination import PageNumberPagination
+from django.shortcuts import get_object_or_404
 
 # serializers
 from .serializers import PostSerializer
@@ -27,6 +28,11 @@ class PostViewset(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Post.objects.filter(state=True).order_by('-created_at')
+
+    def destroy(self, request, *args, **kwargs):
+        instance = get_object_or_404(Post, pk=kwargs['pk'])
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 """

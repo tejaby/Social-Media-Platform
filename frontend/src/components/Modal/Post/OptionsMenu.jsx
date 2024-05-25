@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   deletePostService,
   deactivatePostService,
+  activatePostService,
 } from "../../../services/post";
 
 // context
@@ -57,6 +58,18 @@ function OptionsMenu({ toggleDropdown, viewPost }) {
     }
   };
 
+  const activatePost = () => {
+    if (token) {
+      executeRequestPost(
+        activatePostService,
+        "activate",
+        null,
+        token.access,
+        viewPost.id
+      );
+    }
+  };
+
   return (
     <div
       className="absolute flex flex-col w-48 p-2 border border-colorHover dark:border-darkColorHover rounded-xl right-2 top-full bg-white dark:bg-DarkColor z-10"
@@ -70,14 +83,22 @@ function OptionsMenu({ toggleDropdown, viewPost }) {
           Eliminar
         </button>
       )}
-      {user.id === viewPost.author.id && (
-        <button
-          className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
-          onClick={deactivatePost}
-        >
-          Archivar
-        </button>
-      )}
+      {user.id === viewPost.author.id &&
+        (viewPost.state ? (
+          <button
+            className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
+            onClick={deactivatePost}
+          >
+            Archivar
+          </button>
+        ) : (
+          <button
+            className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
+            onClick={activatePost}
+          >
+            Hacer Público
+          </button>
+        ))}
       {user.id !== viewPost.author.id && (
         <button
           className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
