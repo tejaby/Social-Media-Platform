@@ -1,5 +1,5 @@
-// libraries
-import { useNavigate } from "react-router-dom";
+// services
+import { createPostService } from "../../../services/post";
 
 // context
 import { InterfaceContext } from "../../../context/Interface";
@@ -8,43 +8,27 @@ import { PostContext } from "../../../context/Post";
 
 // hooks
 import usePostActions from "../../../hooks/post/usePostActions";
-import useModal from '../../../hooks/interface/useModal'
 import UseSvgLoader from "../../../hooks/useSvgLoader";
 
 // react
 import { useContext } from "react";
 
-function ImagePreviewAndCaption({ cover, setCover }) {
-  const { theme, showModalPost, setShowModalPost, setCondition } =
-    useContext(InterfaceContext);
+function ImagePreviewAndCaption({ cover }) {
+  const { theme, setCondition } = useContext(InterfaceContext);
 
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
 
   const { register, errors, reset, handleSubmit } = useContext(PostContext);
 
-  const { toggleModal } = useModal(
-    setShowModalPost,
-    showModalPost
-  );
+  const { executeRequestPost } = usePostActions();
 
-  const { submitPost } = usePostActions();
-
-  const navigate = useNavigate();
-
-  const onSubmit = (v) => {
+  const createPost = (value) => {
     const data = new FormData();
-    data.append("content", v.content);
-    data.append("image", v.image[0]);
+    data.append("content", value.content);
+    data.append("image", value.image[0]);
     data.append("state", true);
-    try {
-      submitPost(data);
-      toggleModal();
-      setCover(null);
-      setCondition(false);
-      reset();
-      navigate("/explore");
-    } catch (e) {
-      throw new Error(e);
+    if (token) {
+      executeRequestPost(createPostService, "create", data, token.access);
     }
   };
 
@@ -53,8 +37,8 @@ function ImagePreviewAndCaption({ cover, setCover }) {
       <div className="flex justify-between items-center border-b-2 p-2 border-colorHover dark:border-darkColorHover">
         <button
           onClick={() => {
-            setCondition(false);
             reset();
+            setCondition(false);
           }}
         >
           {theme === "light" ? (
@@ -71,7 +55,7 @@ function ImagePreviewAndCaption({ cover, setCover }) {
         </button>
         <button
           className="rounded-full px-4 py-2 font-semibold text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
-          onClick={handleSubmit(onSubmit)}
+          onClick={handleSubmit(createPost)}
         >
           Postear
         </button>
@@ -79,7 +63,7 @@ function ImagePreviewAndCaption({ cover, setCover }) {
       <div className="grow">
         <form
           className="w-full h-full flex flex-col gap-2"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(createPost)}
         >
           <div className="basis-3/5 relative">
             <img

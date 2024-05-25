@@ -1,60 +1,56 @@
 // libraries
 import axios from "axios";
 
-const POST_API_BASE_URL = "http://localhost:8000/api/";
+const POST_API_BASE_URL = "http://localhost:8000/api/post/";
 
 export const createPostService = async (data, access) => {
   try {
-    const response = await axios.post(`${POST_API_BASE_URL}post/`, data, {
+    const response = await axios.post(`${POST_API_BASE_URL}`, data, {
       headers: {
         Authorization: `Bearer ${access}`,
       },
     });
     return response.data;
   } catch (err) {
-    console.error("Error creating post:", err);
     throw err.response;
   }
 };
 
 export const listPostService = async (access) => {
   try {
-    const response = await axios.get(`${POST_API_BASE_URL}post/`, {
+    const response = await axios.get(`${POST_API_BASE_URL}`, {
       headers: {
         Authorization: `Bearer ${access}`,
       },
     });
     return response.data;
   } catch (err) {
-    console.error("Error listing posts:", err);
     throw err.response;
   }
 };
 
 export const listUserPostService = async (access) => {
   try {
-    const response = await axios.get(`${POST_API_BASE_URL}post/user/`, {
+    const response = await axios.get(`${POST_API_BASE_URL}user/`, {
       headers: {
         Authorization: `Bearer ${access}`,
       },
     });
     return response.data;
   } catch (err) {
-    console.error("Error getting post:", err);
     throw err.response;
   }
 };
 
 export const listPostsByUseridService = async (data, access) => {
   try {
-    const response = await axios.get(`${POST_API_BASE_URL}post/user/${data}`, {
+    const response = await axios.get(`${POST_API_BASE_URL}user/${data}`, {
       headers: {
         Authorization: `Bearer ${access}`,
       },
     });
     return response.data;
   } catch (err) {
-    console.error("Error getting post:", err);
     throw err.response;
   }
 };
@@ -66,6 +62,35 @@ export const loadMorePostsService = async (nextPageUrl, access) => {
         Authorization: `Bearer ${access}`,
       },
     });
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+export const deletePostService = async (post_id, access) => {
+  try {
+    const response = await axios.delete(`${POST_API_BASE_URL}${post_id}/`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+export const deactivatePostService = async (post_id, access) => {
+  try {
+    const response = await axios.delete(
+      `${POST_API_BASE_URL}deactivate/${post_id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
     return response.data;
   } catch (err) {
     throw err.response;

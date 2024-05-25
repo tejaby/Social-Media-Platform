@@ -1,21 +1,30 @@
 // libraries
 import { useNavigate } from "react-router-dom";
 
+// services
+import {
+  deletePostService,
+  deactivatePostService,
+} from "../../../services/post";
+
 // context
 import { InterfaceContext } from "../../../context/Interface";
 import { UserContext } from "../../../context/User";
 
 // hooks
 import useModal from "../../../hooks/interface/useModal";
+import usePostActions from "../../../hooks/post/usePostActions";
 
 // react
 import { useContext } from "react";
 
 function OptionsMenu({ toggleDropdown, viewPost }) {
   const { showViewPost, setShowViewPost } = useContext(InterfaceContext);
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
 
   const { toggleModal } = useModal(setShowViewPost, showViewPost);
+
+  const { executeRequestPost } = usePostActions();
 
   const navigate = useNavigate();
 
@@ -24,18 +33,48 @@ function OptionsMenu({ toggleDropdown, viewPost }) {
     toggleModal();
   };
 
+  const deletePost = () => {
+    if (token) {
+      executeRequestPost(
+        deletePostService,
+        "delete",
+        null,
+        token.access,
+        viewPost.id
+      );
+    }
+  };
+
+  const deactivatePost = () => {
+    if (token) {
+      executeRequestPost(
+        deactivatePostService,
+        "deactivate",
+        null,
+        token.access,
+        viewPost.id
+      );
+    }
+  };
+
   return (
     <div
       className="absolute flex flex-col w-48 p-2 border border-colorHover dark:border-darkColorHover rounded-xl right-2 top-full bg-white dark:bg-DarkColor z-10"
       onClick={toggleDropdown}
     >
       {user.id === viewPost.author.id && (
-        <button className="text-start rounded-xl py-2 px-3 text-red-600 hover:bg-colorHover dark:hover:bg-darkColorHover">
+        <button
+          className="text-start rounded-xl py-2 px-3 text-red-600 hover:bg-colorHover dark:hover:bg-darkColorHover"
+          onClick={deletePost}
+        >
           Eliminar
         </button>
       )}
       {user.id === viewPost.author.id && (
-        <button className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover">
+        <button
+          className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
+          onClick={deactivatePost}
+        >
           Archivar
         </button>
       )}

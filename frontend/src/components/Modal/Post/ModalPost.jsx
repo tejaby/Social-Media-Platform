@@ -28,16 +28,14 @@ function ModalPost() {
     <>
       <div className="flex flex-col w-full h-full xs:max-w-xl xs:h-5/6 xs:rounded-lg bg-white dark:bg-DarkColor">
         <ImageUploader setCover={setCover} condition={condition} />
-        {condition && (
-          <ImagePreviewAndCaption cover={cover} setCover={setCover} />
-        )}
+        {condition && <ImagePreviewAndCaption cover={cover} />}
       </div>
       <div className="hidden xs:block absolute top-0 right-0 p-4">
         <button
           onClick={() => {
+            reset();
             setCondition(false);
             toggleModal();
-            reset();
           }}
         >
           {theme === "light" ? (

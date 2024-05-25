@@ -1,29 +1,62 @@
-// services
-import { createPostService } from "../../services/post";
+// libraries
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 // context
-import { UserContext } from "../../context/User";
+import { InterfaceContext } from "../../context/Interface";
+import { PostContext } from "../../context/Post";
+
+// hooks
+import useModal from "../../hooks/interface/useModal";
+
+// utils
+import { getPostErrorMessage } from "../../utils/getErrorMessage";
 
 // react
-import { useState, useContext } from "react";
+import { useContext } from "react";
 
 function usePostActions() {
-  const { token } = useContext(UserContext);
+  const { showViewPost, setShowViewPost, setCondition } =
+    useContext(InterfaceContext);
 
-  // Estado para almacenar un error en caso de que ocurra durante la creación de un post
-  const [error, setError] = useState(null);
+  const { reset } = useContext(PostContext);
 
-  const submitPost = async (data) => {
-    if (token) {
-      try {
-        const response = await createPostService(data, token.access);
-        setError(null);
-      } catch (e) {
-        setError(e.data);
+  const { toggleModal } = useModal(setShowViewPost, showViewPost);
+
+  const navigate = useNavigate();
+
+  const executeRequestPost = async (
+    service,
+    method,
+    data = null,
+    token = null,
+    id = null
+  ) => {
+    try {
+      if (method === "create") {
+        await service(data, token);
+        reset();
+        setCondition(false);
+        toggleModal();
+        navigate("/explore");
+      } else if (method === "delete") {
+        await service(id, token);
+        toast.success("El post ha sido eliminado con éxito");
+        toggleModal();
+        navigate("/explore");
+      } else if (method === "deactivate") {
+        await service(id, token);
+        toast.success("El post ha sido archivado con éxito");
+        toggleModal();
+        navigate("/explore");
       }
+    } catch (err) {
+      const errorMessage = getPostErrorMessage(err, method);
+      toast.error(errorMessage);
     }
   };
-  return { error, submitPost };
+
+  return { executeRequestPost };
 }
 
 export default usePostActions;

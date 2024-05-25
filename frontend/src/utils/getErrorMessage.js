@@ -26,8 +26,22 @@ export const getAuthErrorMessage = (error, method) => {
   }
 };
 
-export const getPostErrorMessage = (error) => {
-  if (error.data.detail) {
-    return "Token inválido o caducado al intentar obtener posts";
+export const getPostErrorMessage = (error, method) => {
+  if (method === "get") {
+    if (error.data.detail) {
+      return "Token inválido o caducado al intentar obtener posts";
+    }
+  } else if (method === "create") {
+    if (error.data.detail) {
+      return "Token inválido o caducado al intentar crear post";
+    }
+  } else if (method === "delete") {
+    if (error.data.detail) {
+      return "Token inválido o caducado al intentar eliminar post";
+    }
+  } else if (method === "deactivate") {
+    if (error.data.detail) {
+      return "Token inválido o caducado al intentar archivar post";
+    }
   }
 };
