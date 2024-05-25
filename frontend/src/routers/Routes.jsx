@@ -22,7 +22,11 @@ function Rutas() {
         <Route path="/explore" element={<Explore />} />
         <Route
           path="/notifications"
-          element={<h1>notificaciones - private</h1>}
+          element={
+            <h1 className="text-black dark:text-white">
+              notificaciones - private
+            </h1>
+          }
         />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:username" element={<UserDetail />} />

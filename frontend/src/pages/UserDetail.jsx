@@ -1,5 +1,6 @@
 // libraries
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 // libraries
 import { useParams } from "react-router-dom";
@@ -18,9 +19,11 @@ import { UserContext } from "../context/User";
 import { useContext, useState, useEffect } from "react";
 
 function UserDetail() {
-  const { token, setViewUser } = useContext(UserContext);
+  const { user, token, setViewUser } = useContext(UserContext);
 
   const { username } = useParams();
+
+  const navigate = useNavigate();
 
   const [currentPosts, setCurrentPosts] = useState([]);
   const [nextPageCurrentPosts, setNextPageCurrentPosts] = useState(null);
@@ -29,12 +32,17 @@ function UserDetail() {
     const fetchData = async () => {
       try {
         const userResponse = await listUsersService(username, token.access);
-        const user = userResponse.results.find(
+        const user_current = userResponse.results.find(
           (user) => user.username === username
         );
-        if (user) {
-          setViewUser(user);
+        if (!user_current) {
+          navigate("*");
+          return
         }
+        if (user_current.id === user.id) {
+          navigate("/profile");
+        }
+        setViewUser(user_current);
         const postsResponse = await listPostsByUseridService(
           username,
           token.access
