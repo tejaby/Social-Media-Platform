@@ -18,11 +18,11 @@ function Explore() {
   const { token } = useContext(UserContext);
   const { setPosts, setNextPagePosts } = useContext(PostContext);
 
-  const { executeRequest } = usePostRequest(listPostService);
+  const { executeRequest } = usePostRequest();
 
   useEffect(() => {
     if (token) {
-      executeRequest(setPosts, setNextPagePosts, token.access);
+      executeRequest(listPostService, setPosts, setNextPagePosts, token.access);
     }
   }, []);
 

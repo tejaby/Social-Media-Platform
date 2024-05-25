@@ -36,13 +36,14 @@ function UserDetailProfile({
 
   const formattedDate = viewUser ? formatDate(viewUser.date_joined) : "";
 
-  const { executeRequest, loading } = useMorePostRequest(loadMorePostsService);
+  const { executeRequest, loading } = useMorePostRequest();
 
   useEffect(() => {
     if (!statePage || loading) return;
 
     if (inView) {
       executeRequest(
+        loadMorePostsService,
         statePosts,
         setStatePosts,
         setStatePage,

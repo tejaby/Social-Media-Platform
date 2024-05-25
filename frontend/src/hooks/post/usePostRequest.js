@@ -10,10 +10,11 @@ import { getPostErrorMessage } from "../../utils/getErrorMessage";
 // react
 import { useContext } from "react";
 
-export const usePostRequest = (service) => {
+export const usePostRequest = () => {
   const { setUser, setToken } = useContext(UserContext);
 
   const executeRequest = async (
+    service,
     contextSetter,
     contextSetterPage,
     token = null

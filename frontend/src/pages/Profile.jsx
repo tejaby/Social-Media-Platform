@@ -1,5 +1,8 @@
 // services
-import { listUserPostService } from "../services/post";
+import {
+  listUserPostService,
+  listUserInactivePostService,
+} from "../services/post";
 
 // components
 import UserProfile from "../components/profile/UserProfile";
@@ -16,13 +19,29 @@ import { useContext, useEffect } from "react";
 
 function Profile() {
   const { token } = useContext(UserContext);
-  const { setUserPosts, setNextPageUserPosts } = useContext(PostContext);
+  const {
+    setUserPosts,
+    setNextPageUserPosts,
+    setArchivedPosts,
+    setNextPageArchivedPosts,
+  } = useContext(PostContext);
 
-  const { executeRequest } = usePostRequest(listUserPostService);
+  const { executeRequest } = usePostRequest();
 
   useEffect(() => {
     if (token) {
-      executeRequest(setUserPosts, setNextPageUserPosts, token.access);
+      executeRequest(
+        listUserPostService,
+        setUserPosts,
+        setNextPageUserPosts,
+        token.access
+      );
+      executeRequest(
+        listUserInactivePostService,
+        setArchivedPosts,
+        setNextPageArchivedPosts,
+        token.access
+      );
     }
   }, []);
 

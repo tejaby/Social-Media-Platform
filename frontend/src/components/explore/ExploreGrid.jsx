@@ -35,7 +35,7 @@ function ExploreGrid() {
   const { inView, ref } = useInView();
   const navigate = useNavigate();
 
-  const { executeRequest, loading } = useMorePostRequest(loadMorePostsService);
+  const { executeRequest, loading } = useMorePostRequest();
 
   // Estado para almacenar los términos del input para buscar usuarios
   const [searchTerm, setSearchTerm] = useState("");
@@ -87,6 +87,7 @@ function ExploreGrid() {
 
     if (inView) {
       executeRequest(
+        loadMorePostsService,
         posts,
         setPosts,
         setNextPagePosts,

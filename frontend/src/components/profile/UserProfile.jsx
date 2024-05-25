@@ -29,23 +29,38 @@ function UserProfile() {
 
   const { user, token } = useContext(UserContext);
 
-  const { userPosts, setUserPosts, nextPageUserPosts, setNextPageUserPosts } =
-    useContext(PostContext);
+  const {
+    userPosts,
+    setUserPosts,
+    nextPageUserPosts,
+    setNextPageUserPosts,
+    archivedPosts,
+    setArchivedPosts,
+    nextPageArchivedPosts,
+    setNextPageArchivedPosts,
+  } = useContext(PostContext);
 
   const { inView, ref } = useInView();
 
   const formattedDate = formatDate(user.date_joined);
 
-  const { executeRequest, loading } = useMorePostRequest(loadMorePostsService);
+  const { executeRequest, loading } = useMorePostRequest();
+
+  const { toggleModal } = useModal(setShowModalProfile, showModalProfile);
 
   // Estado para mostrar u el modal de configuración del perfil
   const [showAccountModal, setShowAccountModal] = useState(false);
 
-  const { toggleModal } = useModal(
-    setShowModalProfile,
-    showModalProfile
-  );
+  // Estado para indicar si la pestaña activa es la de publicaciones o la de archivados
+  const [isActiveTab, setIsActiveTab] = useState(true);
 
+  const activateTab = () => {
+    setIsActiveTab(true);
+  };
+
+  const deactivateTab = () => {
+    setIsActiveTab(false);
+  };
   const toggleAccountModal = () => {
     setShowAccountModal(!showAccountModal);
   };
@@ -57,12 +72,28 @@ function UserProfile() {
   useEffect(() => {
     if (!nextPageUserPosts || loading) return;
 
-    if (inView) {
+    if (inView & isActiveTab) {
       executeRequest(
+        loadMorePostsService,
         userPosts,
         setUserPosts,
         setNextPageUserPosts,
         nextPageUserPosts,
+        token.access
+      );
+    }
+  }, [inView]);
+
+  useEffect(() => {
+    if (!nextPageArchivedPosts || loading) return;
+
+    if (inView & !isActiveTab) {
+      executeRequest(
+        loadMorePostsService,
+        archivedPosts,
+        setArchivedPosts,
+        setNextPageArchivedPosts,
+        nextPageArchivedPosts,
         token.access
       );
     }
@@ -180,14 +211,68 @@ function UserProfile() {
           {user.date_joined && `Se unió: ${formattedDate}`}
         </p>
       </div>
-
+      <div className="flex justify-evenly border-b-2 border-colorHover dark:border-darkColorHover cursor-pointer">
+        <div
+          className={`basis-1/2 md:basis-1/3 flex justify-center items-center p-2 hover:bg-colorHover dark:hover:bg-darkColorHover ${
+            isActiveTab && "border-b-2 border-PrimaryColor"
+          }`}
+          onClick={activateTab}
+        >
+          <button className="hidden xs:inline-block">
+            {theme === "light" ? (
+              <UseSvgLoader
+                name="layout-collage"
+                options={{ width: "32px", height: "32px" }}
+              />
+            ) : (
+              <UseSvgLoader
+                name="layout-collageDark"
+                options={{ width: "32px", height: "32px" }}
+              />
+            )}
+          </button>
+          <span className="font-semibold text-black dark:text-white">
+            Publicaciones
+          </span>
+        </div>
+        <div
+          className={`basis-1/2 md:basis-1/3 flex justify-center items-center p-2 hover:bg-colorHover dark:hover:bg-darkColorHover ${
+            !isActiveTab && "border-b-2 border-PrimaryColor"
+          }`}
+          onClick={deactivateTab}
+        >
+          <button className="hidden xs:inline-block">
+            {theme === "light" ? (
+              <UseSvgLoader
+                name="archive"
+                options={{ width: "32px", height: "32px" }}
+              />
+            ) : (
+              <UseSvgLoader
+                name="archiveDark"
+                options={{ width: "32px", height: "32px" }}
+              />
+            )}
+          </button>
+          <span className="font-semibold text-black dark:text-white">
+            Archivados
+          </span>
+        </div>
+      </div>
       <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
-        {userPosts.map((post, index) => (
-          <div key={post.id}>
-            <UserPostGrid post={post} />
-            {index === userPosts.length - 1 && <div ref={ref} />}
-          </div>
-        ))}
+        {isActiveTab
+          ? userPosts.map((post, index) => (
+              <div key={post.id}>
+                <UserPostGrid post={post} />
+                {index === userPosts.length - 1 && <div ref={ref} />}
+              </div>
+            ))
+          : archivedPosts.map((post, index) => (
+              <div key={post.id}>
+                <UserPostGrid post={post} />
+                {index === archivedPosts.length - 1 && <div ref={ref} />}
+              </div>
+            ))}
       </div>
     </div>
   );

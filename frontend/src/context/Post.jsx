@@ -17,6 +17,10 @@ export function PostContextProvider({ children }) {
   const [userPosts, setUserPosts] = useState([]);
   const [nextPageUserPosts, setNextPageUserPosts] = useState(null);
 
+  // Estados para publicaciones archivadas del usuario autenticado y el enlace a la siguiente página
+  const [archivedPosts, setArchivedPosts] = useState([]);
+  const [nextPageArchivedPosts, setNextPageArchivedPosts] = useState(null);
+
   // Estados para publicaciones de usuarios seguidos y el enlace a la siguiente página
   const [followedPosts, setFollowedPosts] = useState([]);
   const [nextPageFollowedPosts, setNextPageFollowedPosts] = useState(null);
@@ -36,6 +40,11 @@ export function PostContextProvider({ children }) {
         setUserPosts,
         nextPageUserPosts,
         setNextPageUserPosts,
+
+        archivedPosts,
+        setArchivedPosts,
+        nextPageArchivedPosts,
+        setNextPageArchivedPosts,
 
         followedPosts,
         setFollowedPosts,

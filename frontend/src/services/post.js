@@ -42,6 +42,19 @@ export const listUserPostService = async (access) => {
   }
 };
 
+export const listUserInactivePostService = async (access) => {
+  try {
+    const response = await axios.get(`${POST_API_BASE_URL}user/inactive/`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
 export const listPostsByUseridService = async (data, access) => {
   try {
     const response = await axios.get(`${POST_API_BASE_URL}user/${data}`, {

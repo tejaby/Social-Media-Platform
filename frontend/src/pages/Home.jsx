@@ -21,7 +21,7 @@ function Home() {
   const { setFollowedPosts, setNextPageFollowedPosts } =
     useContext(PostContext);
 
-  const { executeRequest } = usePostRequest(listUserPostService);
+  const { executeRequest } = usePostRequest();
 
   if (!token) {
     return <Form />;
@@ -29,7 +29,12 @@ function Home() {
 
   useEffect(() => {
     if (token) {
-      executeRequest(setFollowedPosts, setNextPageFollowedPosts, token.access);
+      executeRequest(
+        listUserPostService,
+        setFollowedPosts,
+        setNextPageFollowedPosts,
+        token.access
+      );
     }
   }, []);
 

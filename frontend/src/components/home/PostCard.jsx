@@ -41,7 +41,7 @@ function PostCard() {
     navigate(`/profile/${username}`);
   };
 
-  const { executeRequest, loading } = useMorePostRequest(loadMorePostsService);
+  const { executeRequest, loading } = useMorePostRequest();
 
   // Estado para rastrear cuál post tiene el menú de opciones abierto
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -59,6 +59,7 @@ function PostCard() {
 
     if (inView) {
       executeRequest(
+        loadMorePostsService,
         followedPosts,
         setFollowedPosts,
         setNextPageFollowedPosts,

@@ -10,13 +10,14 @@ import { useState, useContext } from "react";
 // utils
 import { getPostErrorMessage } from "../../utils/getErrorMessage";
 
-export const useMorePostRequest = (service) => {
+export const useMorePostRequest = () => {
   const { setUser, setToken } = useContext(UserContext);
 
   // Estado para indicar si los datos están siendo cargados
   const [loading, setLoading] = useState(false);
 
   const executeRequest = async (
+    service,
     context,
     contextSetter,
     contextSetterPage,

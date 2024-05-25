@@ -44,6 +44,20 @@ class UserPostsListView(ListAPIView):
 
 
 """
+Vista basada en ListAPIView para listar los posts desactivados del usuario autenticado
+
+"""
+
+
+class UserInactivePostsListView(ListAPIView):
+    serializer_class = PostSerializer
+    pagination_class = CustomPagination
+
+    def get_queryset(self):
+        return Post.objects.filter(state=False).filter(author=self.request.user).order_by('-created_at')
+
+
+"""
 Vista basada en ListAPIView para listar los posts de un usuario específico según el nombre de usuario
 
 """
