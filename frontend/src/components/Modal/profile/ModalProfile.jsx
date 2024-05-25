@@ -7,7 +7,7 @@ import { UserContext } from "../../../context/User";
 
 // hooks
 import UseSvgLoader from "../../../hooks/useSvgLoader";
-import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
+import useModal from "../../../hooks/interface/useModal";
 import useFileReader from "../../../hooks/post/useFileReader";
 
 import { useUserRequest } from "../../../hooks/user/useUserRequest";
@@ -20,7 +20,7 @@ function ModalProfile() {
     useContext(InterfaceContext);
   const { user, token } = useContext(UserContext);
 
-  const { toggleShowModal } = useToggleModalPost(
+  const { toggleModal } = useModal(
     setShowModalProfile,
     showModalProfile
   );
@@ -71,7 +71,7 @@ function ModalProfile() {
     }
 
     executeRequest("update", data, token.access, user.id);
-    toggleShowModal();
+    toggleModal();
   };
 
   return (
@@ -82,7 +82,7 @@ function ModalProfile() {
         <div className="flex items-center p-2 border-b-2 border-colorHover dark:border-darkColorHover">
           <button
             onClick={() => {
-              toggleShowModal();
+              toggleModal();
             }}
           >
             {theme === "light" ? (
@@ -188,7 +188,7 @@ function ModalProfile() {
       <div className="hidden xs:block absolute top-0 right-0 p-4">
         <button
           onClick={() => {
-            toggleShowModal();
+            toggleModal();
           }}
         >
           {theme === "light" ? (

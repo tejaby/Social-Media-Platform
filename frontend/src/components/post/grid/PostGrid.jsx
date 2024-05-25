@@ -3,7 +3,7 @@ import { InterfaceContext } from "../../../context/Interface";
 import { PostContext } from "../../../context/Post";
 
 // hooks
-import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
+import useModal from "../../../hooks/interface/useModal";
 
 // react
 import { useContext } from "react";
@@ -12,7 +12,7 @@ function PostGrid({ post }) {
   const { showViewPost, setShowViewPost } = useContext(InterfaceContext);
   const { setViewPost } = useContext(PostContext);
 
-  const { toggleShowModal } = useToggleModalPost(setShowViewPost, showViewPost);
+  const { toggleModal } = useModal(setShowViewPost, showViewPost);
   return (
     <img
       className="h-48 sm:h-60 lg:h-72 w-full max-w-full object-cover object-center"
@@ -20,7 +20,7 @@ function PostGrid({ post }) {
       alt={post.author.username}
       onClick={() => {
         setViewPost(post);
-        toggleShowModal();
+        toggleModal();
       }}
     />
   );

@@ -14,7 +14,7 @@ import { PostContext } from "../../context/Post";
 
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
-import useToggleModalPost from "../../hooks/interface/useToggleModalPost";
+import useModal from "../../hooks/interface/useModal";
 import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
 
 // utils
@@ -41,7 +41,7 @@ function UserProfile() {
   // Estado para mostrar u el modal de configuración del perfil
   const [showAccountModal, setShowAccountModal] = useState(false);
 
-  const { toggleShowModal } = useToggleModalPost(
+  const { toggleModal } = useModal(
     setShowModalProfile,
     showModalProfile
   );
@@ -160,7 +160,7 @@ function UserProfile() {
         </div>
         <button
           className="my-5 py-2 px-3 font-semibold text-sm xs:text-base rounded text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
-          onClick={toggleShowModal}
+          onClick={toggleModal}
         >
           Editar perfil
         </button>

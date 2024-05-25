@@ -6,12 +6,11 @@ import OptionsMenu from "../../../components/modal/post/OptionsMenu";
 
 // context
 import { InterfaceContext } from "../../../context/Interface";
-import { UserContext } from "../../../context/User";
 import { PostContext } from "../../../context/Post";
 
 // hooks
 import UseSvgLoader from "../../../hooks/useSvgLoader";
-import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
+import useModal from "../../../hooks/interface/useModal";
 
 // utils
 import { formatTimeAgo } from "../../../utils/dateUtils";
@@ -22,11 +21,9 @@ import { useContext, useState } from "react";
 function ViewPostModal() {
   const { theme, showViewPost, setShowViewPost } = useContext(InterfaceContext);
 
-  const { setViewUser } = useContext(UserContext);
+  const { viewPost } = useContext(PostContext);
 
-  const { viewPost, setViewPost } = useContext(PostContext);
-
-  const { toggleShowModal } = useToggleModalPost(setShowViewPost, showViewPost);
+  const { toggleModal } = useModal(setShowViewPost, showViewPost);
 
   const navigate = useNavigate();
 
@@ -37,19 +34,18 @@ function ViewPostModal() {
     setOpenDropdown(!openDropdown);
   };
 
-  const handleUserPage = (post) => {
-    setViewUser(post.author);
-    navigate(`/profile/${post.author.username}`);
+  const handleUserPage = (username) => {
+    navigate(`/profile/${username}`);
+    toggleModal();
   };
 
   return (
     <>
       <div className="absolute w-full top-0 lg:hidden">
-        <div className="relative flex justify-between p-2">
+        <div className="relative flex justify-between p-4">
           <button
             onClick={() => {
-              setViewPost(null);
-              toggleShowModal();
+              toggleModal();
             }}
           >
             {theme === "light" ? (
@@ -98,9 +94,7 @@ function ViewPostModal() {
             <span
               className="font-semibold text-black dark:text-white cursor-pointer"
               onClick={() => {
-                setViewPost(null);
-                toggleShowModal();
-                handleUserPage(viewPost);
+                handleUserPage(viewPost.author.username);
               }}
             >
               {viewPost.author.username}
@@ -187,18 +181,14 @@ function ViewPostModal() {
                   alt=""
                   className="w-full h-full object-cover"
                   onClick={() => {
-                    setViewPost(null);
-                    toggleShowModal();
-                    handleUserPage(viewPost);
+                    handleUserPage(viewPost.author.username);
                   }}
                 />
               </div>
               <div
                 className="flex flex-col"
                 onClick={() => {
-                  setViewPost(null);
-                  toggleShowModal();
-                  handleUserPage(viewPost);
+                  handleUserPage(viewPost.author.username);
                 }}
               >
                 <span className="text-dark dark:text-white">{`${viewPost.author.first_name} ${viewPost.author.last_name}`}</span>
@@ -298,8 +288,7 @@ function ViewPostModal() {
       <div className="hidden lg:block absolute top-0 left-0 p-4">
         <button
           onClick={() => {
-            setViewPost(null);
-            toggleShowModal();
+            toggleModal();
           }}
         >
           {theme === "light" ? (

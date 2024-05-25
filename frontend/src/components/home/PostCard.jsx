@@ -26,7 +26,7 @@ import { useContext, useEffect, useState } from "react";
 
 function PostCard() {
   const { theme } = useContext(InterfaceContext);
-  const { token, setViewUser } = useContext(UserContext);
+  const { token } = useContext(UserContext);
   const {
     followedPosts,
     setFollowedPosts,
@@ -37,9 +37,8 @@ function PostCard() {
   const { ref, inView } = useInView();
   const navigate = useNavigate();
 
-  const handleUserPage = (user) => {
-    setViewUser(user);
-    navigate(`/profile/${user.username}`);
+  const handleUserPage = (username) => {
+    navigate(`/profile/${username}`);
   };
 
   const { executeRequest, loading } = useMorePostRequest(loadMorePostsService);
@@ -87,13 +86,13 @@ function PostCard() {
                 alt=""
                 className="w-10 h-10 object-cover rounded-full cursor-pointer"
                 onClick={() => {
-                  handleUserPage(post.author);
+                  handleUserPage(post.author.username);
                 }}
               />
               <span
                 className="font-bold text-black dark:text-white cursor-pointer"
                 onClick={() => {
-                  handleUserPage(post.author);
+                  handleUserPage(post.author.username);
                 }}
               >
                 {post.author.username}
@@ -128,7 +127,12 @@ function PostCard() {
           <div>
             <PostImage src={post.image} alt={post.author.username} />
             <div className="flex gap-1">
-              <span className="font-semibold text-black dark:text-white">
+              <span
+                className="font-semibold text-black dark:text-white cursor-pointer"
+                onClick={() => {
+                  handleUserPage(post.author.username);
+                }}
+              >
                 {post.author.username}
               </span>
               <p className="text-base text-black dark:text-white">

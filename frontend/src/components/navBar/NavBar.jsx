@@ -10,7 +10,7 @@ import { InterfaceContext } from "../../context/Interface";
 
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
-import useToggleModalPost from "../../hooks/interface/useToggleModalPost";
+import useModal from "../../hooks/interface/useModal";
 
 // react
 import { useContext, useState } from "react";
@@ -20,7 +20,7 @@ function navBar() {
   const { theme, showModalPost, setShowModalPost } =
     useContext(InterfaceContext);
 
-  const { toggleShowModal } = useToggleModalPost(
+  const { toggleModal } = useModal(
     setShowModalPost,
     showModalPost
   );
@@ -79,7 +79,7 @@ function navBar() {
             />
           )}
         </NavLink>
-        <button className="rounded-xl" onClick={toggleShowModal}>
+        <button className="rounded-xl" onClick={toggleModal}>
           {theme === "light" ? (
             <UseSvgLoader
               name="plus"
@@ -206,7 +206,7 @@ function navBar() {
         </NavLink>
         <button
           className="flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
-          onClick={toggleShowModal}
+          onClick={toggleModal}
         >
           {theme === "light" ? (
             <UseSvgLoader

@@ -4,14 +4,14 @@ import { InterfaceContext } from "../../context/Interface";
 // react
 import { useContext } from "react";
 
-function useToggleModalPost(contextSetter, state) {
+function useModal(setterState, state) {
   const { showModal, setShowModal } = useContext(InterfaceContext);
 
-  const toggleShowModal = () => {
+  const toggleModal = () => {
     setShowModal(!showModal);
-    contextSetter(!state);
+    setterState(!state);
   };
-  return { toggleShowModal };
+  return { toggleModal };
 }
 
-export default useToggleModalPost;
+export default useModal;

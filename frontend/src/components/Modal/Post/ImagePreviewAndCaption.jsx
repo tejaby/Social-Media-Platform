@@ -8,7 +8,7 @@ import { PostContext } from "../../../context/Post";
 
 // hooks
 import usePostActions from "../../../hooks/post/usePostActions";
-import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
+import useModal from '../../../hooks/interface/useModal'
 import UseSvgLoader from "../../../hooks/useSvgLoader";
 
 // react
@@ -22,7 +22,7 @@ function ImagePreviewAndCaption({ cover, setCover }) {
 
   const { register, errors, reset, handleSubmit } = useContext(PostContext);
 
-  const { toggleShowModal } = useToggleModalPost(
+  const { toggleModal } = useModal(
     setShowModalPost,
     showModalPost
   );
@@ -38,7 +38,7 @@ function ImagePreviewAndCaption({ cover, setCover }) {
     data.append("state", true);
     try {
       submitPost(data);
-      toggleShowModal();
+      toggleModal();
       setCover(null);
       setCondition(false);
       reset();

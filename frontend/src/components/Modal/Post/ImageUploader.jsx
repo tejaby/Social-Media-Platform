@@ -5,7 +5,7 @@ import { PostContext } from "../../../context/Post";
 // hooks
 import useFileReader from "../../../hooks/post/useFileReader";
 import UseSvgLoader from "../../../hooks/useSvgLoader";
-import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
+import useModal from "../../../hooks/interface/useModal";
 
 // react
 import { useContext } from "react";
@@ -18,7 +18,7 @@ function ImageUploader({ setCover, condition }) {
 
   const { handleChangeFile } = useFileReader(setCover);
 
-  const { toggleShowModal } = useToggleModalPost(
+  const { toggleModal } = useModal(
     setShowModalPost,
     showModalPost
   );
@@ -28,7 +28,7 @@ function ImageUploader({ setCover, condition }) {
       <div className="flex justify-between items-center border-b-2 border-colorHover dark:border-darkColorHover p-2">
         <button
           onClick={() => {
-            toggleShowModal();
+            toggleModal();
           }}
         >
           {theme === "light" ? (

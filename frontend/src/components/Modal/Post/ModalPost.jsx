@@ -8,7 +8,7 @@ import { PostContext } from "../../../context/Post";
 
 // hooks
 import UseSvgLoader from "../../../hooks/useSvgLoader";
-import useToggleModalPost from "../../../hooks/interface/useToggleModalPost";
+import useModal from "../../../hooks/interface/useModal";
 
 // react
 import { useContext, useState } from "react";
@@ -19,10 +19,7 @@ function ModalPost() {
 
   const { reset } = useContext(PostContext);
 
-  const { toggleShowModal } = useToggleModalPost(
-    setShowModalPost,
-    showModalPost
-  );
+  const { toggleModal } = useModal(setShowModalPost, showModalPost);
 
   // Estado para guardar la imagen de previsualización del post al publicar una imagen
   const [cover, setCover] = useState(null);
@@ -39,7 +36,7 @@ function ModalPost() {
         <button
           onClick={() => {
             setCondition(false);
-            toggleShowModal();
+            toggleModal();
             reset();
           }}
         >
