@@ -19,7 +19,7 @@ function ModalPost() {
 
   const { reset } = useContext(PostContext);
 
-  const { toggleModal } = useModal(setShowModalPost, showModalPost);
+  const { toggleModal } = useModal();
 
   // Estado para guardar la imagen de previsualización del post al publicar una imagen
   const [cover, setCover] = useState(null);
@@ -35,7 +35,7 @@ function ModalPost() {
           onClick={() => {
             reset();
             setCondition(false);
-            toggleModal();
+            toggleModal(setShowModalPost, showModalPost);
           }}
         >
           {theme === "light" ? (

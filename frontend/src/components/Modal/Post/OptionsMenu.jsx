@@ -22,7 +22,7 @@ function OptionsMenu({ toggleDropdown, viewPost }) {
   const { showViewPost, setShowViewPost } = useContext(InterfaceContext);
   const { user, token } = useContext(UserContext);
 
-  const { toggleModal } = useModal(setShowViewPost, showViewPost);
+  const { toggleModal } = useModal();
 
   const { executeRequestPost } = usePostActions();
 
@@ -30,7 +30,7 @@ function OptionsMenu({ toggleDropdown, viewPost }) {
 
   const handleUserPage = (username) => {
     navigate(`/profile/${username}`);
-    toggleModal();
+    toggleModal(setShowViewPost, showViewPost);
   };
 
   const deletePost = () => {

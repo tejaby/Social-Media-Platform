@@ -12,7 +12,7 @@ function UserPostGrid({ post }) {
   const { showViewPost, setShowViewPost } = useContext(InterfaceContext);
   const { setViewPost } = useContext(PostContext);
 
-  const { toggleModal } = useModal(setShowViewPost, showViewPost);
+  const { toggleModal } = useModal();
   return (
     <img
       className="h-48 sm:h-60 lg:h-72 w-full max-w-full object-cover object-center cursor-pointer"
@@ -20,7 +20,7 @@ function UserPostGrid({ post }) {
       alt={post.author.username}
       onClick={() => {
         setViewPost(post);
-        toggleModal();
+        toggleModal(setShowViewPost, showViewPost);
       }}
     />
   );

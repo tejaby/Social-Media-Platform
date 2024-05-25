@@ -23,7 +23,7 @@ function ViewPostModal() {
 
   const { viewPost } = useContext(PostContext);
 
-  const { toggleModal } = useModal(setShowViewPost, showViewPost);
+  const { toggleModal } = useModal();
 
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ function ViewPostModal() {
 
   const handleUserPage = (username) => {
     navigate(`/profile/${username}`);
-    toggleModal();
+    toggleModal(setShowViewPost, showViewPost);
   };
 
   return (
@@ -45,7 +45,7 @@ function ViewPostModal() {
         <div className="relative flex justify-between p-4">
           <button
             onClick={() => {
-              toggleModal();
+              toggleModal(setShowViewPost, showViewPost);
             }}
           >
             {theme === "light" ? (
@@ -288,7 +288,7 @@ function ViewPostModal() {
       <div className="hidden lg:block absolute top-0 left-0 p-4">
         <button
           onClick={() => {
-            toggleModal();
+            toggleModal(setShowViewPost, showViewPost);
           }}
         >
           {theme === "light" ? (

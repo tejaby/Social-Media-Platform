@@ -20,10 +20,7 @@ function navBar() {
   const { theme, showModalPost, setShowModalPost } =
     useContext(InterfaceContext);
 
-  const { toggleModal } = useModal(
-    setShowModalPost,
-    showModalPost
-  );
+  const { toggleModal } = useModal();
 
   // Estado para mostrar u el modal de configuración del perfil
   const [showAccountModal, setShowAccountModal] = useState(false);
@@ -79,7 +76,12 @@ function navBar() {
             />
           )}
         </NavLink>
-        <button className="rounded-xl" onClick={toggleModal}>
+        <button
+          className="rounded-xl"
+          onClick={() => {
+            toggleModal(setShowModalPost, showModalPost);
+          }}
+        >
           {theme === "light" ? (
             <UseSvgLoader
               name="plus"
@@ -206,7 +208,9 @@ function navBar() {
         </NavLink>
         <button
           className="flex justify-center items-center gap-2 w-full py-2 px-3 rounded-xl text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
-          onClick={toggleModal}
+          onClick={() => {
+            toggleModal(setShowModalPost, showModalPost);
+          }}
         >
           {theme === "light" ? (
             <UseSvgLoader

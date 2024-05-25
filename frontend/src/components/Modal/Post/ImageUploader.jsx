@@ -18,17 +18,14 @@ function ImageUploader({ setCover, condition }) {
 
   const { handleChangeFile } = useFileReader(setCover);
 
-  const { toggleModal } = useModal(
-    setShowModalPost,
-    showModalPost
-  );
+  const { toggleModal } = useModal();
 
   return (
     <div className={`basis-full ${!condition ? "flex flex-col" : "hidden"}`}>
       <div className="flex justify-between items-center border-b-2 border-colorHover dark:border-darkColorHover p-2">
         <button
           onClick={() => {
-            toggleModal();
+            toggleModal(setShowModalPost, showModalPost);
           }}
         >
           {theme === "light" ? (

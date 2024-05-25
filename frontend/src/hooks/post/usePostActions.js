@@ -16,12 +16,17 @@ import { getPostErrorMessage } from "../../utils/getErrorMessage";
 import { useContext } from "react";
 
 function usePostActions() {
-  const { showViewPost, setShowViewPost, setCondition } =
-    useContext(InterfaceContext);
+  const {
+    showModalPost,
+    setShowModalPost,
+    showViewPost,
+    setShowViewPost,
+    setCondition,
+  } = useContext(InterfaceContext);
 
   const { reset } = useContext(PostContext);
 
-  const { toggleModal } = useModal(setShowViewPost, showViewPost);
+  const { toggleModal } = useModal();
 
   const navigate = useNavigate();
 
@@ -37,17 +42,17 @@ function usePostActions() {
         await service(data, token);
         reset();
         setCondition(false);
-        toggleModal();
+        toggleModal(setShowModalPost, showModalPost);
         navigate("/explore");
       } else if (method === "delete") {
         await service(id, token);
         toast.success("El post ha sido eliminado con éxito");
-        toggleModal();
+        toggleModal(setShowViewPost, showViewPost);
         navigate("/explore");
       } else if (method === "deactivate") {
         await service(id, token);
         toast.success("El post ha sido archivado con éxito");
-        toggleModal();
+        toggleModal(setShowViewPost, showViewPost);
         navigate("/explore");
       }
     } catch (err) {

@@ -20,10 +20,7 @@ function ModalProfile() {
     useContext(InterfaceContext);
   const { user, token } = useContext(UserContext);
 
-  const { toggleModal } = useModal(
-    setShowModalProfile,
-    showModalProfile
-  );
+  const { toggleModal } = useModal();
 
   const { executeRequest } = useUserRequest(updateUserService);
 
@@ -71,7 +68,7 @@ function ModalProfile() {
     }
 
     executeRequest("update", data, token.access, user.id);
-    toggleModal();
+    toggleModal(setShowModalProfile, showModalProfile);
   };
 
   return (
@@ -82,7 +79,7 @@ function ModalProfile() {
         <div className="flex items-center p-2 border-b-2 border-colorHover dark:border-darkColorHover">
           <button
             onClick={() => {
-              toggleModal();
+              toggleModal(setShowModalProfile, showModalProfile);
             }}
           >
             {theme === "light" ? (
@@ -188,7 +185,7 @@ function ModalProfile() {
       <div className="hidden xs:block absolute top-0 right-0 p-4">
         <button
           onClick={() => {
-            toggleModal();
+            toggleModal(setShowModalProfile, showModalProfile);
           }}
         >
           {theme === "light" ? (

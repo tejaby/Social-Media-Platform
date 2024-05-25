@@ -46,7 +46,7 @@ function UserProfile() {
 
   const { executeRequest, loading } = useMorePostRequest();
 
-  const { toggleModal } = useModal(setShowModalProfile, showModalProfile);
+  const { toggleModal } = useModal();
 
   // Estado para mostrar u el modal de configuración del perfil
   const [showAccountModal, setShowAccountModal] = useState(false);
@@ -191,7 +191,9 @@ function UserProfile() {
         </div>
         <button
           className="my-5 py-2 px-3 font-semibold text-sm xs:text-base rounded text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
-          onClick={toggleModal}
+          onClick={() => {
+            toggleModal(setShowModalProfile, showModalProfile);
+          }}
         >
           Editar perfil
         </button>
