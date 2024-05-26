@@ -1,4 +1,5 @@
 // components
+import UserInfo from "../../components/profile/UserInfo";
 import EditableUser from "../../components/profile/EditableUser";
 
 // context
@@ -33,50 +34,42 @@ function UserSettings() {
     });
   };
 
-  const renderUserInfo = (label, value, editLabel, fieldName) => (
-    <div
-      className="flex flex-col sm:flex-row items-start justify-between sm:items-center px-4 py-4 md:py-6 hover:bg-colorHover dark:hover:bg-darkColorHover cursor-pointer"
-      onClick={() => handleEditing(value, editLabel, fieldName)}
-    >
-      <span className="basis-1/2 text-black dark:text-white">{label}</span>
-      <span className="basis-1/2 text-sm text-secondaryText dark:text-secondaryTextDark">
-        {value}
-      </span>
-    </div>
-  );
-
   return !isEditing ? (
-    <div>
-      <div className="p-2 border-b-2 border-colorHover dark:border-darkColorHover">
+    <>
+      <div className="border-b-2 pb-2 border-colorHover dark:border-darkColorHover">
         <h1 className="text-center text-lg font-semibold text-black dark:text-white">
           Información de la cuenta
         </h1>
       </div>
       <div className="mt-6">
-        {renderUserInfo(
-          "Nombre",
-          user.first_name,
-          "Cambiar nombre",
-          "first_name"
-        )}
-        {renderUserInfo(
-          "Apellido",
-          user.last_name,
-          "Cambiar apellido",
-          "last_name"
-        )}
-        {renderUserInfo(
-          "Nombre de usuario",
-          `${user.username}`,
-          "Cambiar nombre de usuario",
-          "username"
-        )}
-        {renderUserInfo(
-          "Correo electrónico",
-          user.email,
-          "Cambiar el correo electrónico",
-          "email"
-        )}
+        <UserInfo
+          label="Nombre"
+          value={user.first_name}
+          editLabel="Cambiar nombre"
+          fieldName="first_name"
+          onEdit={handleEditing}
+        />
+        <UserInfo
+          label="Apellido"
+          value={user.last_name}
+          editLabel="Cambiar apellido"
+          fieldName="last_name"
+          onEdit={handleEditing}
+        />
+        <UserInfo
+          label="Nombre de usuario"
+          value={user.username}
+          editLabel="Cambiar nombre de usuario"
+          fieldName="username"
+          onEdit={handleEditing}
+        />
+        <UserInfo
+          label="Correo electrónico"
+          value={user.email}
+          editLabel="Cambiar el correo electrónico"
+          fieldName="email"
+          onEdit={handleEditing}
+        />
         <div className="flex flex-col sm:flex-row items-start justify-between sm:items-center px-4 py-4 md:py-6 hover:bg-colorHover dark:hover:bg-darkColorHover">
           <span className="basis-1/2 text-black dark:text-white">
             Creación de la cuenta
@@ -119,16 +112,14 @@ function UserSettings() {
             />
           )}
           <div className="flex flex-col">
-            <span className="text-black dark:text-white">
-              Eliminar tu cuenta
-            </span>
+            <span className="text-colorError">Eliminar tu cuenta</span>
             <span className="text-sm text-secondaryText dark:text-secondaryTextDark">
               Averigua cómo puedes eliminar tu cuenta.
             </span>
           </div>
         </div>
       </div>
-    </div>
+    </>
   ) : (
     <EditableUser setIsEditing={setIsEditing} field={field} />
   );

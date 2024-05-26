@@ -17,6 +17,8 @@ export default {
 
         secondaryText: "#677682",
         secondaryTextDark: "#8B98A5",
+
+        colorError: "#F4212E",
       },
       screens: {
         xs: "425px",

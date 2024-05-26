@@ -35,12 +35,14 @@ export const useUserRequest = (service) => {
     } catch (err) {
       const errorMessage = getUserErrorMessage(err, method);
       toast.error(errorMessage);
-      setTimeout(() => {
-        setUser(null);
-        setToken(null);
-        localStorage.removeItem("authUser");
-        localStorage.removeItem("authToken");
-      }, 5000);
+      if (err.data.detail) {
+        setTimeout(() => {
+          setUser(null);
+          setToken(null);
+          localStorage.removeItem("authUser");
+          localStorage.removeItem("authToken");
+        }, 5000);
+      }
     }
   };
 
