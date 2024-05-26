@@ -1,3 +1,6 @@
+// libraries
+import { useForm } from "react-hook-form";
+
 // services
 import { updateUserService } from "../../../services/user";
 
@@ -13,7 +16,7 @@ import useFileReader from "../../../hooks/post/useFileReader";
 import { useUserRequest } from "../../../hooks/user/useUserRequest";
 
 // react
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 
 function ModalProfile() {
   const { theme, showModalProfile, setShowModalProfile } =
@@ -26,48 +29,30 @@ function ModalProfile() {
 
   // Estado para almacenar la imagen de previsualización de la foto de perfil
   const [cover, setCover] = useState(null);
-  // Estado para almacenar la foto de perfil del usuario
-  const [profilePicture, setProfilePicture] = useState(null);
-  // Estado para almacenar la biografía del usuario
-  const [bio, setBio] = useState(user.biography);
-  // Estado para almacenar el sitio web del usuario
-  const [sitio, setSitio] = useState(user.website);
 
   const { handleChangeFile } = useFileReader(setCover);
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
-    if (name == "biography") {
-      setBio(value);
-    } else if (name == "website") {
-      setSitio(value);
+  useEffect(() => {
+    setValue("biography", user.biography);
+    setValue("website", user.website);
+  }, []);
+
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    if (data.profile_picture) {
+      formData.append("profile_picture", data.profile_picture);
     }
-  };
+    formData.append("biography", data.biography);
+    formData.append("website", data.website);
 
-  const handleFile = (e) => {
-    const file = e.target.files[0];
-    setProfilePicture(file);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const data = new FormData();
-    const fields = {
-      profile_picture: profilePicture,
-      biography: bio,
-      website: sitio,
-    };
-
-    for (const [fieldName, fieldValue] of Object.entries(fields)) {
-      if (fieldValue) {
-        data.append(fieldName, fieldValue);
-      }
-    }
-
-    executeRequest("update", data, token.access, user.id);
+    executeRequest("update", formData, token.access, user.id);
     toggleModal(setShowModalProfile, showModalProfile);
   };
 
@@ -99,12 +84,12 @@ function ModalProfile() {
           </p>
           <button
             className="rounded-full px-4 py-2 font-semibold text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
-            onClick={handleSubmit}
+            onClick={handleSubmit(onSubmit)}
           >
             Guardar
           </button>
         </div>
-        <form className="grow flex flex-col" onSubmit={handleSubmit}>
+        <form className="grow flex flex-col" onSubmit={handleSubmit(onSubmit)}>
           <div className="basis-1/2 flex flex-col justify-center">
             <div className="py-2">
               <label className="text-base sm:text-lg font-semibold text-black dark:text-white">
@@ -123,7 +108,7 @@ function ModalProfile() {
                   className="text-sm file:mr-2 file:p-4 file:rounded-full file:border-0 file:font-semibold text-darkColorHover dark:text-colorHover file:text-white file:bg-PrimaryColor hover:file:bg-PrimaryColorHover"
                   onChange={(e) => {
                     handleChangeFile(e);
-                    handleFile(e);
+                    setValue("profile_picture", e.target.files[0]);
                   }}
                 />
               ) : (
@@ -155,12 +140,22 @@ function ModalProfile() {
               <textarea
                 name="biography"
                 className="grow w-4/5 border rounded text-base text-center resize-none focus:outline-none border-colorHover dark:border-darkColorHover text-black dark:text-white bg-white dark:bg-DarkColor"
-                value={!!bio ? bio : ""}
-                onChange={handleChange}
+                {...register("biography", {
+                  maxLength: {
+                    value: 150,
+                    message: "No debe superar los 150 caracteres",
+                  },
+                })}
               />
-              <p className="text-xs text-secondaryText dark:text-secondaryTextDark pb-2">
-                Cuéntanos un poco sobre ti en unas pocas palabras.
-              </p>
+              {!errors.biography ? (
+                <p className="text-xs text-secondaryText dark:text-secondaryTextDark pb-2">
+                  Cuéntanos un poco sobre ti en unas pocas palabras.
+                </p>
+              ) : (
+                <p className="text-sm text-colorError">
+                  {errors.biography.message}
+                </p>
+              )}
             </div>
             <div className="basis-1/2 flex flex-col justify-center items-center">
               <label className="text-base sm:text-lg font-semibold text-black dark:text-white">
@@ -170,13 +165,27 @@ function ModalProfile() {
                 type="text"
                 name="website"
                 className="w-4/5 py-2 px-3 border rounded text-sm xs:text-base text-center focus:outline-none border-colorHover dark:border-darkColorHover text-black dark:text-white bg-white dark:bg-DarkColor"
-                value={!!sitio ? sitio : ""}
-                onChange={handleChange}
+                {...register("website", {
+                  maxLength: {
+                    value: 150,
+                    message: "No debe superar los 150 caracteres",
+                  },
+                  minLength: {
+                    value: 10,
+                    message: "Debe tener al menos 10 caracteres",
+                  },
+                })}
               />
-              <p className="text-xs text-secondaryText dark:text-secondaryTextDark pb-2">
-                Agrega enlaces a tus perfiles en redes sociales y sitios web
-                aquí.
-              </p>
+              {!errors.website ? (
+                <p className="text-xs text-secondaryText dark:text-secondaryTextDark pb-2">
+                  Agrega enlaces a tus perfiles en redes sociales y sitios web
+                  aquí.
+                </p>
+              ) : (
+                <p className="text-sm text-colorError">
+                  {errors.website.message}
+                </p>
+              )}
             </div>
           </div>
         </form>
