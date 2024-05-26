@@ -1,11 +1,13 @@
 export const getUserErrorMessage = (error, method) => {
   if (method === "create") {
     if (error.data.username) {
-      return "Un usuario con ese nombre ya existe.";
+      return "Un usuario con ese nombre ya existe";
     }
   } else if (method === "update") {
     if (error.data.detail) {
       return "Token inválido o caducado al actualizar biografía";
+    } else if (error.data.username) {
+      return "Un usuario con ese nombre ya existe";
     }
   } else if (method === "search") {
     if (error.data.detail) {

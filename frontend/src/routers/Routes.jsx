@@ -10,6 +10,7 @@ import Home from "../pages/Home";
 import Explore from "../pages/Explore";
 import Profile from "../pages/Profile";
 import UserDetail from "../pages/UserDetail";
+import Settings from "../pages/Settings";
 // import Dashboard from "../pages/Dashboard";
 
 function Rutas() {
@@ -30,6 +31,7 @@ function Rutas() {
         />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:username" element={<UserDetail />} />
+        <Route path="/Settings" element={<Settings />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

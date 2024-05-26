@@ -37,7 +37,7 @@ function UserDetail() {
         );
         if (!user_current) {
           navigate("*");
-          return
+          return;
         }
         if (user_current.id === user.id) {
           navigate("/profile");
