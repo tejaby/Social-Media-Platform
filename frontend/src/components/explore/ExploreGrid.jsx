@@ -19,6 +19,7 @@ import { PostContext } from "../../context/Post";
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
 import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
+import useClickOutside from "../../hooks/interface/useClickOutside";
 
 // utils
 import { getUserErrorMessage } from "../../utils/getErrorMessage";
@@ -35,9 +36,9 @@ function ExploreGrid() {
   const { inView, ref } = useInView();
   const navigate = useNavigate();
 
-  const { executeRequest, loading } = useMorePostRequest();
-
   const searchRef = useRef(null);
+
+  const { executeRequest, loading } = useMorePostRequest();
 
   // Estado para almacenar los términos del input para buscar usuarios
   const [searchTerm, setSearchTerm] = useState("");
@@ -59,18 +60,9 @@ function ExploreGrid() {
     navigate(`/profile/${username}`);
   };
 
-  const handleClickOutside = (event) => {
-    if (searchRef.current && !searchRef.current.contains(event.target)) {
-      setIsFocused(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  }, []);
+  useClickOutside(searchRef, () => {
+    setIsFocused(false);
+  });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -123,7 +115,6 @@ function ExploreGrid() {
         <div className="flex w-full gap-2">
           {isFocused && (
             <button
-              className=""
               onClick={() => {
                 setIsFocused(false);
               }}

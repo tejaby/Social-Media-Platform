@@ -15,12 +15,13 @@ import { PostContext } from "../../context/Post";
 import UseSvgLoader from "../../hooks/useSvgLoader";
 import useModal from "../../hooks/interface/useModal";
 import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
+import useClickOutside from "../../hooks/interface/useClickOutside";
 
 // utils
 import { formatDate } from "../../utils/dateUtils";
 
 // react
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 
 function UserProfile() {
   const { theme, showModalProfile, setShowModalProfile } =
@@ -45,6 +46,8 @@ function UserProfile() {
 
   const { executeRequest, loading } = useMorePostRequest();
 
+  const optionsRef = useRef();
+
   const { toggleModal } = useModal();
 
   // Estado para mostrar u el modal de configuración del perfil
@@ -53,20 +56,11 @@ function UserProfile() {
   // Estado para indicar si la pestaña activa es la de publicaciones o la de archivados
   const [isActiveTab, setIsActiveTab] = useState(true);
 
-  const activateTab = () => {
-    setIsActiveTab(true);
-  };
-
-  const deactivateTab = () => {
-    setIsActiveTab(false);
-  };
-  const toggleAccountModal = () => {
-    setShowAccountModal(!showAccountModal);
-  };
-
-  const { OptionsModalMobile } = OptionsModal({
-    toggleAccountModal,
+  useClickOutside(optionsRef, () => {
+    setShowAccountModal(false);
   });
+
+  const { OptionsModalMobile } = OptionsModal();
 
   useEffect(() => {
     if (!nextPageUserPosts || loading) return;
@@ -130,7 +124,12 @@ function UserProfile() {
             />
           )}
         </button>
-        <button className="sm:hidden" onClick={toggleAccountModal}>
+        <button
+          className="sm:hidden"
+          onClick={() => {
+            setShowAccountModal(!showAccountModal);
+          }}
+        >
           {theme === "light" ? (
             <UseSvgLoader
               name="menu-2"
@@ -157,7 +156,13 @@ function UserProfile() {
           )}
         </button>
       </div>
-      <div className="relative sm:hidden">
+      <div
+        ref={optionsRef}
+        className="relative sm:hidden"
+        onClick={() => {
+          setShowAccountModal(!showAccountModal);
+        }}
+      >
         {showAccountModal && <OptionsModalMobile />}
       </div>
       <div className="flex flex-col justify-center items-center my-5">
@@ -217,7 +222,9 @@ function UserProfile() {
           className={`basis-1/2 md:basis-1/3 flex justify-center items-center p-2 hover:bg-colorHover dark:hover:bg-darkColorHover ${
             isActiveTab && "border-b-2 border-PrimaryColor"
           }`}
-          onClick={activateTab}
+          onClick={() => {
+            setIsActiveTab(true);
+          }}
         >
           <button className="hidden xs:inline-block">
             {theme === "light" ? (
@@ -240,7 +247,9 @@ function UserProfile() {
           className={`basis-1/2 md:basis-1/3 flex justify-center items-center p-2 hover:bg-colorHover dark:hover:bg-darkColorHover ${
             !isActiveTab && "border-b-2 border-PrimaryColor"
           }`}
-          onClick={deactivateTab}
+          onClick={() => {
+            setIsActiveTab(false);
+          }}
         >
           <button className="hidden xs:inline-block">
             {theme === "light" ? (

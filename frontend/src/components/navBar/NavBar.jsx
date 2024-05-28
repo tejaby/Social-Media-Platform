@@ -11,27 +11,28 @@ import { InterfaceContext } from "../../context/Interface";
 // hooks
 import UseSvgLoader from "../../hooks/useSvgLoader";
 import useModal from "../../hooks/interface/useModal";
+import useClickOutside from "../../hooks/interface/useClickOutside";
 
 // react
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 
 function navBar() {
   const { user } = useContext(UserContext);
   const { theme, showModalPost, setShowModalPost } =
     useContext(InterfaceContext);
 
+  const optionsRef = useRef();
+
   const { toggleModal } = useModal();
 
   // Estado para mostrar u el modal de configuración del perfil
   const [showAccountModal, setShowAccountModal] = useState(false);
 
-  const toggleAccountModal = () => {
-    setShowAccountModal(!showAccountModal);
-  };
-
-  const { OptionsModalDesktop } = OptionsModal({
-    toggleAccountModal,
+  useClickOutside(optionsRef, () => {
+    setShowAccountModal(false);
   });
+
+  const { OptionsModalDesktop } = OptionsModal();
 
   return (
     <nav className="flex sm:flex-col items-center sm-items-start sm:justify-between sm:fixed sm:w-36 lg:w-80 h-16 sm:h-screen border-t-2 sm:border-t-0 sm:border-r-2 border-colorHover dark:border-darkColorHover sm:py-4 sm:px-6">
@@ -227,8 +228,11 @@ function navBar() {
         </button>
       </div>
       <div
-        className="relative hidden sm:flex justify-center lg:justify-between items-center gap-2 w-full py-2 px-3 cursor-pointer hover:bg-colorHover dark:hover:bg-darkColorHover"
-        onClick={toggleAccountModal}
+        ref={optionsRef}
+        className="relative hidden sm:flex justify-center lg:justify-between items-center gap-2 w-full py-2 px-3 cursor-pointer hover:bg-colorHover dark:hover:bg-darkColorHover "
+        onClick={() => {
+          setShowAccountModal(!showAccountModal);
+        }}
       >
         <div className="hidden lg:flex flex-col">
           {user && (
@@ -243,17 +247,19 @@ function navBar() {
           )}
         </div>
         <div className="hidden lg:block">
-          {theme === "light" ? (
-            <UseSvgLoader
-              name="dots-vertical"
-              options={{ width: "32px", height: "32px" }}
-            />
-          ) : (
-            <UseSvgLoader
-              name="dots-verticalDark"
-              options={{ width: "32px", height: "32px" }}
-            />
-          )}
+          <button>
+            {theme === "light" ? (
+              <UseSvgLoader
+                name="dots-vertical"
+                options={{ width: "32px", height: "32px" }}
+              />
+            ) : (
+              <UseSvgLoader
+                name="dots-verticalDark"
+                options={{ width: "32px", height: "32px" }}
+              />
+            )}
+          </button>
         </div>
         <div className="lg:hidden">
           {theme === "light" ? (

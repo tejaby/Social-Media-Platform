@@ -12,9 +12,9 @@ import { InterfaceContext } from "../../../context/Interface";
 import { useAuthRequest } from "../../../hooks/user/useAuthRequest";
 
 // react
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
-function OptionsModal({ toggleAccountModal }) {
+function OptionsModal() {
   const { executeRequest } = useAuthRequest(logoutService);
 
   const { token } = useContext(UserContext);
@@ -39,10 +39,7 @@ function OptionsModal({ toggleAccountModal }) {
 
   const OptionsModalMobile = () => {
     return (
-      <div
-        className="absolute flex flex-col w-48 p-2 border border-colorHover dark:border-darkColorHover rounded-xl right-2 top-full bg-white dark:bg-DarkColor z-10"
-        onClick={toggleAccountModal}
-      >
+      <div className="absolute flex flex-col w-48 p-2 border border-colorHover dark:border-darkColorHover rounded-xl right-2 top-full bg-white dark:bg-DarkColor z-10">
         <button
           className="text-start rounded-xl py-2 px-3 text-black dark:text-white"
           onClick={() => {
