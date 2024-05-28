@@ -40,12 +40,18 @@ function AppContent() {
       );
     }
 
-    const refreshPeriodically = setInterval(() => {
-      executeRequest("refresh", null, { refresh: token.refresh });
-    }, 240000);
+    let refreshPeriodically;
+
+    if (token) {
+      refreshPeriodically = setInterval(() => {
+        executeRequest("refresh", null, { refresh: token.refresh });
+      }, 240000);
+    }
 
     return () => {
-      clearInterval(refreshPeriodically);
+      if (refreshPeriodically) {
+        clearInterval(refreshPeriodically);
+      }
     };
   }, [token, loading]);
 
