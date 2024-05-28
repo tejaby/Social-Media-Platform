@@ -12,7 +12,7 @@ function Form() {
   const { showLogin } = useContext(InterfaceContext);
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center min-h-screen">
       {showLogin ? <Signin /> : <Signup />}
     </div>
   );

@@ -23,41 +23,26 @@ function getSignupConfig() {
       type: "text",
       name: "first_name",
       label: "Nombre",
-      class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
-      width: "md:w-1/2",
     },
     {
       type: "text",
       name: "last_name",
       label: "Apellido",
-      class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
-      width: "md:w-1/2",
     },
     {
       type: "email",
       name: "email",
       label: "Correo electrónico",
-      class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
-      width: "md:w-full",
     },
     {
       type: "text",
       name: "username",
       label: "Usuario",
-      class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
-      width: "md:w-full",
     },
     {
       type: "password",
       name: "password",
       label: "Contraseña",
-      class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
-      width: "md:w-full",
     },
   ];
 

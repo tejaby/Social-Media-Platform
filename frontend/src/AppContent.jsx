@@ -23,7 +23,7 @@ import { useAuthRequest } from "./hooks/user/useAuthRequest";
 import { useContext, useEffect, useState } from "react";
 
 function AppContent() {
-  const { showModal } = useContext(InterfaceContext);
+  const { theme, showModal } = useContext(InterfaceContext);
   const { token } = useContext(UserContext);
 
   const { executeRequest } = useAuthRequest(refreshTokenService);
@@ -48,6 +48,14 @@ function AppContent() {
       clearInterval(refreshPeriodically);
     };
   }, [token, loading]);
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.querySelector("html").classList.add("dark");
+    } else {
+      document.querySelector("html").classList.remove("dark");
+    }
+  }, [theme]);
 
   return (
     <BrowserRouter>

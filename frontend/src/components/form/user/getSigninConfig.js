@@ -17,17 +17,11 @@ function getSigninConfig() {
       type: "text",
       name: "username",
       label: "Usuario",
-      class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
-      width: "md:w-full",
     },
     {
       type: "password",
       name: "password",
       label: "Contraseña",
-      class:
-        "border-2 border-white rounded w-full py-2 px-3 shadow focus:outline-none focus:border-PrimaryColor",
-      width: "md:w-full",
     },
   ];
 

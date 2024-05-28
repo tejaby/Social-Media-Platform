@@ -28,57 +28,56 @@ function FormGenerator({ formData, schema, headers, handleFormSubmit }) {
 
   return (
     <form
-      className="max-w-xs py-6 shadow sm:max-w-md"
+      className="h-full w-full sm:max-w-lg sm:h-max flex flex-col justify-center px-8 sm:px-12 sm:m-4 rounded-lg sm:border border-colorHover dark:border-darkColorHover"
       onSubmit={handleSubmit(handleFormSubmit)}
     >
-      <div className="flex flex-col items-center mb-4">
-        <div className="">
-          <UseSvgLoader
-            name="logo"
-            options={{ width: "48px", height: "48px" }}
-          />
-        </div>
-        <h2 className="font-bold">{headers.title}</h2>
+      <div className="flex flex-col items-center my-4">
+        <UseSvgLoader name="logo" options={{ width: "48px", height: "48px" }} />
+        <h2 className="font-semibold text-lg text-black dark:text-white">
+          {headers.title}
+        </h2>
       </div>
-      <div className="flex flex-wrap mb-4 px-3 md:px-12">
+      <div className="mb-4">
         {formData.map((input) => {
           return (
-            <div className={`w-full mb-2 px-2 ${input.width}`} key={input.name}>
+            <div className="my-2" key={input.name}>
               <label
                 htmlFor={input.name}
-                className="block font-semibold text-zinc-700"
+                className="font-semibold text-black dark:text-white"
               >
                 {input.label}
               </label>
               <input
                 {...register(input.name)}
                 type={input.type}
-                className={input.class}
+                className="w-full mt-1 px-2 py-3 outline-none border-2 rounded-lg text-black dark:text-white border-colorHover dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor bg-white dark:bg-DarkColor"
+                spellCheck="false"
+                autoComplete="off"
               />
-              <p className="text-xs text-red-600 sm:text-sm">
+              <p className="text-xs sm:text-sm text-colorError">
                 {errors[input.name]?.message}
               </p>
             </div>
           );
         })}
       </div>
-      <div className="w-full px-3 md:w-auto md:px-12 mb-4">
-        <button
-          type="submit"
-          className="rounded w-full py-2 px-3 text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
-        >
-          {headers.button_submit}
-        </button>
-      </div>
-      <div className="flex flex-col justify-center items-center sm:flex-row mb-4">
-        <p className="font-extralight">{headers.message}</p>
-        <button
-          type="button"
-          className="font-semibold text-PrimaryColor hover:text-PrimaryColorHover"
+
+      <button
+        type="submit"
+        className="w-full px-2 py-3 mb-4 font-semibold rounded-lg text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
+      >
+        {headers.button_submit}
+      </button>
+      <div className="flex flex-col sm:flex-row gap-1 justify-center items-center my-4">
+        <p className="font-extralight text-secondaryText dark:text-secondaryTextDark">
+          {headers.message}
+        </p>
+        <span
+          className="font-semibold text-PrimaryColor hover:text-PrimaryColorHover cursor-pointer"
           onClick={toggleForm}
         >
           {headers.button_form}
-        </button>
+        </span>
       </div>
     </form>
   );
