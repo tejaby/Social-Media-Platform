@@ -24,7 +24,7 @@ import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
 import { getUserErrorMessage } from "../../utils/getErrorMessage";
 
 // react
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 
 function ExploreGrid() {
   const { theme } = useContext(InterfaceContext);
@@ -36,6 +36,8 @@ function ExploreGrid() {
   const navigate = useNavigate();
 
   const { executeRequest, loading } = useMorePostRequest();
+
+  const searchRef = useRef(null);
 
   // Estado para almacenar los términos del input para buscar usuarios
   const [searchTerm, setSearchTerm] = useState("");
@@ -56,6 +58,19 @@ function ExploreGrid() {
   const handleUserPage = (username) => {
     navigate(`/profile/${username}`);
   };
+
+  const handleClickOutside = (event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setIsFocused(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -99,7 +114,12 @@ function ExploreGrid() {
 
   return (
     <>
-      <div className="fixed xs:relative xs:py-2 min-w-full bg-white dark:bg-DarkColor">
+      <div
+        ref={searchRef}
+        className={`${
+          isFocused && "fixed"
+        } xs:relative py-2 min-w-full bg-white dark:bg-DarkColor`}
+      >
         <div className="flex w-full gap-2">
           {isFocused && (
             <button
@@ -165,7 +185,7 @@ function ExploreGrid() {
             ) : (
               searchResults.map((user) => (
                 <div
-                  className="flex justify-start rounded sm:hover:bg-colorHover sm:dark:hover:bg-darkColorHover p-2 cursor-pointer"
+                  className="flex justify-start items-center gap-2 rounded sm:hover:bg-colorHover sm:dark:hover:bg-darkColorHover p-2 cursor-pointer"
                   onClick={() => {
                     handleUserPage(user.username);
                   }}
