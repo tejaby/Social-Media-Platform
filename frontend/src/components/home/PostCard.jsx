@@ -121,7 +121,11 @@ function PostCard() {
                 )}
               </button>
               {openDropdown === post.id && (
-                <OptionsMenu toggleDropdown={toggleDropdown} viewPost={post} />
+                <OptionsMenu
+                  toggleDropdown={toggleDropdown}
+                  viewPost={post}
+                  updateGlobalModal={false}
+                />
               )}
             </div>
           </div>

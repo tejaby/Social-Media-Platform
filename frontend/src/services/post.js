@@ -122,7 +122,6 @@ export const activatePostService = async (post_id, access) => {
     );
     return response.data;
   } catch (err) {
-    console.log(err);
     throw err.response;
   }
 };

@@ -30,35 +30,62 @@ function usePostActions() {
 
   const navigate = useNavigate();
 
+  const handlePostSuccess = (
+    message,
+    showModalContent,
+    setShowModalContent,
+    updateGlobalModal = true
+  ) => {
+    toast.success(message);
+    if (updateGlobalModal) {
+      toggleModal(setShowModalContent, showModalContent);
+    }
+    navigate("/explore");
+  };
+
   const executeRequestPost = async (
     service,
     method,
     data = null,
     token = null,
-    id = null
+    id = null,
+    updateGlobalModal = true
   ) => {
     try {
       if (method === "create") {
         await service(data, token);
         reset();
         setCondition(false);
-        toggleModal(setShowModalPost, showModalPost);
-        navigate("/explore");
+        handlePostSuccess(
+          "El post ha sido creado con éxito",
+          showModalPost,
+          setShowModalPost,
+          updateGlobalModal
+        );
       } else if (method === "delete") {
         await service(id, token);
-        toast.success("El post ha sido eliminado con éxito");
-        toggleModal(setShowViewPost, showViewPost);
-        navigate("/explore");
+        handlePostSuccess(
+          "El post ha sido eliminado con éxito",
+          showViewPost,
+          setShowViewPost,
+          updateGlobalModal
+        );
       } else if (method === "deactivate") {
         await service(id, token);
-        toast.success("El post ha sido archivado con éxito");
-        toggleModal(setShowViewPost, showViewPost);
-        navigate("/explore");
+        handlePostSuccess(
+          "El post ha sido archivado con éxito",
+          showViewPost,
+          setShowViewPost,
+          updateGlobalModal
+        );
       } else if (method === "activate") {
         await service(id, token);
-        toast.success("El post ahora es visible para todos");
-        toggleModal(setShowViewPost, showViewPost);
-        navigate("/explore");
+        handlePostSuccess(
+          "El post ahora es visible para todos",
+          showViewPost,
+          setShowViewPost,
+          updateGlobalModal
+        );
       }
     } catch (err) {
       const errorMessage = getPostErrorMessage(err, method);

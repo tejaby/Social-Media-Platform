@@ -19,7 +19,7 @@ import usePostActions from "../../../hooks/post/usePostActions";
 // react
 import { useContext } from "react";
 
-function OptionsMenu({ toggleDropdown, viewPost }) {
+function OptionsMenu({ toggleDropdown, viewPost, updateGlobalModal = true }) {
   const { showViewPost, setShowViewPost } = useContext(InterfaceContext);
   const { user, token } = useContext(UserContext);
 
@@ -34,31 +34,33 @@ function OptionsMenu({ toggleDropdown, viewPost }) {
     toggleModal(setShowViewPost, showViewPost);
   };
 
-  const deletePost = () => {
+  const handleDeletePost = () => {
     if (token) {
       executeRequestPost(
         deletePostService,
         "delete",
         null,
         token.access,
-        viewPost.id
+        viewPost.id,
+        updateGlobalModal
       );
     }
   };
 
-  const deactivatePost = () => {
+  const handleDeactivatePost = () => {
     if (token) {
       executeRequestPost(
         deactivatePostService,
         "deactivate",
         null,
         token.access,
-        viewPost.id
+        viewPost.id,
+        updateGlobalModal
       );
     }
   };
 
-  const activatePost = () => {
+  const handleActivatePost = () => {
     if (token) {
       executeRequestPost(
         activatePostService,
@@ -78,7 +80,7 @@ function OptionsMenu({ toggleDropdown, viewPost }) {
       {user.id === viewPost.author.id && (
         <button
           className="text-start rounded-xl py-2 px-3 text-red-600 hover:bg-colorHover dark:hover:bg-darkColorHover"
-          onClick={deletePost}
+          onClick={handleDeletePost}
         >
           Eliminar
         </button>
@@ -87,14 +89,14 @@ function OptionsMenu({ toggleDropdown, viewPost }) {
         (viewPost.state ? (
           <button
             className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
-            onClick={deactivatePost}
+            onClick={handleDeactivatePost}
           >
             Archivar
           </button>
         ) : (
           <button
             className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
-            onClick={activatePost}
+            onClick={handleActivatePost}
           >
             Hacer Público
           </button>

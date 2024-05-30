@@ -76,7 +76,11 @@ function ViewPostModal() {
         </div>
         <div className="relative lg:hidden">
           {openDropdown && (
-            <OptionsMenu toggleDropdown={toggleDropdown} viewPost={viewPost} />
+            <OptionsMenu
+              toggleDropdown={toggleDropdown}
+              viewPost={viewPost}
+              updateGlobalModal={true}
+            />
           )}
         </div>
       </div>
@@ -218,6 +222,7 @@ function ViewPostModal() {
               <OptionsMenu
                 toggleDropdown={toggleDropdown}
                 viewPost={viewPost}
+                updateGlobalModal={true}
               />
             )}
           </div>
