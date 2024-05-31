@@ -46,7 +46,7 @@ function UserProfile() {
 
   const { executeRequest, loading } = useMorePostRequest();
 
-  const optionsRef = useRef();
+  const optionsRef = useRef(null);
 
   const { toggleModal } = useModal();
 

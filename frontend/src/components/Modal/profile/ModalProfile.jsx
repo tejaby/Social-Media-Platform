@@ -12,16 +12,18 @@ import { UserContext } from "../../../context/User";
 import UseSvgLoader from "../../../hooks/useSvgLoader";
 import useModal from "../../../hooks/interface/useModal";
 import useFileReader from "../../../hooks/post/useFileReader";
-
 import { useUserRequest } from "../../../hooks/user/useUserRequest";
+import useClickOutside from "../../../hooks/interface/useClickOutside";
 
 // react
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 
 function ModalProfile() {
   const { theme, showModalProfile, setShowModalProfile } =
     useContext(InterfaceContext);
   const { user, token } = useContext(UserContext);
+
+  const modalRef = useRef(null);
 
   const { toggleModal } = useModal();
 
@@ -31,6 +33,14 @@ function ModalProfile() {
   const [cover, setCover] = useState(null);
 
   const { handleChangeFile } = useFileReader(setCover);
+
+  const closeModal = () => {
+    toggleModal(setShowModalProfile, showModalProfile);
+  };
+
+  useClickOutside(modalRef, () => {
+    closeModal();
+  });
 
   const {
     register,
@@ -59,14 +69,11 @@ function ModalProfile() {
   return (
     <>
       <div
+        ref={modalRef}
         className={`flex flex-col w-full h-full xs:max-w-xl xs:h-5/6 xs:rounded-lg bg-white dark:bg-DarkColor`}
       >
         <div className="flex items-center p-2 border-b-2 border-colorHover dark:border-darkColorHover">
-          <button
-            onClick={() => {
-              toggleModal(setShowModalProfile, showModalProfile);
-            }}
-          >
+          <button onClick={closeModal}>
             {theme === "light" ? (
               <UseSvgLoader
                 name="arrow-left"
@@ -192,11 +199,7 @@ function ModalProfile() {
       </div>
 
       <div className="hidden xs:block absolute top-0 right-0 p-4">
-        <button
-          onClick={() => {
-            toggleModal(setShowModalProfile, showModalProfile);
-          }}
-        >
+        <button onClick={closeModal}>
           {theme === "light" ? (
             <UseSvgLoader
               name="x"

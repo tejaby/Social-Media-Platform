@@ -21,7 +21,7 @@ function navBar() {
   const { theme, showModalPost, setShowModalPost } =
     useContext(InterfaceContext);
 
-  const optionsRef = useRef();
+  const optionsRef = useRef(null);
 
   const { toggleModal } = useModal();
 
