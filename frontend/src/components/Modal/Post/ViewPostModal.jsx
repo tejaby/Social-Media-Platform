@@ -29,9 +29,14 @@ function ViewPostModal() {
 
   // Estado para mostrar u ocultar el menú de opciones abierto
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [openDropdownMobile, setOpenDropdownMobile] = useState(false);
 
   const toggleDropdown = () => {
     setOpenDropdown(!openDropdown);
+  };
+
+  const toggleDropdownMobile = () => {
+    setOpenDropdownMobile(!openDropdownMobile);
   };
 
   const handleUserPage = (username) => {
@@ -60,7 +65,7 @@ function ViewPostModal() {
               />
             )}
           </button>
-          <button onClick={toggleDropdown}>
+          <button onClick={toggleDropdownMobile}>
             {theme === "light" ? (
               <UseSvgLoader
                 name="dots"
@@ -75,9 +80,9 @@ function ViewPostModal() {
           </button>
         </div>
         <div className="relative lg:hidden">
-          {openDropdown && (
+          {openDropdownMobile && (
             <OptionsMenu
-              toggleDropdown={toggleDropdown}
+              toggleDropdown={toggleDropdownMobile}
               viewPost={viewPost}
               updateGlobalModal={true}
             />

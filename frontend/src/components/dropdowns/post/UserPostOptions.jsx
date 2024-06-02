@@ -7,6 +7,10 @@ import {
 
 // hooks
 import usePostActions from "../../../hooks/post/usePostActions";
+import useClickOutside from "../../../hooks/interface/useClickOutside";
+
+// react
+import { useRef } from "react";
 
 function UserPostOptions({
   toggleDropdown,
@@ -15,6 +19,12 @@ function UserPostOptions({
   token,
 }) {
   const { executeRequestPost } = usePostActions();
+
+  const dropDownRef = useRef(null);
+
+  useClickOutside(dropDownRef, () => {
+    toggleDropdown()
+  });
 
   const handleDeletePost = () => {
     if (token) {
@@ -56,6 +66,7 @@ function UserPostOptions({
 
   return (
     <div
+      ref={dropDownRef}
       className="absolute flex flex-col w-48 p-2 border border-colorHover dark:border-darkColorHover rounded-xl right-2 top-full bg-white dark:bg-DarkColor cursor-pointer z-10"
       onClick={toggleDropdown}
     >
