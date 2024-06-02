@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 
 // components
-import OptionsMenu from "../../../components/modal/post/OptionsMenu";
+import OptionsMenu from "../../dropdowns/post/OptionsMenu";
 
 // context
 import { InterfaceContext } from "../../../context/Interface";
