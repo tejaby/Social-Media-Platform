@@ -4,7 +4,7 @@ import { loadMorePostsService } from "../../services/post";
 
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
-import OptionsModal from "../../components/modal/navbar/OptionsModal";
+import UserOptionsMenu from "../dropdown/user/UserOptionsMenu";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
@@ -56,11 +56,11 @@ function UserProfile() {
   // Estado para indicar si la pestaña activa es la de publicaciones o la de archivados
   const [isActiveTab, setIsActiveTab] = useState(true);
 
+  const { OptionsMobile } = UserOptionsMenu();
+
   useClickOutside(optionsRef, () => {
     setShowAccountModal(false);
   });
-
-  const { OptionsModalMobile } = OptionsModal();
 
   useEffect(() => {
     if (!nextPageUserPosts || loading) return;
@@ -163,7 +163,7 @@ function UserProfile() {
           setShowAccountModal(!showAccountModal);
         }}
       >
-        {showAccountModal && <OptionsModalMobile />}
+        {showAccountModal && <OptionsMobile />}
       </div>
       <div className="flex flex-col justify-center items-center my-5">
         <div className="w-14 h-14 sm:w-16 sm:h-16">

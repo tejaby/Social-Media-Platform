@@ -7,7 +7,7 @@ import { loadMorePostsService } from "../../services/post";
 
 // components
 import PostImage from "../../components/post/image/PostImage";
-import OptionsMenu from "../dropdowns/post/OptionsMenu";
+import OptionsMenu from "../dropdown/post/OptionsMenu";
 
 // context
 import { InterfaceContext } from "../../context/Interface";

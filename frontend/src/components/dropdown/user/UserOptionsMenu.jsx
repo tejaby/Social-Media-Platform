@@ -1,12 +1,12 @@
 // libraries
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // services
 import { logoutService } from "../../../services/auth";
 
 // context
-import { UserContext } from "../../../context/User";
 import { InterfaceContext } from "../../../context/Interface";
+import { UserContext } from "../../../context/User";
 
 // hooks
 import { useAuthRequest } from "../../../hooks/user/useAuthRequest";
@@ -14,7 +14,7 @@ import { useAuthRequest } from "../../../hooks/user/useAuthRequest";
 // react
 import { useContext } from "react";
 
-function OptionsModal() {
+function UserOptionsMenu() {
   const { executeRequest } = useAuthRequest(logoutService);
 
   const { token } = useContext(UserContext);
@@ -37,7 +37,7 @@ function OptionsModal() {
     }
   };
 
-  const OptionsModalMobile = () => {
+  const OptionsMobile = () => {
     return (
       <div className="absolute flex flex-col w-48 p-2 border border-colorHover dark:border-darkColorHover rounded-xl right-2 top-full bg-white dark:bg-DarkColor z-10">
         <button
@@ -64,7 +64,7 @@ function OptionsModal() {
     );
   };
 
-  const OptionsModalDesktop = () => {
+  const OptionsDesktop = () => {
     return (
       <div className="absolute flex flex-col w-48 p-2 border border-colorHover dark:border-darkColorHover rounded-xl left-0 bottom-full bg-white dark:bg-DarkColor z-10">
         <button
@@ -90,8 +90,7 @@ function OptionsModal() {
       </div>
     );
   };
-
-  return { OptionsModalMobile, OptionsModalDesktop };
+  return { OptionsMobile, OptionsDesktop };
 }
 
-export default OptionsModal;
+export default UserOptionsMenu;

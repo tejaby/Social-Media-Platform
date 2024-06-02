@@ -2,7 +2,7 @@
 import { NavLink } from "react-router-dom";
 
 // components
-import OptionsModal from "../../components/modal/navbar/OptionsModal";
+import UserOptionsMenu from "../dropdown/user/UserOptionsMenu";
 
 // context
 import { UserContext } from "../../context/User";
@@ -28,11 +28,11 @@ function navBar() {
   // Estado para mostrar u el modal de configuración del perfil
   const [showAccountModal, setShowAccountModal] = useState(false);
 
+  const { OptionsDesktop } = UserOptionsMenu();
+
   useClickOutside(optionsRef, () => {
     setShowAccountModal(false);
   });
-
-  const { OptionsModalDesktop } = OptionsModal();
 
   return (
     <nav className="flex sm:flex-col items-center sm-items-start sm:justify-between sm:fixed sm:w-36 lg:w-80 h-16 sm:h-screen border-t-2 sm:border-t-0 sm:border-r-2 border-colorHover dark:border-darkColorHover sm:py-4 sm:px-6">
@@ -274,7 +274,7 @@ function navBar() {
             />
           )}
         </div>
-        {showAccountModal && <OptionsModalDesktop />}
+        {showAccountModal && <OptionsDesktop />}
       </div>
     </nav>
   );

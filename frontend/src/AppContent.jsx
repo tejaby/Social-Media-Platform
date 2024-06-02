@@ -74,7 +74,7 @@ function AppContent() {
       >
         {!!token ? (
           <>
-            <div className="fixed sm:static order-2 sm:order-1 w-full h-16 sm:h-full bottom-0 bg-white dark:bg-DarkColor">
+            <div className="fixed sm:static order-2 sm:order-1 w-full h-16 sm:h-full bottom-0 bg-white dark:bg-DarkColor z-40">
               <Navbar />
             </div>
             <div className="order-1 sm:order-2 w-full min-h-screen bg-white dark:bg-DarkColor">
