@@ -10,6 +10,7 @@ import { loadMorePostsService } from "../../services/post";
 
 // components
 import PostGrid from "../../components/post/grid/PostGrid";
+import UseSvgLoader from "../ui/UseSvgLoader";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
@@ -17,7 +18,6 @@ import { UserContext } from "../../context/User";
 import { PostContext } from "../../context/Post";
 
 // hooks
-import UseSvgLoader from "../../hooks/useSvgLoader";
 import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
 import useClickOutside from "../../hooks/interface/useClickOutside";
 

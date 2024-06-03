@@ -2,8 +2,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-// hooks
-import UseSvgLoader from "../../hooks/useSvgLoader";
+// components
+import UseSvgLoader from "../ui/UseSvgLoader";
 
 // context
 import { InterfaceContext } from "../../context/Interface";

@@ -5,6 +5,7 @@ import { loadMorePostsService } from "../../services/post";
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
 import UserOptionsMenu from "../dropdown/user/UserOptionsMenu";
+import UseSvgLoader from "../ui/UseSvgLoader";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
@@ -12,7 +13,6 @@ import { UserContext } from "../../context/User";
 import { PostContext } from "../../context/Post";
 
 // hooks
-import UseSvgLoader from "../../hooks/useSvgLoader";
 import useModal from "../../hooks/interface/useModal";
 import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
 import useClickOutside from "../../hooks/interface/useClickOutside";

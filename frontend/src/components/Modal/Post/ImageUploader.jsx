@@ -1,10 +1,12 @@
+// components
+import UseSvgLoader from "../../ui/UseSvgLoader";
+
 // context
 import { InterfaceContext } from "../../../context/Interface";
 import { PostContext } from "../../../context/Post";
 
 // hooks
 import useFileReader from "../../../hooks/post/useFileReader";
-import UseSvgLoader from "../../../hooks/useSvgLoader";
 import useModal from "../../../hooks/interface/useModal";
 
 // react

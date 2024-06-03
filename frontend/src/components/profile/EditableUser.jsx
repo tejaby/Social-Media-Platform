@@ -4,12 +4,14 @@ import { useForm } from "react-hook-form";
 // services
 import { updateUserService } from "../../services/user";
 
+// components
+import UseSvgLoader from "../ui/UseSvgLoader";
+
 // context
 import { InterfaceContext } from "../../context/Interface";
 import { UserContext } from "../../context/User";
 
 // hooks
-import UseSvgLoader from "../../hooks/useSvgLoader";
 import { useUserRequest } from "../../hooks/user/useUserRequest";
 
 // react

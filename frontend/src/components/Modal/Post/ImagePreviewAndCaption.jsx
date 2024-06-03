@@ -1,6 +1,9 @@
 // services
 import { createPostService } from "../../../services/post";
 
+// components
+import UseSvgLoader from "../../ui/UseSvgLoader";
+
 // context
 import { InterfaceContext } from "../../../context/Interface";
 import { UserContext } from "../../../context/User";
@@ -8,7 +11,6 @@ import { PostContext } from "../../../context/Post";
 
 // hooks
 import usePostActions from "../../../hooks/post/usePostActions";
-import UseSvgLoader from "../../../hooks/useSvgLoader";
 
 // react
 import { useContext } from "react";

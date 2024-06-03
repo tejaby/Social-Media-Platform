@@ -8,6 +8,7 @@ import { loadMorePostsService } from "../../services/post";
 // components
 import PostImage from "../../components/post/image/PostImage";
 import OptionsMenu from "../dropdown/post/OptionsMenu";
+import UseSvgLoader from "../ui/UseSvgLoader";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
@@ -16,7 +17,6 @@ import { PostContext } from "../../context/Post";
 
 // hooks
 import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
-import UseSvgLoader from "../../hooks/useSvgLoader";
 
 // utils
 import { formatTimeAgo } from "../../utils/dateUtils";

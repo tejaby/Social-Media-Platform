@@ -3,13 +3,13 @@ import { NavLink } from "react-router-dom";
 
 // components
 import UserOptionsMenu from "../dropdown/user/UserOptionsMenu";
+import UseSvgLoader from "../ui/UseSvgLoader";
 
 // context
 import { UserContext } from "../../context/User";
 import { InterfaceContext } from "../../context/Interface";
 
 // hooks
-import UseSvgLoader from "../../hooks/useSvgLoader";
 import useModal from "../../hooks/interface/useModal";
 import useClickOutside from "../../hooks/interface/useClickOutside";
 

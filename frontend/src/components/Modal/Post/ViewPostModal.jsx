@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 // components
 import OptionsMenu from "../../dropdown/post/OptionsMenu";
+import UseSvgLoader from "../../ui/UseSvgLoader";
 
 // context
 import { InterfaceContext } from "../../../context/Interface";
 import { PostContext } from "../../../context/Post";
 
 // hooks
-import UseSvgLoader from "../../../hooks/useSvgLoader";
 import useModal from "../../../hooks/interface/useModal";
 
 // utils

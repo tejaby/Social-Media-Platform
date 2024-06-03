@@ -1,13 +1,13 @@
 // components
 import ImageUploader from "./ImageUploader";
 import ImagePreviewAndCaption from "./ImagePreviewAndCaption";
+import UseSvgLoader from "../../ui/UseSvgLoader";
 
 // context
 import { InterfaceContext } from "../../../context/Interface";
 import { PostContext } from "../../../context/Post";
 
 // hooks
-import UseSvgLoader from "../../../hooks/useSvgLoader";
 import useModal from "../../../hooks/interface/useModal";
 import useClickOutside from "../../../hooks/interface/useClickOutside";
 

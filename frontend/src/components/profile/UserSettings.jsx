@@ -1,13 +1,11 @@
 // components
 import UserInfo from "../../components/profile/UserInfo";
 import EditableUser from "../../components/profile/EditableUser";
+import UseSvgLoader from "../ui/UseSvgLoader";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
 import { UserContext } from "../../context/User";
-
-// hooks
-import UseSvgLoader from "../../hooks/useSvgLoader";
 
 // context
 import { useContext, useState } from "react";

@@ -7,13 +7,13 @@ import { loadMorePostsService } from "../../services/post";
 
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
+import UseSvgLoader from "../ui/UseSvgLoader";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
 import { UserContext } from "../../context/User";
 
 // hooks
-import UseSvgLoader from "../../hooks/useSvgLoader";
 import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
 
 // utils
