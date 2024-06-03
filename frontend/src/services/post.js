@@ -125,3 +125,16 @@ export const activatePostService = async (post_id, access) => {
     throw err.response;
   }
 };
+
+export const listFollowedPostsService = async (access) => {
+  try {
+    const response = await axios.get(`${POST_API_BASE_URL}followed_posts/`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};

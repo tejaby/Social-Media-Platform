@@ -1,5 +1,5 @@
 // services
-import { listUserPostService } from "../services/post";
+import { listFollowedPostsService } from "../services/post";
 
 // components
 import Form from "../components/form/user/Form";
@@ -30,7 +30,7 @@ function Home() {
   useEffect(() => {
     if (token && !loading) {
       executeRequest(
-        listUserPostService,
+        listFollowedPostsService,
         setFollowedPosts,
         setNextPageFollowedPosts,
         token.access

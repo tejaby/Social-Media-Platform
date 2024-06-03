@@ -25,11 +25,14 @@ function PostOptions({ toggleDropdown, viewPost }) {
   });
 
   const handleUserPage = (username) => {
-    toggleModal(setShowViewPost, showViewPost);
+    if (!!showViewPost) {
+      toggleModal(setShowViewPost, showViewPost);
+    }
     navigate(`/profile/${username}`);
   };
   return (
-    <div ref={dropDownRef}
+    <div
+      ref={dropDownRef}
       className="absolute flex flex-col w-48 p-2 border border-colorHover dark:border-darkColorHover rounded-xl right-2 top-full bg-white dark:bg-DarkColor cursor-pointer z-10"
       onClick={toggleDropdown}
     >
