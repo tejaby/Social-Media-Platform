@@ -34,6 +34,7 @@ urlpatterns = [
     path('api/token/logout/', CustomLogoutView.as_view(), name='logout'),
     path('api/', include('apps.post.urls')),
     path('api/', include('apps.user.urls')),
+    path('api/', include('apps.follow.urls'))
 ]
 
 if settings.DEBUG:
