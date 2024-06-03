@@ -1,9 +1,13 @@
 // libraries
 import { useInView } from "react-intersection-observer";
-import toast from "react-hot-toast";
 
 // services
 import { loadMorePostsService } from "../../services/post";
+import {
+  verifyUserFollow,
+  followUserService,
+  unfollowUserService,
+} from "../../services/follow";
 
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
@@ -20,7 +24,7 @@ import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
 import { formatDate } from "../../utils/dateUtils";
 
 // react
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 
 function UserDetailProfile({
   statePosts,
@@ -37,6 +41,37 @@ function UserDetailProfile({
   const formattedDate = viewUser ? formatDate(viewUser.date_joined) : "";
 
   const { executeRequest, loading } = useMorePostRequest();
+
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  const followUser = async () => {
+    try {
+      await followUserService(viewUser.id, token.access);
+      setIsFollowing(true);
+    } catch (err) {
+      console.error("Error following user", err);
+    }
+  };
+
+  const unfollowUser = async () => {
+    try {
+      await unfollowUserService(viewUser.id, token.access);
+      setIsFollowing(false);
+    } catch (err) {
+      console.error("Error following user", err);
+    }
+  };
+
+  useEffect(() => {
+    const checkFollowStatus = async () => {
+      const response = await verifyUserFollow(viewUser.id, token.access);
+      setIsFollowing(response.is_following);
+    };
+
+    if (viewUser) {
+      checkFollowStatus();
+    }
+  }, [viewUser]);
 
   useEffect(() => {
     if (!statePage || loading) return;
@@ -55,7 +90,7 @@ function UserDetailProfile({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex justify-between items-center text-sm">
+      <div className="flex justify-between items-center text-sm sm:text-base">
         <button>
           {theme === "light" ? (
             <UseSvgLoader
@@ -87,32 +122,21 @@ function UserDetailProfile({
             />
           )}
         </button>
-        <button className="sm:hidden">
-          {theme === "light" ? (
-            <UseSvgLoader
-              name="menu-2"
-              options={{ width: "32px", height: "32px" }}
-            />
-          ) : (
-            <UseSvgLoader
-              name="menu-2Dark"
-              options={{ width: "32px", height: "32px" }}
-            />
-          )}
-        </button>
-        <button className="hidden sm:block">
-          {theme === "light" ? (
-            <UseSvgLoader
-              name="menu-2"
-              options={{ width: "32px", height: "32px" }}
-            />
-          ) : (
-            <UseSvgLoader
-              name="menu-2Dark"
-              options={{ width: "32px", height: "32px" }}
-            />
-          )}
-        </button>
+        {isFollowing ? (
+          <button
+            className="rounded-full px-4 py-1 sm:py-2 font-semibold text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
+            onClick={unfollowUser}
+          >
+            Siguiendo
+          </button>
+        ) : (
+          <button
+            className="rounded-full px-4 py-1 sm:py-2 font-semibold text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
+            onClick={followUser}
+          >
+            Seguir
+          </button>
+        )}
       </div>
       <div className="flex flex-col justify-center items-center my-5">
         <div className="w-14 h-14 sm:w-16 sm:h-16">
