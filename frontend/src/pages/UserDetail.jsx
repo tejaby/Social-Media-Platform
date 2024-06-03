@@ -19,7 +19,7 @@ import { UserContext } from "../context/User";
 import { useContext, useState, useEffect } from "react";
 
 function UserDetail() {
-  const { user, token, setViewUser } = useContext(UserContext);
+  const { user, token, setViewUser, loading } = useContext(UserContext);
 
   const { username } = useParams();
 
@@ -55,10 +55,10 @@ function UserDetail() {
       }
     };
 
-    if (token && token.access) {
+    if (token && !loading) {
       fetchData();
     }
-  }, []);
+  }, [token, loading]);
 
   return (
     <div className="max-w-3xl mx-auto sm:my-2">

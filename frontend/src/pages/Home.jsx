@@ -16,7 +16,7 @@ import { usePostRequest } from "../hooks/post/usePostRequest";
 import { useContext, useEffect } from "react";
 
 function Home() {
-  const { token } = useContext(UserContext);
+  const { token, loading } = useContext(UserContext);
 
   const { setFollowedPosts, setNextPageFollowedPosts } =
     useContext(PostContext);
@@ -28,7 +28,7 @@ function Home() {
   }
 
   useEffect(() => {
-    if (token) {
+    if (token && !loading) {
       executeRequest(
         listUserPostService,
         setFollowedPosts,
@@ -36,7 +36,7 @@ function Home() {
         token.access
       );
     }
-  }, []);
+  }, [token, loading]);
 
   return (
     <div className="max-w-lg sm:max-w-xl mx-auto sm:my-2">

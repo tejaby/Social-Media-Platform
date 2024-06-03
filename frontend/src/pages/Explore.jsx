@@ -15,16 +15,16 @@ import { usePostRequest } from "../hooks/post/usePostRequest";
 import { useContext, useEffect } from "react";
 
 function Explore() {
-  const { token } = useContext(UserContext);
+  const { token, loading } = useContext(UserContext);
   const { setPosts, setNextPagePosts } = useContext(PostContext);
 
   const { executeRequest } = usePostRequest();
 
   useEffect(() => {
-    if (token) {
+    if (token && !loading) {
       executeRequest(listPostService, setPosts, setNextPagePosts, token.access);
     }
-  }, []);
+  }, [token, loading]);
 
   return (
     <div className="max-w-3xl mx-auto">

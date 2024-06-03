@@ -20,16 +20,13 @@ import { UserContext } from "./context/User";
 import { useAuthRequest } from "./hooks/user/useAuthRequest";
 
 // react
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 function AppContent() {
   const { theme, showModal } = useContext(InterfaceContext);
-  const { token } = useContext(UserContext);
+  const { token, loading, setLoading } = useContext(UserContext);
 
   const { executeRequest } = useAuthRequest(refreshTokenService);
-
-  // Estado para indicar si los datos están siendo cargados
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (token && loading) {

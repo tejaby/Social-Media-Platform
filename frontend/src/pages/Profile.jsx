@@ -18,7 +18,7 @@ import { usePostRequest } from "../hooks/post/usePostRequest";
 import { useContext, useEffect } from "react";
 
 function Profile() {
-  const { token } = useContext(UserContext);
+  const { token, loading } = useContext(UserContext);
   const {
     setUserPosts,
     setNextPageUserPosts,
@@ -29,7 +29,7 @@ function Profile() {
   const { executeRequest } = usePostRequest();
 
   useEffect(() => {
-    if (token) {
+    if (token && !loading) {
       executeRequest(
         listUserPostService,
         setUserPosts,
@@ -43,7 +43,7 @@ function Profile() {
         token.access
       );
     }
-  }, []);
+  }, [token, loading]);
 
   return (
     <div className="max-w-3xl mx-auto sm:my-2">

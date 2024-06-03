@@ -21,9 +21,21 @@ export function UserContextProvider({ children }) {
   // Estado para almacenar la información de un usuario seleccionado para previsualización
   const [viewUser, setViewUser] = useState(null);
 
+  // Estado para indicar si los datos están siendo cargados
+  const [loading, setLoading] = useState(true);
+
   return (
     <UserContext.Provider
-      value={{ user, setUser, token, setToken, viewUser, setViewUser }}
+      value={{
+        user,
+        setUser,
+        token,
+        setToken,
+        viewUser,
+        setViewUser,
+        loading,
+        setLoading,
+      }}
     >
       {children}
     </UserContext.Provider>
