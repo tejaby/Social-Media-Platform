@@ -11,6 +11,7 @@ from .serializers import PostSerializer
 # models
 from apps.post.models import Post
 from apps.post.models import CustomUser
+from apps.follow.models import Follow
 
 
 class CustomPagination(PageNumberPagination):
@@ -121,3 +122,18 @@ class PostActivateAPIView(UpdateAPIView):
             instance.save()
             return Response(status=status.HTTP_200_OK)
         return Response({'error': 'post not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+"""
+Vista basada en ListAPIView para listar los posts de usuarios seguidos
+
+"""
+
+
+class PostsFromFollowedUsersView(ListAPIView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        followed_users = Follow.objects.filter(
+            follower=self.request.user).values_list('followed', flat=True)
+        return Post.objects.filter(author__in=followed_users).order_by('-created_at')

@@ -8,6 +8,12 @@ from apps.user.models import CustomUser
 from apps.follow.models import Follow
 
 
+"""
+Vista basada en APIView para seguir a un usuario
+
+"""
+
+
 class FollowUserView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -21,6 +27,12 @@ class FollowUserView(APIView):
             return Response({"message": "Ahora siguiendo"}, status=status.HTTP_201_CREATED)
         except CustomUser.DoesNotExist:
             return Response({"error": "Usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+
+"""
+Vista basada en APIView para dejar de seguir a un usuario
+
+"""
 
 
 class UnfollowUserView(APIView):
