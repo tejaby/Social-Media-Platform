@@ -4,11 +4,11 @@ import toast from "react-hot-toast";
 // context
 import { UserContext } from "../../context/User";
 
-// react
-import { useState, useContext } from "react";
-
 // utils
 import { getPostErrorMessage } from "../../utils/getErrorMessage";
+
+// react
+import { useState, useContext } from "react";
 
 export const useMorePostRequest = () => {
   const { setUser, setToken } = useContext(UserContext);
