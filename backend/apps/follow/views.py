@@ -46,3 +46,22 @@ class UnfollowUserView(APIView):
             return Response({"message": "Ya no te sigo"}, status=status.HTTP_204_NO_CONTENT)
         except CustomUser.DoesNotExist:
             return Response({"error": "Usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+
+"""
+Vista basada en APIView para verificar el estado de seguimiento
+
+"""
+
+
+class IsFollowingView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, user_id):
+        try:
+            followed_user = CustomUser.objects.get(pk=user_id)
+            is_following = Follow.objects.filter(
+                follower=request.user, followed=followed_user).exists()
+            return Response({"is_following": is_following}, status=status.HTTP_200_OK)
+        except CustomUser.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
