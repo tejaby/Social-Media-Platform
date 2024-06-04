@@ -3,11 +3,6 @@ import { useInView } from "react-intersection-observer";
 
 // services
 import { loadMorePostsService } from "../../services/post";
-import {
-  verifyUserFollow,
-  followUserService,
-  unfollowUserService,
-} from "../../services/follow";
 
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
@@ -19,12 +14,13 @@ import { UserContext } from "../../context/User";
 
 // hooks
 import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
+import useFollowStatus from "../../hooks/follow/useFollowStatus";
 
 // utils
 import { formatDate } from "../../utils/dateUtils";
 
 // react
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 
 function UserDetailProfile({
   statePosts,
@@ -42,36 +38,10 @@ function UserDetailProfile({
 
   const { executeRequest, loading } = useMorePostRequest();
 
-  const [isFollowing, setIsFollowing] = useState(false);
-
-  const followUser = async () => {
-    try {
-      await followUserService(viewUser.id, token.access);
-      setIsFollowing(true);
-    } catch (err) {
-      console.error("Error following user", err);
-    }
-  };
-
-  const unfollowUser = async () => {
-    try {
-      await unfollowUserService(viewUser.id, token.access);
-      setIsFollowing(false);
-    } catch (err) {
-      console.error("Error following user", err);
-    }
-  };
-
-  useEffect(() => {
-    const checkFollowStatus = async () => {
-      const response = await verifyUserFollow(viewUser.id, token.access);
-      setIsFollowing(response.is_following);
-    };
-
-    if (viewUser) {
-      checkFollowStatus();
-    }
-  }, [viewUser]);
+  const { isFollowing, followUser, unfollowUser } = useFollowStatus(
+    viewUser?.id,
+    token.access
+  );
 
   useEffect(() => {
     if (!statePage || loading) return;
