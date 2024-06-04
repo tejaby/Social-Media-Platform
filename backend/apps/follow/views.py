@@ -1,7 +1,10 @@
 # rest_framework
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+# serializers
+from apps.user.api.serializers import UserListSerializer
 
 # models
 from apps.user.models import CustomUser
@@ -65,3 +68,35 @@ class IsFollowingView(APIView):
             return Response({"is_following": is_following}, status=status.HTTP_200_OK)
         except CustomUser.DoesNotExist:
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+"""
+Vista basada en ListAPIView para listar seguidores
+
+"""
+
+
+class FollowersListView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserListSerializer
+
+    def get_queryset(self):
+        followers = Follow.objects.filter(
+            followed=self.request.user).values_list('follower', flat=True)
+        return CustomUser.objects.filter(id__in=followers)
+
+
+"""
+Vista basada en ListAPIView para listar seguidos
+
+"""
+
+
+class FollowingListView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserListSerializer
+
+    def get_queryset(self):
+        following = Follow.objects.filter(
+            follower=self.request.user).values_list('followed', flat=True)
+        return CustomUser.objects.filter(id__in=following)
