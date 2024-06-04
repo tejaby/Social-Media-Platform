@@ -3,20 +3,28 @@ import { useNavigate } from "react-router-dom";
 
 // context
 import { InterfaceContext } from "../../../context/Interface";
+import { UserContext } from "../../../context/User";
 
 // hooks
 import useModal from "../../../hooks/interface/useModal";
 import useClickOutside from "../../../hooks/interface/useClickOutside";
+import useFollowStatus from "../../../hooks/follow/useFollowStatus";
 
 // react
 import { useContext, useRef } from "react";
 
 function PostOptions({ toggleDropdown, viewPost }) {
   const { showViewPost, setShowViewPost } = useContext(InterfaceContext);
+  const { token } = useContext(UserContext);
 
   const { toggleModal } = useModal();
 
   const navigate = useNavigate();
+
+  const { isFollowing, followUser, unfollowUser } = useFollowStatus(
+    viewPost.author.id,
+    token.access
+  );
 
   const dropDownRef = useRef(null);
 
@@ -44,9 +52,21 @@ function PostOptions({ toggleDropdown, viewPost }) {
       >
         Ver perfil
       </span>
-      <span className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover">
-        {`Seguir a @${viewPost.author.username}`}
-      </span>
+      {isFollowing ? (
+        <span
+          className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
+          onClick={unfollowUser}
+        >
+          Siguiendo
+        </span>
+      ) : (
+        <span
+          className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover"
+          onClick={followUser}
+        >
+          Seguir
+        </span>
+      )}
       <span className="text-start rounded-xl py-2 px-3 text-black dark:text-white hover:bg-colorHover dark:hover:bg-darkColorHover">
         Denunciar Post
       </span>
