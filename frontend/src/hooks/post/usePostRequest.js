@@ -17,12 +17,16 @@ export const usePostRequest = () => {
     service,
     contextSetter,
     contextSetterPage,
+    setterCount = null,
     token = null
   ) => {
     try {
       const response = await service(token);
       contextSetter(response.results);
       contextSetterPage(response.next);
+      if (!!setterCount) {
+        setterCount(response.count);
+      }
     } catch (err) {
       const errorMessage = getPostErrorMessage(err);
       toast.error(errorMessage);

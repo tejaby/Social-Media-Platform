@@ -4,6 +4,8 @@ import {
   listUserInactivePostService,
 } from "../services/post";
 
+import { listFollowersService, listFollowingService } from "../services/follow";
+
 // components
 import UserProfile from "../components/profile/UserProfile";
 
@@ -13,9 +15,10 @@ import { PostContext } from "../context/Post";
 
 // hooks
 import { usePostRequest } from "../hooks/post/usePostRequest";
+import useFetchFollowData from "../hooks/follow/useFetchFollowData";
 
 // react
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function Profile() {
   const { token, loading } = useContext(UserContext);
@@ -28,18 +31,33 @@ function Profile() {
 
   const { executeRequest } = usePostRequest();
 
+  // Estado para almacenar el total de posts
+  const [userPostCount, setUserPostCount] = useState(0);
+
+  const { data: followers, loading: followersLoading } = useFetchFollowData(
+    listFollowersService,
+    token
+  );
+
+  const { data: following, loading: followingLoading } = useFetchFollowData(
+    listFollowingService,
+    token
+  );
+
   useEffect(() => {
     if (token && !loading) {
       executeRequest(
         listUserPostService,
         setUserPosts,
         setNextPageUserPosts,
+        setUserPostCount,
         token.access
       );
       executeRequest(
         listUserInactivePostService,
         setArchivedPosts,
         setNextPageArchivedPosts,
+        null,
         token.access
       );
     }
@@ -47,7 +65,13 @@ function Profile() {
 
   return (
     <div className="max-w-3xl mx-auto sm:my-2">
-      <UserProfile />
+      <UserProfile
+        userPostCount={userPostCount}
+        followers={followers}
+        followersLoading={followersLoading}
+        following={following}
+        followingLoading={followingLoading}
+      />
     </div>
   );
 }

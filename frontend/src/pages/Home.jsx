@@ -33,6 +33,7 @@ function Home() {
         listFollowedPostsService,
         setFollowedPosts,
         setNextPageFollowedPosts,
+        null,
         token.access
       );
     }

@@ -52,3 +52,29 @@ export const verifyUserFollow = async (user, access) => {
     throw err.response;
   }
 };
+
+export const listFollowersService = async (access) => {
+  try {
+    const response = await axios.get(`${FOLLOW_API_BASE_URL}followers/`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+export const listFollowingService = async (access) => {
+  try {
+    const response = await axios.get(`${FOLLOW_API_BASE_URL}following/`, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};

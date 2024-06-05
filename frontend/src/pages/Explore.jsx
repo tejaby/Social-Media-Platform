@@ -22,7 +22,13 @@ function Explore() {
 
   useEffect(() => {
     if (token && !loading) {
-      executeRequest(listPostService, setPosts, setNextPagePosts, token.access);
+      executeRequest(
+        listPostService,
+        setPosts,
+        setNextPagePosts,
+        null,
+        token.access
+      );
     }
   }, [token, loading]);
 
