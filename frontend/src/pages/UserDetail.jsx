@@ -1,13 +1,11 @@
 // libraries
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-
-// libraries
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // services
 import { listPostsByUseridService } from "../services/post";
 import { listUsersService } from "../services/user";
+import { listFollowersService, listFollowingService } from "../services/follow";
 
 // components
 import UserDetailProfile from "../components/profile/UserDetailProfile ";
@@ -15,18 +13,36 @@ import UserDetailProfile from "../components/profile/UserDetailProfile ";
 // context
 import { UserContext } from "../context/User";
 
+// hooks
+import useFetchFollowData from "../hooks/follow/useFetchFollowData";
+
 // react
 import { useContext, useState, useEffect } from "react";
 
 function UserDetail() {
-  const { user, token, setViewUser, loading } = useContext(UserContext);
+  const { user, token, viewUser, setViewUser, loading } =
+    useContext(UserContext);
 
   const { username } = useParams();
 
   const navigate = useNavigate();
 
+  // Estado para almacenar el total de posts
+  const [userPostCount, setUserPostCount] = useState(0);
+
   const [currentPosts, setCurrentPosts] = useState([]);
   const [nextPageCurrentPosts, setNextPageCurrentPosts] = useState(null);
+
+  const { data: followers, loading: followersLoading } = useFetchFollowData(
+    listFollowersService,
+    viewUser?.id,
+    token
+  );
+  const { data: following, loading: followingLoading } = useFetchFollowData(
+    listFollowingService,
+    viewUser?.id,
+    token
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +65,7 @@ function UserDetail() {
         );
         setCurrentPosts(postsResponse.results);
         setNextPageCurrentPosts(postsResponse.next);
+        setUserPostCount(postsResponse.count);
       } catch (err) {
         toast.error(err.data.detail);
         return;
@@ -67,6 +84,11 @@ function UserDetail() {
         setStatePosts={setCurrentPosts}
         statePage={nextPageCurrentPosts}
         setStatePage={setNextPageCurrentPosts}
+        userPostCount={userPostCount}
+        followers={followers}
+        followersLoading={followersLoading}
+        following={following}
+        followingLoading={followingLoading}
       />
     </div>
   );

@@ -4,7 +4,7 @@ import { UserContext } from "../../context/User";
 // react
 import { useEffect, useState, useContext } from "react";
 
-function useFetchFollowData(service, token) {
+function useFetchFollowData(service, user, token) {
   const { loading: cargando } = useContext(UserContext);
 
   const [data, setData] = useState([]);
@@ -13,7 +13,7 @@ function useFetchFollowData(service, token) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await service(token.access);
+        const response = await service(user, token.access);
         setData(response);
       } catch (err) {
         console.error(err);
@@ -21,10 +21,10 @@ function useFetchFollowData(service, token) {
         setLoading(false);
       }
     };
-    if (token && !cargando) {
+    if (user && token && !cargando) {
       fetchData();
     }
-  }, [token, cargando]);
+  }, [user, token, cargando]);
 
   return { data, loading };
 }

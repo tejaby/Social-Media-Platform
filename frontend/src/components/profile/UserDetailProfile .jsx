@@ -27,6 +27,11 @@ function UserDetailProfile({
   setStatePosts,
   statePage,
   setStatePage,
+  userPostCount,
+  followers,
+  followersLoading,
+  following,
+  followingLoading,
 }) {
   const { theme } = useContext(InterfaceContext);
 
@@ -130,17 +135,23 @@ function UserDetailProfile({
             @{viewUser.username}
           </span>
         )}
-        <div className="flex gap-10 text-sm">
+        <div className="flex items-center gap-10 text-sm">
           <div className="flex flex-col items-center">
-            <span className="font-bold text-black dark:text-white">10</span>
+            <span className="font-bold text-black dark:text-white">
+              {userPostCount}
+            </span>
             <span className="text-black dark:text-white">Post</span>
           </div>
-          <div className="flex flex-col items-center">
-            <span className="font-bold text-black dark:text-white">1.20 K</span>
+          <div className="flex flex-col items-center cursor-pointer">
+            <span className="font-bold text-black dark:text-white">
+              {followersLoading ? 0 : followers.count}
+            </span>
             <span className="text-black dark:text-white">seguidores</span>
           </div>
-          <div className="flex flex-col items-center">
-            <span className="font-bold text-black dark:text-white">300</span>
+          <div className="flex flex-col items-center cursor-pointer">
+            <span className="font-bold text-black dark:text-white">
+              {followingLoading ? 0 : following.count}
+            </span>
             <span className="text-black dark:text-white">seguidos</span>
           </div>
         </div>

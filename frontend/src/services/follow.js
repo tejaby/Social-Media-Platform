@@ -53,26 +53,32 @@ export const verifyUserFollow = async (user, access) => {
   }
 };
 
-export const listFollowersService = async (access) => {
+export const listFollowersService = async (user, access) => {
   try {
-    const response = await axios.get(`${FOLLOW_API_BASE_URL}followers/`, {
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-    });
+    const response = await axios.get(
+      `${FOLLOW_API_BASE_URL}followers/${user}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
     return response.data;
   } catch (err) {
     throw err.response;
   }
 };
 
-export const listFollowingService = async (access) => {
+export const listFollowingService = async (user, access) => {
   try {
-    const response = await axios.get(`${FOLLOW_API_BASE_URL}following/`, {
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-    });
+    const response = await axios.get(
+      `${FOLLOW_API_BASE_URL}following/${user}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
     return response.data;
   } catch (err) {
     throw err.response;

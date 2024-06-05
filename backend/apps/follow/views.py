@@ -81,8 +81,10 @@ class FollowersListView(generics.ListAPIView):
     serializer_class = UserListSerializer
 
     def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        user = CustomUser.objects.get(id=user_id)
         followers = Follow.objects.filter(
-            followed=self.request.user).values_list('follower', flat=True)
+            followed=user).values_list('follower', flat=True)
         return CustomUser.objects.filter(id__in=followers)
 
 
@@ -97,6 +99,8 @@ class FollowingListView(generics.ListAPIView):
     serializer_class = UserListSerializer
 
     def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        user = CustomUser.objects.get(id=user_id)
         following = Follow.objects.filter(
-            follower=self.request.user).values_list('followed', flat=True)
+            follower=user).values_list('followed', flat=True)
         return CustomUser.objects.filter(id__in=following)

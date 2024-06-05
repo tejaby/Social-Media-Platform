@@ -21,7 +21,7 @@ import useFetchFollowData from "../hooks/follow/useFetchFollowData";
 import { useContext, useEffect, useState } from "react";
 
 function Profile() {
-  const { token, loading } = useContext(UserContext);
+  const { user, token, loading } = useContext(UserContext);
   const {
     setUserPosts,
     setNextPageUserPosts,
@@ -36,11 +36,13 @@ function Profile() {
 
   const { data: followers, loading: followersLoading } = useFetchFollowData(
     listFollowersService,
+    user.id,
     token
   );
 
   const { data: following, loading: followingLoading } = useFetchFollowData(
     listFollowingService,
+    user.id,
     token
   );
 

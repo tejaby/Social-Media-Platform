@@ -192,13 +192,13 @@ function UserProfile({
             </span>
             <span className="text-black dark:text-white">Post</span>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center cursor-pointer">
             <span className="font-bold text-black dark:text-white">
               {followersLoading ? 0 : followers.count}
             </span>
             <span className="text-black dark:text-white">seguidores</span>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center cursor-pointer">
             <span className="font-bold text-black dark:text-white">
               {followingLoading ? 0 : following.count}
             </span>

@@ -9,9 +9,9 @@ urlpatterns = [
          UnfollowUserView.as_view(), name='unfollow_user'),
     path('follow/is_following/<int:user_id>/',
          IsFollowingView.as_view(), name='is_following'),
-    path('follow/followers/',
+    path('follow/followers/<int:user_id>/',
          FollowersListView.as_view(), name='followers_list'),
-    path('follow/following/',
+    path('follow/following/<int:user_id>/',
          FollowingListView.as_view(), name='following_list'),
 
 ]
