@@ -30,6 +30,7 @@ function UserDetail() {
   // Estado para almacenar el total de posts
   const [userPostCount, setUserPostCount] = useState(0);
 
+  // Estados para publicaciones del usuario y el enlace a la siguiente página
   const [currentPosts, setCurrentPosts] = useState([]);
   const [nextPageCurrentPosts, setNextPageCurrentPosts] = useState(null);
 
@@ -75,7 +76,7 @@ function UserDetail() {
     if (token && !loading) {
       fetchData();
     }
-  }, [token, loading]);
+  }, [token, loading, navigate]);
 
   return (
     <div className="max-w-3xl mx-auto sm:my-2">

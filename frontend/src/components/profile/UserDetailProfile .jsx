@@ -4,6 +4,9 @@ import { useInView } from "react-intersection-observer";
 // services
 import { loadMorePostsService } from "../../services/post";
 
+// pages
+import Follow from "../../pages/Follow";
+
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
 import UseSvgLoader from "../ui/UseSvgLoader";
@@ -20,7 +23,7 @@ import useFollowStatus from "../../hooks/follow/useFollowStatus";
 import { formatDate } from "../../utils/dateUtils";
 
 // react
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 
 function UserDetailProfile({
   statePosts,
@@ -41,12 +44,22 @@ function UserDetailProfile({
 
   const formattedDate = viewUser ? formatDate(viewUser.date_joined) : "";
 
+  // Estado para mostrar u ocultar la pagina follow del usuario
+  const [showFollowPage, setShowFollowPage] = useState(false);
+
+  // Estado para indicar si la pestaña activa es la de followers o followings
+  const [isFollowersTabActive, setIsFollowersTabActive] = useState(true);
+
   const { executeRequest, loading } = useMorePostRequest();
 
   const { isFollowing, followUser, unfollowUser } = useFollowStatus(
     viewUser?.id,
     token.access
   );
+
+  const handleFollowPage = () => {
+    setShowFollowPage(true);
+  };
 
   useEffect(() => {
     if (!statePage || loading) return;
@@ -63,7 +76,7 @@ function UserDetailProfile({
     }
   }, [inView]);
 
-  return (
+  return !showFollowPage ? (
     <div className="flex flex-col gap-2">
       <div className="flex justify-between items-center text-sm sm:text-base">
         <button>
@@ -142,13 +155,25 @@ function UserDetailProfile({
             </span>
             <span className="text-black dark:text-white">Post</span>
           </div>
-          <div className="flex flex-col items-center cursor-pointer">
+          <div
+            className="flex flex-col items-center cursor-pointer"
+            onClick={() => {
+              handleFollowPage();
+              setIsFollowersTabActive(true);
+            }}
+          >
             <span className="font-bold text-black dark:text-white">
               {followersLoading ? 0 : followers.count}
             </span>
             <span className="text-black dark:text-white">seguidores</span>
           </div>
-          <div className="flex flex-col items-center cursor-pointer">
+          <div
+            className="flex flex-col items-center cursor-pointer"
+            onClick={() => {
+              handleFollowPage();
+              setIsFollowersTabActive(false);
+            }}
+          >
             <span className="font-bold text-black dark:text-white">
               {followingLoading ? 0 : following.count}
             </span>
@@ -188,6 +213,15 @@ function UserDetailProfile({
         ))}
       </div>
     </div>
+  ) : (
+    <Follow
+      user={viewUser}
+      followers={followers}
+      following={following}
+      setShowFollowPage={setShowFollowPage}
+      isFollowersTabActive={isFollowersTabActive}
+      setIsFollowersTabActive={setIsFollowersTabActive}
+    />
   );
 }
 
