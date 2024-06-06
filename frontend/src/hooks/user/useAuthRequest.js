@@ -36,12 +36,14 @@ export const useAuthRequest = (service) => {
     } catch (err) {
       const errorMessage = getAuthErrorMessage(err, method);
       toast.error(errorMessage);
-      setTimeout(() => {
-        setUser(null);
-        setToken(null);
-        localStorage.removeItem("authUser");
-        localStorage.removeItem("authToken");
-      }, 5000);
+      if (method !== "login") {
+        setTimeout(() => {
+          setUser(null);
+          setToken(null);
+          localStorage.removeItem("authUser");
+          localStorage.removeItem("authToken");
+        }, 5000);
+      }
     }
   };
 

@@ -38,7 +38,7 @@ export const useUserRequest = (service) => {
     } catch (err) {
       const errorMessage = getUserErrorMessage(err, method);
       toast.error(errorMessage);
-      if (err.data.detail) {
+      if (method !== "create") {
         setTimeout(() => {
           setUser(null);
           setToken(null);
