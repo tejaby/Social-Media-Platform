@@ -75,12 +75,6 @@ function ExploreGrid() {
       } catch (err) {
         const errorMessage = getUserErrorMessage(err, "search");
         toast.error(errorMessage);
-        setTimeout(() => {
-          setUser(null);
-          setToken(null);
-          localStorage.removeItem("authUser");
-          localStorage.removeItem("authToken");
-        }, 5000);
       }
     };
 

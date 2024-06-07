@@ -1,3 +1,6 @@
+// libraries
+import toast from "react-hot-toast";
+
 // services
 import {
   verifyUserFollow,
@@ -5,16 +8,24 @@ import {
   unfollowUserService,
 } from "../../services/follow";
 
+// utils
+import { getFollowErrorMessage } from "../../utils/getErrorMessage";
+
 // react
 import { useEffect, useState } from "react";
 
-function useFollowStatus(user, access) {
+function useFollowStatus(user, token) {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
     const checkFollowStatus = async () => {
-      const response = await verifyUserFollow(user, access);
-      setIsFollowing(response.is_following);
+      try {
+        const response = await verifyUserFollow(user, token);
+        setIsFollowing(response.is_following);
+      } catch (err) {
+        const error = getFollowErrorMessage(err, "get");
+        toast.error(error);
+      }
     };
 
     if (user) {
@@ -24,19 +35,21 @@ function useFollowStatus(user, access) {
 
   const followUser = async () => {
     try {
-      await followUserService(user, access);
+      await followUserService(user, token);
       setIsFollowing(true);
     } catch (err) {
-      console.error(err.data.error);
+      const error = getFollowErrorMessage(err, "post");
+      toast.error(error);
     }
   };
 
   const unfollowUser = async () => {
     try {
-      await unfollowUserService(user, access);
+      await unfollowUserService(user, token);
       setIsFollowing(false);
     } catch (err) {
-      console.error(err.data.error);
+      const error = getFollowErrorMessage(err, "post");
+      toast.error(error);
     }
   };
 

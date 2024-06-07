@@ -37,13 +37,13 @@ function Profile() {
   const { data: followers, loading: followersLoading } = useFetchFollowData(
     listFollowersService,
     user.id,
-    token
+    token.access
   );
 
   const { data: following, loading: followingLoading } = useFetchFollowData(
     listFollowingService,
     user.id,
-    token
+    token.access
   );
 
   useEffect(() => {

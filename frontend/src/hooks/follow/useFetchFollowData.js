@@ -1,5 +1,11 @@
+// libraries
+import toast from "react-hot-toast";
+
 // context
 import { UserContext } from "../../context/User";
+
+// utils
+import { getFollowErrorMessage } from "../../utils/getErrorMessage";
 
 // react
 import { useEffect, useState, useContext } from "react";
@@ -13,10 +19,11 @@ function useFetchFollowData(service, user, token) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await service(user, token.access);
+        const response = await service(user, token);
         setData(response);
       } catch (err) {
-        console.error(err);
+        const error = getFollowErrorMessage(err, "get");
+        toast.error(error);
       } finally {
         setLoading(false);
       }

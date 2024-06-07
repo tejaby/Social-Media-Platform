@@ -28,7 +28,7 @@ export const usePostRequest = () => {
         setterCount(response.count);
       }
     } catch (err) {
-      const errorMessage = getPostErrorMessage(err);
+      const errorMessage = getPostErrorMessage(err, "get");
       toast.error(errorMessage);
       setTimeout(() => {
         setUser(null);

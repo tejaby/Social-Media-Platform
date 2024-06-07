@@ -114,6 +114,7 @@ export const activatePostService = async (post_id, access) => {
   try {
     const response = await axios.put(
       `${POST_API_BASE_URL}activate/${post_id}/`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${access}`,

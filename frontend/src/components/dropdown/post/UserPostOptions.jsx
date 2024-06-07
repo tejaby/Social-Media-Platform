@@ -23,7 +23,7 @@ function UserPostOptions({
   const dropDownRef = useRef(null);
 
   useClickOutside(dropDownRef, () => {
-    toggleDropdown()
+    toggleDropdown();
   });
 
   const handleDeletePost = () => {

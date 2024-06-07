@@ -30,7 +30,7 @@ export const useMorePostRequest = () => {
       contextSetter([...context, ...response.results]);
       contextSetterPage(response.next);
     } catch (err) {
-      const errorMessage = getPostErrorMessage(err);
+      const errorMessage = getPostErrorMessage(err, "get");
       toast.error(errorMessage);
       setTimeout(() => {
         setUser(null);

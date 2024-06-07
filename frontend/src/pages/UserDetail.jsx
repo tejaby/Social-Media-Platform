@@ -37,12 +37,12 @@ function UserDetail() {
   const { data: followers, loading: followersLoading } = useFetchFollowData(
     listFollowersService,
     viewUser?.id,
-    token
+    token.access
   );
   const { data: following, loading: followingLoading } = useFetchFollowData(
     listFollowingService,
     viewUser?.id,
-    token
+    token.access
   );
 
   useEffect(() => {
