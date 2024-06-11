@@ -1,5 +1,6 @@
 # rest_framework
-from rest_framework import viewsets, status
+from rest_framework.views import APIView
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView
 from rest_framework.pagination import PageNumberPagination
@@ -137,3 +138,43 @@ class PostsFromFollowedUsersView(ListAPIView):
         followed_users = Follow.objects.filter(
             follower=self.request.user).values_list('followed', flat=True)
         return Post.objects.filter(author__in=followed_users).order_by('-created_at')
+
+
+"""
+Vista basada en APIView para agregar me gusta a post
+
+"""
+
+
+class PostLikeAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+            if request.user in post.likes.all():
+                return Response({"message": "Ya te ha gustado esta publicación"}, status=status.HTTP_400_BAD_REQUEST)
+            post.likes.add(request.user)
+            return Response({"message": "Like agregado"}, status=status.HTTP_200_OK)
+        except Post.DoesNotExist:
+            return Response({"error": "Post no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+
+"""
+Vista basada en APIView para eliminar me gusta a post
+
+"""
+
+
+class PostDislikeAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+            if request.user not in post.likes.all():
+                return Response({"message": "Aún no te ha gustado esta publicación"}, status=status.HTTP_400_BAD_REQUEST)
+            post.likes.remove(request.user)
+            return Response({"message": "Like eliminado"}, status=status.HTTP_200_OK)
+        except Post.DoesNotExist:
+            return Response({"error": "Post no encontrado"}, status=status.HTTP_404_NOT_FOUND)

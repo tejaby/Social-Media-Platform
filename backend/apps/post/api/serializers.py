@@ -12,8 +12,10 @@ Serializador para el listado, obtencion, creacion y actualizacion de posts
 
 """
 
+
 class PostSerializer(serializers.ModelSerializer):
     author = UserListSerializer(read_only=True)
+    likes = UserListSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
