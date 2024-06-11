@@ -8,6 +8,7 @@ import {
 // hooks
 import usePostActions from "../../../hooks/post/usePostActions";
 import useClickOutside from "../../../hooks/interface/useClickOutside";
+import usePostManagement from "../../../hooks/post/usePostManagement";
 
 // react
 import { useRef } from "react";
@@ -20,15 +21,18 @@ function UserPostOptions({
 }) {
   const { executeRequestPost } = usePostActions();
 
+  const { deletePostState, movePostToArchived, movePostToActive } =
+    usePostManagement();
+
   const dropDownRef = useRef(null);
 
   useClickOutside(dropDownRef, () => {
     toggleDropdown();
   });
 
-  const handleDeletePost = () => {
+  const handleDeletePost = async () => {
     if (token) {
-      executeRequestPost(
+      const success = await executeRequestPost(
         deletePostService,
         "delete",
         null,
@@ -36,12 +40,15 @@ function UserPostOptions({
         viewPost.id,
         updateGlobalModal
       );
+      if (success) {
+        deletePostState(viewPost.id);
+      }
     }
   };
 
-  const handleDeactivatePost = () => {
+  const handleDeactivatePost = async () => {
     if (token) {
-      executeRequestPost(
+      const success = await executeRequestPost(
         deactivatePostService,
         "deactivate",
         null,
@@ -49,18 +56,24 @@ function UserPostOptions({
         viewPost.id,
         updateGlobalModal
       );
+      if (success) {
+        movePostToArchived(viewPost.id);
+      }
     }
   };
 
-  const handleActivatePost = () => {
+  const handleActivatePost = async () => {
     if (token) {
-      executeRequestPost(
+      const success = await executeRequestPost(
         activatePostService,
         "activate",
         null,
         token.access,
         viewPost.id
       );
+      if (success) {
+        movePostToActive(viewPost.id);
+      }
     }
   };
 

@@ -1,6 +1,9 @@
 // libraries
 import { useInView } from "react-intersection-observer";
 
+// services
+import { loadMorePostsService } from "../../services/post";
+
 // page
 import Follow from "../../pages/Follow";
 

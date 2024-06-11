@@ -11,6 +11,7 @@ import { PostContext } from "../../../context/Post";
 
 // hooks
 import usePostActions from "../../../hooks/post/usePostActions";
+import usePostManagement from "../../../hooks/post/usePostManagement";
 
 // react
 import { useContext } from "react";
@@ -24,13 +25,23 @@ function ImagePreviewAndCaption({ cover }) {
 
   const { executeRequestPost } = usePostActions();
 
-  const createPost = (value) => {
+  const { updatePostState } = usePostManagement();
+
+  const handleCreatePost = async (value) => {
     const data = new FormData();
     data.append("content", value.content);
     data.append("image", value.image[0]);
     data.append("state", true);
     if (token) {
-      executeRequestPost(createPostService, "create", data, token.access);
+      const response = await executeRequestPost(
+        createPostService,
+        "create",
+        data,
+        token.access
+      );
+      if (!!response) {
+        updatePostState(response);
+      }
     }
   };
 
@@ -57,7 +68,7 @@ function ImagePreviewAndCaption({ cover }) {
         </button>
         <button
           className="rounded-full px-4 py-2 font-semibold text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
-          onClick={handleSubmit(createPost)}
+          onClick={handleSubmit(handleCreatePost)}
         >
           Postear
         </button>
@@ -65,7 +76,7 @@ function ImagePreviewAndCaption({ cover }) {
       <div className="grow">
         <form
           className="w-full h-full flex flex-col gap-2"
-          onSubmit={handleSubmit(createPost)}
+          onSubmit={handleSubmit(handleCreatePost)}
         >
           <div className="basis-3/5 relative">
             <img

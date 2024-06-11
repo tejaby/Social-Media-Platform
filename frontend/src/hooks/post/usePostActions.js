@@ -1,5 +1,4 @@
 // libraries
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 // context
@@ -28,8 +27,6 @@ function usePostActions() {
 
   const { toggleModal } = useModal();
 
-  const navigate = useNavigate();
-
   const handlePostSuccess = (
     message,
     showModalContent,
@@ -40,7 +37,6 @@ function usePostActions() {
     if (updateGlobalModal) {
       toggleModal(setShowModalContent, showModalContent);
     }
-    navigate("/explore");
   };
 
   const executeRequestPost = async (
@@ -53,7 +49,7 @@ function usePostActions() {
   ) => {
     try {
       if (method === "create") {
-        await service(data, token);
+        const response = await service(data, token);
         reset();
         setCondition(false);
         handlePostSuccess(
@@ -62,6 +58,7 @@ function usePostActions() {
           setShowModalPost,
           updateGlobalModal
         );
+        return response;
       } else if (method === "delete") {
         await service(id, token);
         handlePostSuccess(
@@ -70,6 +67,7 @@ function usePostActions() {
           setShowViewPost,
           updateGlobalModal
         );
+        return true;
       } else if (method === "deactivate") {
         await service(id, token);
         handlePostSuccess(
@@ -78,6 +76,7 @@ function usePostActions() {
           setShowViewPost,
           updateGlobalModal
         );
+        return true;
       } else if (method === "activate") {
         await service(id, token);
         handlePostSuccess(
@@ -86,10 +85,12 @@ function usePostActions() {
           setShowViewPost,
           updateGlobalModal
         );
+        return true;
       }
     } catch (err) {
       const errorMessage = getPostErrorMessage(err, method);
       toast.error(errorMessage);
+      return false;
     }
   };
 
