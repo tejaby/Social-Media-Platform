@@ -14,6 +14,7 @@ import UseSvgLoader from "../ui/UseSvgLoader";
 // context
 import { InterfaceContext } from "../../context/Interface";
 import { UserContext } from "../../context/User";
+import { PostContext } from "../../context/Post";
 
 // hooks
 import { useMorePostRequest } from "../../hooks/post/useMorePostRequest";
@@ -26,10 +27,6 @@ import { formatDate } from "../../utils/dateUtils";
 import { useEffect, useContext, useState } from "react";
 
 function UserDetailProfile({
-  statePosts,
-  setStatePosts,
-  statePage,
-  setStatePage,
   userPostCount,
   followers,
   followersLoading,
@@ -39,6 +36,13 @@ function UserDetailProfile({
   const { theme } = useContext(InterfaceContext);
 
   const { token, viewUser } = useContext(UserContext);
+
+  const {
+    currentPosts,
+    setCurrentPosts,
+    nextPageCurrentPosts,
+    setNextPageCurrentPosts,
+  } = useContext(PostContext);
 
   const { inView, ref } = useInView();
 
@@ -62,15 +66,15 @@ function UserDetailProfile({
   };
 
   useEffect(() => {
-    if (!statePage || loading) return;
+    if (!nextPageCurrentPosts || loading) return;
 
     if (inView) {
       executeRequest(
         loadMorePostsService,
-        statePosts,
-        setStatePosts,
-        setStatePage,
-        statePage,
+        currentPosts,
+        setCurrentPosts,
+        setNextPageCurrentPosts,
+        nextPageCurrentPosts,
         token.access
       );
     }
@@ -201,14 +205,14 @@ function UserDetailProfile({
         )}
       </div>
       <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
-        {statePosts.map((post, index) => (
+        {currentPosts.map((post, index) => (
           <div key={post.id}>
             <UserPostGrid
               src={post.image}
               alt={post.author.username}
               post={post}
             />
-            {index === statePosts.length - 1 && <div ref={ref} />}
+            {index === currentPosts.length - 1 && <div ref={ref} />}
           </div>
         ))}
       </div>

@@ -139,3 +139,37 @@ export const listFollowedPostsService = async (access) => {
     throw err.response;
   }
 };
+
+export const likePostService = async (post_id, access) => {
+  try {
+    const response = await axios.post(
+      `${POST_API_BASE_URL}like/${post_id}/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+export const dislikePostService = async (post_id, access) => {
+  try {
+    const response = await axios.post(
+      `${POST_API_BASE_URL}dislike/${post_id}/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};

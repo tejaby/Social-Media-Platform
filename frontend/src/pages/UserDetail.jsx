@@ -12,6 +12,7 @@ import UserDetailProfile from "../components/profile/UserDetailProfile ";
 
 // context
 import { UserContext } from "../context/User";
+import { PostContext } from "../context/Post";
 
 // hooks
 import useFetchFollowData from "../hooks/follow/useFetchFollowData";
@@ -23,16 +24,14 @@ function UserDetail() {
   const { user, token, viewUser, setViewUser, loading } =
     useContext(UserContext);
 
+  const { setCurrentPosts, setNextPageCurrentPosts } = useContext(PostContext);
+
   const { username } = useParams();
 
   const navigate = useNavigate();
 
   // Estado para almacenar el total de posts
   const [userPostCount, setUserPostCount] = useState(0);
-
-  // Estados para publicaciones del usuario y el enlace a la siguiente página
-  const [currentPosts, setCurrentPosts] = useState([]);
-  const [nextPageCurrentPosts, setNextPageCurrentPosts] = useState(null);
 
   const { data: followers, loading: followersLoading } = useFetchFollowData(
     listFollowersService,
@@ -81,10 +80,6 @@ function UserDetail() {
   return (
     <div className="max-w-3xl mx-auto sm:my-2">
       <UserDetailProfile
-        statePosts={currentPosts}
-        setStatePosts={setCurrentPosts}
-        statePage={nextPageCurrentPosts}
-        setStatePage={setNextPageCurrentPosts}
         userPostCount={userPostCount}
         followers={followers}
         followersLoading={followersLoading}

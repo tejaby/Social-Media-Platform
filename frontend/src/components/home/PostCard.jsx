@@ -3,7 +3,11 @@ import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 
 // services
-import { loadMorePostsService } from "../../services/post";
+import {
+  loadMorePostsService,
+  likePostService,
+  dislikePostService,
+} from "../../services/post";
 
 // components
 import PostImage from "../../components/post/image/PostImage";
@@ -26,7 +30,7 @@ import { useContext, useEffect, useState } from "react";
 
 function PostCard() {
   const { theme } = useContext(InterfaceContext);
-  const { token } = useContext(UserContext);
+  const { token, user } = useContext(UserContext);
   const {
     followedPosts,
     setFollowedPosts,
@@ -51,6 +55,43 @@ function PostCard() {
       setOpenDropdown(null);
     } else {
       setOpenDropdown(postId);
+    }
+  };
+
+  const handleLike = async (postId) => {
+    if (token) {
+      try {
+        await likePostService(postId, token.access);
+        setFollowedPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post.id === postId
+              ? { ...post, likes: [...post.likes, user] }
+              : post
+          )
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  const handleDislike = async (postId) => {
+    if (token) {
+      try {
+        await dislikePostService(postId, token.access);
+        setFollowedPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post.id === postId
+              ? {
+                  ...post,
+                  likes: post.likes.filter((like) => like.id !== user.id),
+                }
+              : post
+          )
+        );
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -147,54 +188,52 @@ function PostCard() {
           </div>
           <div className="flex justify-between items-center py-2">
             <div className="flex gap-2">
-              <div className="flex items-center">
-                <button>
-                  {theme === "light" ? (
+              <div className="flex items-center gap-1">
+                {!post.likes.some((like) => like.id === user.id) ? (
+                  <button
+                    onClick={() => {
+                      handleLike(post.id);
+                    }}
+                  >
                     <UseSvgLoader
                       name="heart"
                       options={{ width: "24px", height: "24px" }}
                     />
-                  ) : (
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      handleDislike(post.id);
+                    }}
+                  >
                     <UseSvgLoader
-                      name="heartDark"
+                      name="heart-filled"
                       options={{ width: "24px", height: "24px" }}
                     />
-                  )}
-                </button>
-                <span className="text-black dark:text-white">{post.likes}</span>
+                  </button>
+                )}
+                <span className="text-black dark:text-white">
+                  {post.likes.length}
+                </span>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center gap-1">
                 <button>
-                  {theme === "light" ? (
-                    <UseSvgLoader
-                      name="message-circle-2"
-                      options={{ width: "24px", height: "24px" }}
-                    />
-                  ) : (
-                    <UseSvgLoader
-                      name="message-circle-2Dark"
-                      options={{ width: "24px", height: "24px" }}
-                    />
-                  )}
+                  <UseSvgLoader
+                    name="message-circle-2"
+                    options={{ width: "24px", height: "24px" }}
+                  />
                 </button>
-                <span className="text-black dark:text-white">3</span>
+                <span className="text-black dark:text-white">0</span>
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center gap-1">
               <button>
-                {theme === "light" ? (
-                  <UseSvgLoader
-                    name="chart-line"
-                    options={{ width: "24px", height: "24px" }}
-                  />
-                ) : (
-                  <UseSvgLoader
-                    name="chart-lineDark"
-                    options={{ width: "24px", height: "24px" }}
-                  />
-                )}
+                <UseSvgLoader
+                  name="chart-line"
+                  options={{ width: "24px", height: "24px" }}
+                />
               </button>
-              <span className="text-black dark:text-white">54</span>
+              <span className="text-black dark:text-white">0</span>
             </div>
           </div>
           {index === followedPosts.length - 1 && <div ref={ref} />}

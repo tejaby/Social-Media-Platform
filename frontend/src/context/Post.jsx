@@ -25,6 +25,10 @@ export function PostContextProvider({ children }) {
   const [followedPosts, setFollowedPosts] = useState([]);
   const [nextPageFollowedPosts, setNextPageFollowedPosts] = useState(null);
 
+  // Estados para publicaciones del usuario y el enlace a la siguiente página
+  const [currentPosts, setCurrentPosts] = useState([]);
+  const [nextPageCurrentPosts, setNextPageCurrentPosts] = useState(null);
+
   // Estado para almacenar la información de una publicación seleccionada para previsualización
   const [viewPost, setViewPost] = useState(null);
 
@@ -50,6 +54,11 @@ export function PostContextProvider({ children }) {
         setFollowedPosts,
         nextPageFollowedPosts,
         setNextPageFollowedPosts,
+
+        currentPosts,
+        setCurrentPosts,
+        nextPageCurrentPosts,
+        setNextPageCurrentPosts,
 
         viewPost,
         setViewPost,
