@@ -21,7 +21,7 @@ function useFollowStatus(user, token) {
     const checkFollowStatus = async () => {
       try {
         const response = await verifyUserFollow(user, token);
-        setIsFollowing(response.is_following);
+        setIsFollowing(response.message);
       } catch (err) {
         const error = getFollowErrorMessage(err, "get");
         toast.error(error);

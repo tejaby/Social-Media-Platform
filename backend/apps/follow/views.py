@@ -66,7 +66,7 @@ class IsFollowingView(APIView):
             followed_user = CustomUser.objects.get(pk=user_id)
             is_following = Follow.objects.filter(
                 follower=request.user, followed=followed_user).exists()
-            return Response({"estas siguiendo": is_following}, status=status.HTTP_200_OK)
+            return Response({"message": is_following}, status=status.HTTP_200_OK)
         except CustomUser.DoesNotExist:
             return Response({"error": "Usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
