@@ -1,4 +1,5 @@
 # rest_framework
+from django.shortcuts import get_object_or_404
 from rest_framework import status, permissions, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -65,9 +66,9 @@ class IsFollowingView(APIView):
             followed_user = CustomUser.objects.get(pk=user_id)
             is_following = Follow.objects.filter(
                 follower=request.user, followed=followed_user).exists()
-            return Response({"is_following": is_following}, status=status.HTTP_200_OK)
+            return Response({"estas siguiendo": is_following}, status=status.HTTP_200_OK)
         except CustomUser.DoesNotExist:
-            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
 
 """
@@ -77,12 +78,12 @@ Vista basada en ListAPIView para listar seguidores
 
 
 class FollowersListView(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserListSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
-        user = CustomUser.objects.get(id=user_id)
+        user = get_object_or_404(CustomUser, id=user_id)
         followers = Follow.objects.filter(
             followed=user).values_list('follower', flat=True)
         return CustomUser.objects.filter(id__in=followers)
@@ -95,12 +96,12 @@ Vista basada en ListAPIView para listar seguidos
 
 
 class FollowingListView(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserListSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
-        user = CustomUser.objects.get(id=user_id)
+        user = get_object_or_404(CustomUser, id=user_id)
         following = Follow.objects.filter(
             follower=user).values_list('followed', flat=True)
         return CustomUser.objects.filter(id__in=following)

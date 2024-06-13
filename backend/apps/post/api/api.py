@@ -3,20 +3,18 @@ from rest_framework.views import APIView
 from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView
-from rest_framework.pagination import PageNumberPagination
 from django.shortcuts import get_object_or_404
 
 # serializers
 from .serializers import PostSerializer
 
+# paginations
+from .pagination import CustomPagination
+
 # models
 from apps.post.models import Post
 from apps.post.models import CustomUser
 from apps.follow.models import Follow
-
-
-class CustomPagination(PageNumberPagination):
-    page_size = 9
 
 
 """
@@ -27,6 +25,7 @@ Vista basada en GenericViewSet para el listado, obtencion, crecion, actualizacio
 
 class PostViewset(viewsets.ModelViewSet):
     serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return Post.objects.filter(state=True).order_by('-created_at')
@@ -45,6 +44,7 @@ Vista basada en ListAPIView para listar los posts del usuario autenticado
 
 class UserPostsListView(ListAPIView):
     serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
     pagination_class = CustomPagination
 
     def get_queryset(self):
@@ -59,6 +59,7 @@ Vista basada en ListAPIView para listar los posts desactivados del usuario auten
 
 class UserInactivePostsListView(ListAPIView):
     serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
     pagination_class = CustomPagination
 
     def get_queryset(self):
@@ -73,11 +74,12 @@ Vista basada en ListAPIView para listar los posts de un usuario específico seg�
 
 class UserPostsByUserListView(ListAPIView):
     serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
     pagination_class = CustomPagination
 
     def get_queryset(self):
         username = self.kwargs['username']
-        user = CustomUser.objects.get(username=username)
+        user = get_object_or_404(CustomUser, username=username)
         return Post.objects.filter(state=True, author=user).order_by('-created_at')
 
 
@@ -88,11 +90,11 @@ Vista basada en DestroyAPIView para desactivar un post específico
 
 
 class PostDeactivateAPIView(DestroyAPIView):
-    model = Post
     serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return self.model.objects.filter(state=True)
+        return Post.objects.filter(state=True)
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -110,11 +112,11 @@ Vista basada en UpdateAPIView para activar un post específico
 
 
 class PostActivateAPIView(UpdateAPIView):
-    model = Post
     serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return self.model.objects.filter(state=False)
+        return Post.objects.filter(state=False)
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -133,11 +135,13 @@ Vista basada en ListAPIView para listar los posts de usuarios seguidos
 
 class PostsFromFollowedUsersView(ListAPIView):
     serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         followed_users = Follow.objects.filter(
             follower=self.request.user).values_list('followed', flat=True)
-        return Post.objects.filter(author__in=followed_users).order_by('-created_at')
+        return Post.objects.filter(state=True, author__in=followed_users).order_by('-created_at')
 
 
 """

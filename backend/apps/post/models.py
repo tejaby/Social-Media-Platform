@@ -16,12 +16,3 @@ class Post(BaseModel):
     class Meta:
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
-
-
-class Like(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ['user', 'post']
