@@ -111,137 +111,148 @@ function PostCard() {
   }, [inView]);
 
   return (
-    <div className="flex flex-col gap-2">
-      {followedPosts.map((post, index) => (
-        <div
-          key={post.id}
-          className="flex flex-col border-b-2 border-colorHover dark:border-darkColorHover"
-        >
-          <div className="flex justify-between items-center py-2">
-            <div className="flex items-center gap-1">
-              <img
-                src={`${
-                  post.author.profile_picture
-                    ? post.author.profile_picture
-                    : "/user-defect.png"
-                }`}
-                alt=""
-                className="w-10 h-10 object-cover rounded-full cursor-pointer"
-                onClick={() => {
-                  handleUserPage(post.author.username);
-                }}
-              />
-              <span
-                className="font-bold text-black dark:text-white cursor-pointer"
-                onClick={() => {
-                  handleUserPage(post.author.username);
-                }}
-              >
-                {post.author.username}
-              </span>
-              <span className="text-secondaryText dark:text-secondaryTextDark">
-                {formatTimeAgo(new Date(post.created_at))}
-              </span>
-            </div>
-            <div className="relative">
-              <button
-                onClick={() => {
-                  toggleDropdown(post.id);
-                }}
-              >
-                {theme === "light" ? (
-                  <UseSvgLoader
-                    name="dots"
-                    options={{ width: "32px", height: "32px" }}
-                  />
-                ) : (
-                  <UseSvgLoader
-                    name="dotsDark"
-                    options={{ width: "32px", height: "32px" }}
-                  />
-                )}
-              </button>
-              {openDropdown === post.id && (
-                <OptionsMenu
-                  toggleDropdown={toggleDropdown}
-                  viewPost={post}
-                  updateGlobalModal={false}
-                />
-              )}
-            </div>
-          </div>
-          <div>
-            <PostImage src={post.image} alt={post.author.username} />
-            <div className="flex gap-1">
-              <span
-                className="font-semibold text-black dark:text-white cursor-pointer"
-                onClick={() => {
-                  handleUserPage(post.author.username);
-                }}
-              >
-                {post.author.username}
-              </span>
-              <p className="text-base text-black dark:text-white">
-                {post.content}
-              </p>
-            </div>
-          </div>
-          <div className="flex justify-between items-center py-2">
-            <div className="flex gap-2">
+    <div className="flex flex-col gap-2 min-h-screen">
+      {followedPosts.length > 0 ? (
+        followedPosts.map((post, index) => (
+          <div
+            key={post.id}
+            className="flex flex-col border-b-2 border-colorHover dark:border-darkColorHover"
+          >
+            <div className="flex justify-between items-center py-2">
               <div className="flex items-center gap-1">
-                {!post.likes.some((like) => like.id === user.id) ? (
-                  <button
-                    onClick={() => {
-                      handleLike(post.id);
-                    }}
-                  >
-                    <UseSvgLoader
-                      name="heart"
-                      options={{ width: "24px", height: "24px" }}
-                    />
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      handleDislike(post.id);
-                    }}
-                  >
-                    <UseSvgLoader
-                      name="heart-filled"
-                      options={{ width: "24px", height: "24px" }}
-                    />
-                  </button>
-                )}
-                <span className="text-black dark:text-white">
-                  {post.likes.length}
+                <img
+                  src={`${
+                    post.author.profile_picture
+                      ? post.author.profile_picture
+                      : "/user-defect.png"
+                  }`}
+                  alt=""
+                  className="w-10 h-10 object-cover rounded-full cursor-pointer"
+                  onClick={() => {
+                    handleUserPage(post.author.username);
+                  }}
+                />
+                <span
+                  className="font-bold text-black dark:text-white cursor-pointer"
+                  onClick={() => {
+                    handleUserPage(post.author.username);
+                  }}
+                >
+                  {post.author.username}
                 </span>
+                <span className="text-secondaryText dark:text-secondaryTextDark">
+                  {formatTimeAgo(new Date(post.created_at))}
+                </span>
+              </div>
+              <div className="relative">
+                <button
+                  onClick={() => {
+                    toggleDropdown(post.id);
+                  }}
+                >
+                  {theme === "light" ? (
+                    <UseSvgLoader
+                      name="dots"
+                      options={{ width: "32px", height: "32px" }}
+                    />
+                  ) : (
+                    <UseSvgLoader
+                      name="dotsDark"
+                      options={{ width: "32px", height: "32px" }}
+                    />
+                  )}
+                </button>
+                {openDropdown === post.id && (
+                  <OptionsMenu
+                    toggleDropdown={toggleDropdown}
+                    viewPost={post}
+                    updateGlobalModal={false}
+                  />
+                )}
+              </div>
+            </div>
+            <div>
+              <PostImage src={post.image} alt={post.author.username} />
+              <div className="flex gap-1">
+                <span
+                  className="font-semibold text-black dark:text-white cursor-pointer"
+                  onClick={() => {
+                    handleUserPage(post.author.username);
+                  }}
+                >
+                  {post.author.username}
+                </span>
+                <p className="text-base text-black dark:text-white">
+                  {post.content}
+                </p>
+              </div>
+            </div>
+            <div className="flex justify-between items-center py-2">
+              <div className="flex gap-2">
+                <div className="flex items-center gap-1">
+                  {!post.likes.some((like) => like.id === user.id) ? (
+                    <button
+                      onClick={() => {
+                        handleLike(post.id);
+                      }}
+                    >
+                      <UseSvgLoader
+                        name="heart"
+                        options={{ width: "24px", height: "24px" }}
+                      />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        handleDislike(post.id);
+                      }}
+                    >
+                      <UseSvgLoader
+                        name="heart-filled"
+                        options={{ width: "24px", height: "24px" }}
+                      />
+                    </button>
+                  )}
+                  <span className="text-black dark:text-white">
+                    {post.likes.length}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <button>
+                    <UseSvgLoader
+                      name="message-circle-2"
+                      options={{ width: "24px", height: "24px" }}
+                    />
+                  </button>
+                  <span className="text-black dark:text-white">0</span>
+                </div>
               </div>
               <div className="flex items-center gap-1">
                 <button>
                   <UseSvgLoader
-                    name="message-circle-2"
+                    name="chart-line"
                     options={{ width: "24px", height: "24px" }}
                   />
                 </button>
                 <span className="text-black dark:text-white">0</span>
               </div>
             </div>
-            <div className="flex items-center gap-1">
-              <button>
-                <UseSvgLoader
-                  name="chart-line"
-                  options={{ width: "24px", height: "24px" }}
-                />
-              </button>
-              <span className="text-black dark:text-white">0</span>
-            </div>
+            {index === followedPosts.length - 1 && <div ref={ref} />}
           </div>
-          {index === followedPosts.length - 1 && <div ref={ref} />}
-        </div>
-      ))}
-      {nextPageFollowedPosts && (
-        <div className="flex justify-center text-black dark:text-white">
-          Loading...
+        ))
+      ) : (
+        <div className="flex-grow flex flex-col justify-center items-center text-center">
+          {theme === "light" ? (
+            <UseSvgLoader name="photo-off" />
+          ) : (
+            <UseSvgLoader name="photo-offDark" />
+          )}
+          <h2 className="text-xl font-semibold text-secondaryText dark:text-secondaryTextDark">
+            Aún no hay publicaciones para mostrar
+          </h2>
+          <p className="text-sm sm:text-base text-gray-600">
+            Sigue a otros usuarios para ver sus publicaciones en tu inicio.
+          </p>
         </div>
       )}
     </div>

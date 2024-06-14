@@ -114,7 +114,7 @@ function UserProfile({
   }, [inView]);
 
   return !showFollowPage ? (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 min-h-screen">
       <div className="flex justify-between items-center text-sm">
         <button>
           {theme === "light" ? (
@@ -308,21 +308,37 @@ function UserProfile({
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
-        {isActiveTab
-          ? userPosts.map((post, index) => (
-              <div key={post.id}>
-                <UserPostGrid post={post} />
-                {index === userPosts.length - 1 && <div ref={ref} />}
-              </div>
-            ))
-          : archivedPosts.map((post, index) => (
-              <div key={post.id}>
-                <UserPostGrid post={post} />
-                {index === archivedPosts.length - 1 && <div ref={ref} />}
-              </div>
-            ))}
-      </div>
+      {userPosts.length || archivedPosts.length > 0 ? (
+        <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
+          {isActiveTab
+            ? userPosts.map((post, index) => (
+                <div key={post.id}>
+                  <UserPostGrid post={post} />
+                  {index === userPosts.length - 1 && <div ref={ref} />}
+                </div>
+              ))
+            : archivedPosts.map((post, index) => (
+                <div key={post.id}>
+                  <UserPostGrid post={post} />
+                  {index === archivedPosts.length - 1 && <div ref={ref} />}
+                </div>
+              ))}
+        </div>
+      ) : (
+        <div className="flex-grow flex flex-col justify-center items-center">
+          {theme === "light" ? (
+            <UseSvgLoader name="photo-off" />
+          ) : (
+            <UseSvgLoader name="photo-offDark" />
+          )}
+          <h2 className="text-xl font-semibold text-secondaryText dark:text-secondaryTextDark">
+            Aún no tienes publicaciones
+          </h2>
+          <p className="text-sm sm:text-base text-gray-600">
+            ¡Crea tu primer post para compartir con tus amigos!
+          </p>
+        </div>
+      )}
     </div>
   ) : (
     <Follow

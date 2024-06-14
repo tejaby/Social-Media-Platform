@@ -81,7 +81,7 @@ function UserDetailProfile({
   }, [inView]);
 
   return !showFollowPage ? (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 min-h-screen">
       <div className="flex justify-between items-center text-sm sm:text-base">
         <button>
           {theme === "light" ? (
@@ -204,18 +204,32 @@ function UserDetailProfile({
           </p>
         )}
       </div>
-      <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
-        {currentPosts.map((post, index) => (
-          <div key={post.id}>
-            <UserPostGrid
-              src={post.image}
-              alt={post.author.username}
-              post={post}
-            />
-            {index === currentPosts.length - 1 && <div ref={ref} />}
-          </div>
-        ))}
-      </div>
+      <hr className="border-0 border-b-2 border-colorHover dark:border-darkColorHover" />
+      {currentPosts.length > 0 ? (
+        <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
+          {currentPosts.map((post, index) => (
+            <div key={post.id}>
+              <UserPostGrid
+                src={post.image}
+                alt={post.author.username}
+                post={post}
+              />
+              {index === currentPosts.length - 1 && <div ref={ref} />}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex-grow flex flex-col justify-center items-center">
+          {theme === "light" ? (
+            <UseSvgLoader name="photo-off" />
+          ) : (
+            <UseSvgLoader name="photo-offDark" />
+          )}
+          <h2 className="text-xl font-semibold text-secondaryText dark:text-secondaryTextDark">
+            Este usuario aún no ha publicado nada
+          </h2>
+        </div>
+      )}
     </div>
   ) : (
     <Follow
