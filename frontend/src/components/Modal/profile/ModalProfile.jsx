@@ -1,5 +1,6 @@
 // libraries
 import { useForm } from "react-hook-form";
+import imageCompression from "browser-image-compression";
 
 // services
 import { updateUserService } from "../../../services/user";
@@ -56,16 +57,38 @@ function ModalProfile() {
     setValue("website", user.website);
   }, []);
 
-  const onSubmit = (data) => {
-    const formData = new FormData();
-    if (data.profile_picture) {
-      formData.append("profile_picture", data.profile_picture);
-    }
-    formData.append("biography", data.biography);
-    formData.append("website", data.website);
+  const onSubmit = async (data) => {
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
 
-    executeRequest("update", formData, token.access, user.id);
-    toggleModal(setShowModalProfile, showModalProfile);
+    let compressedFile;
+
+    try {
+      if (data.profile_picture) {
+        const compressedBlob = await imageCompression(
+          data.profile_picture,
+          options
+        );
+
+        compressedFile = new File([compressedBlob], data.profile_picture.name, {
+          type: data.profile_picture.type,
+          lastModified: Date.now(),
+        });
+      }
+
+      const formData = new FormData();
+      if (data.profile_picture) {
+        formData.append("profile_picture", compressedFile);
+      }
+      formData.append("biography", data.biography);
+      formData.append("website", data.website);
+
+      executeRequest("update", formData, token.access, user.id);
+      toggleModal(setShowModalProfile, showModalProfile);
+    } catch (err) {}
   };
 
   return (
