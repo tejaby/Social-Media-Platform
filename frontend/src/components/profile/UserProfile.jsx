@@ -11,6 +11,7 @@ import Follow from "../../pages/Follow";
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
 import UserOptionsMenu from "../dropdown/user/UserOptionsMenu";
 import UseSvgLoader from "../ui/UseSvgLoader";
+import Spinner from "../ui/Spinner";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
@@ -34,6 +35,7 @@ function UserProfile({
   followersLoading,
   following,
   followingLoading,
+  postsLoading,
 }) {
   const { theme, showModalProfile, setShowModalProfile } =
     useContext(InterfaceContext);
@@ -115,23 +117,11 @@ function UserProfile({
 
   return !showFollowPage ? (
     <div className="flex flex-col gap-2 min-h-screen">
-      <div className="flex justify-between items-center text-sm">
-        <button>
-          {theme === "light" ? (
-            <UseSvgLoader
-              name="error-404"
-              options={{ width: "32px", height: "32px" }}
-            />
-          ) : (
-            <UseSvgLoader
-              name="error-404Dark"
-              options={{ width: "32px", height: "32px" }}
-            />
-          )}
-        </button>
-        <button className="flex gap-1 items-center">
+      <div className="flex justify-between sm:justify-center items-center text-sm sm:text-base h-12">
+        <div className="w-8 sm:hidden" />
+        <button className="flex justify-center items-center gap-1">
           <span className="font-bold text-black dark:text-white">
-            @{user.username}
+            {user.username}
           </span>
           {theme === "light" ? (
             <UseSvgLoader
@@ -163,19 +153,6 @@ function UserProfile({
             />
           )}
         </button>
-        <button className="hidden sm:block">
-          {theme === "light" ? (
-            <UseSvgLoader
-              name="menu-2"
-              options={{ width: "32px", height: "32px" }}
-            />
-          ) : (
-            <UseSvgLoader
-              name="menu-2Dark"
-              options={{ width: "32px", height: "32px" }}
-            />
-          )}
-        </button>
       </div>
       <div
         ref={optionsRef}
@@ -187,7 +164,7 @@ function UserProfile({
         {showAccountModal && <OptionsMobile />}
       </div>
       <div className="flex flex-col justify-center items-center my-5">
-        <div className="w-14 h-14 sm:w-16 sm:h-16">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 mt-3">
           <img
             src={`${
               user.profile_picture ? user.profile_picture : "/user-defect.png"
@@ -308,7 +285,11 @@ function UserProfile({
           </span>
         </div>
       </div>
-      {userPosts.length || archivedPosts.length > 0 ? (
+      {postsLoading ? (
+        <div className="flex-grow flex items-center justify-center bg-white dark:bg-DarkColor">
+          <Spinner />
+        </div>
+      ) : userPosts.length || archivedPosts.length > 0 ? (
         <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
           {isActiveTab
             ? userPosts.map((post, index) => (

@@ -29,7 +29,7 @@ function Profile() {
     setNextPageArchivedPosts,
   } = useContext(PostContext);
 
-  const { executeRequest } = usePostRequest();
+  const { executeRequest, postsLoading } = usePostRequest();
 
   // Estado para almacenar el total de posts
   const [userPostCount, setUserPostCount] = useState(0);
@@ -73,6 +73,7 @@ function Profile() {
         followersLoading={followersLoading}
         following={following}
         followingLoading={followingLoading}
+        postsLoading={postsLoading}
       />
     </div>
   );

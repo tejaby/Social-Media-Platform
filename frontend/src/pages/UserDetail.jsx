@@ -33,6 +33,8 @@ function UserDetail() {
   // Estado para almacenar el total de posts
   const [userPostCount, setUserPostCount] = useState(0);
 
+  const [postsLoading, setPostsLoading] = useState(true);
+
   const { data: followers, loading: followersLoading } = useFetchFollowData(
     listFollowersService,
     viewUser?.id,
@@ -69,6 +71,8 @@ function UserDetail() {
       } catch (err) {
         toast.error(err.data.detail);
         return;
+      } finally {
+        setPostsLoading(false);
       }
     };
 
@@ -85,6 +89,7 @@ function UserDetail() {
         followersLoading={followersLoading}
         following={following}
         followingLoading={followingLoading}
+        postsLoading={postsLoading}
       />
     </div>
   );

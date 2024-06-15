@@ -4,6 +4,7 @@ import { listFollowedPostsService } from "../services/post";
 // components
 import Form from "../components/form/user/Form";
 import PostCard from "../components/home/PostCard";
+import Spinner from "../components/ui/Spinner";
 
 // context
 import { UserContext } from "../context/User";
@@ -21,7 +22,7 @@ function Home() {
   const { setFollowedPosts, setNextPageFollowedPosts } =
     useContext(PostContext);
 
-  const { executeRequest } = usePostRequest();
+  const { executeRequest, postsLoading } = usePostRequest();
 
   if (!token) {
     return <Form />;
@@ -39,9 +40,13 @@ function Home() {
     }
   }, [token, loading]);
 
-  return (
+  return !postsLoading ? (
     <div className="max-w-lg sm:max-w-xl mx-auto sm:my-2">
       <PostCard />
+    </div>
+  ) : (
+    <div className="w-full h-full flex items-center justify-center bg-white dark:bg-DarkColor">
+      <Spinner />
     </div>
   );
 }

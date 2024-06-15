@@ -11,6 +11,7 @@ import { loadMorePostsService } from "../../services/post";
 // components
 import PostGrid from "../../components/post/grid/PostGrid";
 import UseSvgLoader from "../ui/UseSvgLoader";
+import Spinner from "../ui/Spinner";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
@@ -27,9 +28,9 @@ import { getUserErrorMessage } from "../../utils/getErrorMessage";
 // react
 import { useContext, useEffect, useState, useRef } from "react";
 
-function ExploreGrid() {
+function ExploreGrid({ postsLoading }) {
   const { theme } = useContext(InterfaceContext);
-  const { setUser, token, setToken } = useContext(UserContext);
+  const { token } = useContext(UserContext);
   const { posts, setPosts, nextPagePosts, setNextPagePosts } =
     useContext(PostContext);
 
@@ -201,14 +202,18 @@ function ExploreGrid() {
           </div>
         )}
       </div>
-      <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
-        {posts.map((post, index) => (
-          <div key={post.id}>
-            <PostGrid post={post} />
-            {index === posts.length - 1 && <div ref={ref} />}
-          </div>
-        ))}
-      </div>
+      {postsLoading ? (
+        <Spinner />
+      ) : (
+        <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
+          {posts.map((post, index) => (
+            <div key={post.id}>
+              <PostGrid post={post} />
+              {index === posts.length - 1 && <div ref={ref} />}
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 }

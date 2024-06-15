@@ -7,6 +7,7 @@ import { refreshTokenService } from "./services/auth";
 
 // components
 import ShowModal from "./components/modal/ShowModal";
+import LoadingComponent from "./components/ui/LoadingComponent";
 
 // pages
 import Rutas from "./routers/Routes";
@@ -35,6 +36,8 @@ function AppContent() {
           setLoading(false);
         }
       );
+    } else {
+      setLoading(false);
     }
 
     let refreshPeriodically;
@@ -69,7 +72,9 @@ function AppContent() {
             : "grid-cols-1"
         } gap-2 w-full h-full bg-white dark:bg-DarkColor`}
       >
-        {!!token ? (
+        {loading ? (
+          <LoadingComponent />
+        ) : !!token ? (
           <>
             <div className="fixed sm:static order-2 sm:order-1 w-full h-16 sm:h-full bottom-0 bg-white dark:bg-DarkColor z-40">
               <Navbar />

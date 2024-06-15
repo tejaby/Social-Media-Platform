@@ -18,7 +18,7 @@ function Explore() {
   const { token, loading } = useContext(UserContext);
   const { setPosts, setNextPagePosts } = useContext(PostContext);
 
-  const { executeRequest } = usePostRequest();
+  const { executeRequest, postsLoading } = usePostRequest();
 
   useEffect(() => {
     if (token && !loading) {
@@ -34,7 +34,7 @@ function Explore() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <ExploreGrid />
+      <ExploreGrid postsLoading={postsLoading} />
     </div>
   );
 }

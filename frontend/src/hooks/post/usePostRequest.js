@@ -8,10 +8,12 @@ import { UserContext } from "../../context/User";
 import { getPostErrorMessage } from "../../utils/getErrorMessage";
 
 // react
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export const usePostRequest = () => {
   const { setUser, setToken } = useContext(UserContext);
+
+  const [postsLoading, setPostsLoading] = useState(true);
 
   const executeRequest = async (
     service,
@@ -36,8 +38,10 @@ export const usePostRequest = () => {
         localStorage.removeItem("authUser");
         localStorage.removeItem("authToken");
       }, 5000);
+    } finally {
+      setPostsLoading(false);
     }
   };
 
-  return { executeRequest };
+  return { executeRequest, postsLoading };
 };

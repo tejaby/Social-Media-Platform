@@ -10,6 +10,8 @@ import Follow from "../../pages/Follow";
 // components
 import UserPostGrid from "../../components/post/grid/UserPostGrid";
 import UseSvgLoader from "../ui/UseSvgLoader";
+import Spinner from "../ui/Spinner";
+import Avatar from "../ui/Avatar";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
@@ -32,6 +34,7 @@ function UserDetailProfile({
   followersLoading,
   following,
   followingLoading,
+  postsLoading,
 }) {
   const { theme } = useContext(InterfaceContext);
 
@@ -82,25 +85,15 @@ function UserDetailProfile({
 
   return !showFollowPage ? (
     <div className="flex flex-col gap-2 min-h-screen">
-      <div className="flex justify-between items-center text-sm sm:text-base">
-        <button>
-          {theme === "light" ? (
-            <UseSvgLoader
-              name="error-404"
-              options={{ width: "32px", height: "32px" }}
-            />
-          ) : (
-            <UseSvgLoader
-              name="error-404Dark"
-              options={{ width: "32px", height: "32px" }}
-            />
-          )}
-        </button>
-        <button className="flex gap-1 items-center">
-          {viewUser && (
+      <div className="flex justify-between items-center text-sm sm:text-base h-12">
+        <div className="w-12" />
+        <button className="flex justify-center items-center gap-1">
+          {viewUser ? (
             <span className="font-bold text-black dark:text-white">
               {viewUser.username}
             </span>
+          ) : (
+            <div className="h-4 w-28 bg-gray-200 rounded-full dark:bg-gray-700 animate-pulse" />
           )}
           {theme === "light" ? (
             <UseSvgLoader
@@ -116,14 +109,14 @@ function UserDetailProfile({
         </button>
         {isFollowing ? (
           <button
-            className="rounded-full px-4 py-1 sm:py-2 font-semibold text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
+            className="rounded-full px-4 py-2 font-semibold text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
             onClick={unfollowUser}
           >
             Siguiendo
           </button>
         ) : (
           <button
-            className="rounded-full px-4 py-1 sm:py-2 font-semibold text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
+            className="rounded-full px-4 py-2 font-semibold text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
             onClick={followUser}
           >
             Seguir
@@ -131,8 +124,12 @@ function UserDetailProfile({
         )}
       </div>
       <div className="flex flex-col justify-center items-center my-5">
-        <div className="w-14 h-14 sm:w-16 sm:h-16">
-          {viewUser && (
+        <div
+          className={`w-14 h-14 sm:w-16 sm:h-16 mt-3${
+            !viewUser ? " animate-pulse" : ""
+          }`}
+        >
+          {viewUser ? (
             <img
               src={`${
                 viewUser.profile_picture
@@ -142,17 +139,30 @@ function UserDetailProfile({
               alt=""
               className="w-full h-full object-cover rounded-full"
             />
+          ) : (
+            <Avatar />
           )}
         </div>
-        {viewUser && (
-          <span className="mt-3 text-black dark:text-white">{`${viewUser.first_name} ${viewUser.last_name}`}</span>
-        )}
-        {viewUser && (
-          <span className="mb-3 text-secondaryText dark:text-secondaryTextDark">
-            @{viewUser.username}
-          </span>
-        )}
-        <div className="flex items-center gap-10 text-sm">
+        <div
+          className={`flex flex-col items-center ${
+            viewUser ? "gap-1" : "gap-4"
+          } mt-3`}
+        >
+          {viewUser ? (
+            <>
+              <span className="text-black dark:text-white">{`${viewUser.first_name} ${viewUser.last_name}`}</span>
+              <span className="text-secondaryText dark:text-secondaryTextDark">
+                @{viewUser.username}
+              </span>
+            </>
+          ) : (
+            <>
+              <div className="h-4 w-28 bg-gray-200 rounded-full dark:bg-gray-700 animate-pulse" />
+              <div className="h-4 w-28 bg-gray-200 rounded-full dark:bg-gray-700 animate-pulse" />
+            </>
+          )}
+        </div>
+        <div className="flex items-center gap-10 text-sm mt-3">
           <div className="flex flex-col items-center">
             <span className="font-bold text-black dark:text-white">
               {userPostCount}
@@ -184,28 +194,34 @@ function UserDetailProfile({
             <span className="text-black dark:text-white">seguidos</span>
           </div>
         </div>
-        {viewUser && (
-          <p className="my-3 text-black dark:text-white">
+        {viewUser ? (
+          <p className="mt-3 text-black dark:text-white">
             {viewUser.biography ? viewUser.biography : "Nada por aquí..."}
           </p>
+        ) : (
+          <div className="h-4 w-40 bg-gray-200 rounded-full dark:bg-gray-700 mt-6 animate-pulse" />
         )}
         {viewUser && viewUser.website && (
           <a
             href={viewUser.website}
-            className="mb-3 text-black dark:text-white hover:text-PrimaryColor dark:hover:text-PrimaryColor"
+            className="mt-3 text-black dark:text-white hover:text-PrimaryColor dark:hover:text-PrimaryColor"
             target="_blank"
           >
             {viewUser.website}
           </a>
         )}
-        {viewUser && (
-          <p className="text-secondaryText dark:text-secondaryTextDark">
+        {viewUser ? (
+          <p className="text-secondaryText dark:text-secondaryTextDark mt-3">
             {viewUser.date_joined && `Se unió: ${formattedDate}`}
           </p>
+        ) : (
+          <div className="h-4 w-40 bg-gray-200 rounded-full dark:bg-gray-700 mt-6 animate-pulse" />
         )}
       </div>
       <hr className="border-0 border-b-2 border-colorHover dark:border-darkColorHover" />
-      {currentPosts.length > 0 ? (
+      {postsLoading ? (
+        <Spinner />
+      ) : currentPosts.length > 0 ? (
         <div className="grid grid-cols-3 gap-1 md:gap-2 sm:pt-2">
           {currentPosts.map((post, index) => (
             <div key={post.id}>
