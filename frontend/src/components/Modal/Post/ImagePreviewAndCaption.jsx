@@ -1,3 +1,6 @@
+// libraries
+import imageCompression from "browser-image-compression";
+
 // services
 import { createPostService } from "../../../services/post";
 
@@ -28,21 +31,37 @@ function ImagePreviewAndCaption({ cover }) {
   const { updatePostState } = usePostManagement();
 
   const handleCreatePost = async (value) => {
-    const data = new FormData();
-    data.append("content", value.content);
-    data.append("image", value.image[0]);
-    data.append("state", true);
-    if (token) {
-      const response = await executeRequestPost(
-        createPostService,
-        "create",
-        data,
-        token.access
-      );
-      if (!!response) {
-        updatePostState(response);
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+
+    try {
+      const compressedBlob = await imageCompression(value.image[0], options);
+
+      const compressedFile = new File([compressedBlob], value.image[0].name, {
+        type: value.image[0].type,
+        lastModified: Date.now(),
+      });
+
+      const data = new FormData();
+      data.append("content", value.content);
+      data.append("image", compressedFile);
+      data.append("state", true);
+
+      if (token) {
+        const response = await executeRequestPost(
+          createPostService,
+          "create",
+          data,
+          token.access
+        );
+        if (!!response) {
+          updatePostState(response);
+        }
       }
-    }
+    } catch (err) {}
   };
 
   return (
