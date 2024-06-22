@@ -2,37 +2,18 @@
 import * as yup from "yup";
 
 function getSigninConfig() {
-  const schema = yup
-    .object({
-      username: yup.string().required("Introduce un usuario válido"),
-      password: yup
-        .string()
-        .min(6, "Introduce una contraseña válida")
-        .required(""),
-    })
-    .required();
+  const schema = yup.object({
+    username: yup
+      .string()
+      .required("¡Ingresa tu nombre de usuario!")
+      .min(4, "El nombre de usuario debe tener al menos 4 caracteres"),
+    password: yup
+      .string()
+      .required("¡La contraseña es obligatoria!")
+      .min(6, "Introduce una contraseña de al menos 6 caracteres"),
+  });
 
-  const formData = [
-    {
-      type: "text",
-      name: "username",
-      label: "Usuario",
-    },
-    {
-      type: "password",
-      name: "password",
-      label: "Contraseña",
-    },
-  ];
-
-  const headers = {
-    title: "Iniciar sesión en su cuenta",
-    message: "¿No tienes una cuenta?",
-    button_submit: "Iniciar sesión",
-    button_form: "Crear cuenta",
-  };
-
-  return { schema, formData, headers };
+  return { schema };
 }
 
 export default getSigninConfig;
