@@ -55,15 +55,17 @@ function Signup() {
       <div className="flex flex-col xs:flex-row xs:mb-4">
         <div className="w-full mr-2">
           <label
-            htmlFor="nombre"
+            htmlFor="name"
             className="font-semibold text-black dark:text-white"
           >
             Nombre
           </label>
           <input
             type="text"
-            id="nombre"
             className="w-full mt-1 py-2 px-3 outline-none border-2 rounded-lg text-black dark:text-white border-colorHover dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor bg-white dark:bg-DarkColor"
+            id="name"
+            spellCheck="false"
+            autoComplete="off"
             {...register("first_name")}
           />
           <p className="text-xs sm:text-sm text-colorError">
@@ -72,15 +74,17 @@ function Signup() {
         </div>
         <div className="w-full xs:ml-2">
           <label
-            htmlFor="apellido"
+            htmlFor="surname"
             className="font-semibold text-black dark:text-white"
           >
             Apellido
           </label>
           <input
             type="text"
-            id="apellido"
             className="w-full mt-1 py-2 px-3 outline-none border-2 rounded-lg text-black dark:text-white border-colorHover dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor bg-white dark:bg-DarkColor"
+            id="surname"
+            spellCheck="false"
+            autoComplete="off"
             {...register("last_name")}
           />
           <p className="text-xs sm:text-sm text-colorError">
@@ -97,8 +101,10 @@ function Signup() {
         </label>
         <input
           type="email"
-          id="email"
           className="w-full mt-1 py-2 px-3 outline-none border-2 rounded-lg text-black dark:text-white border-colorHover dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor bg-white dark:bg-DarkColor"
+          id="email"
+          spellCheck="false"
+          autoComplete="off"
           {...register("email")}
         />
         <p className="text-xs sm:text-sm text-colorError">
@@ -114,8 +120,10 @@ function Signup() {
         </label>
         <input
           type="text"
-          id="username"
           className="w-full mt-1 py-2 px-3 outline-none border-2 rounded-lg text-black dark:text-white border-colorHover dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor bg-white dark:bg-DarkColor"
+          id="username"
+          spellCheck="false"
+          autoComplete="off"
           {...register("username")}
         />
         <p className="text-xs sm:text-sm text-colorError">
@@ -131,9 +139,10 @@ function Signup() {
             Contraseña
           </label>
           <input
-            type="text"
-            id="password"
+            type="password"
             className="w-full mt-1 py-2 px-3 outline-none border-2 rounded-lg text-black dark:text-white border-colorHover dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor bg-white dark:bg-DarkColor"
+            id="password"
+            autoComplete="new-password"
             {...register("password")}
           />
           <p className="text-xs sm:text-sm text-colorError">
@@ -148,9 +157,10 @@ function Signup() {
             Confirmar contraseña
           </label>
           <input
-            type="text"
-            id="password2"
+            type="password"
             className="w-full mt-1 py-2 px-3 outline-none border-2 rounded-lg text-black dark:text-white border-colorHover dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor bg-white dark:bg-DarkColor"
+            id="password2"
+            autoComplete="new-password"
             {...register("password2")}
           />
           <p className="text-xs sm:text-sm text-colorError">

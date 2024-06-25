@@ -61,8 +61,10 @@ function Signin() {
         </label>
         <input
           type="text"
-          id="username"
           className="w-full mt-1 py-2 px-3 outline-none border-2 rounded-lg text-black dark:text-white border-colorHover dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor bg-white dark:bg-DarkColor"
+          id="username"
+          spellCheck="false"
+          autoComplete="off"
           {...register("username")}
         />
         <p className="text-xs sm:text-sm text-colorError">
@@ -78,8 +80,9 @@ function Signin() {
         </label>
         <input
           type="password"
-          id="password"
           className="w-full mt-1 py-2 px-3 outline-none border-2 rounded-lg text-black dark:text-white border-colorHover dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor bg-white dark:bg-DarkColor"
+          id="password"
+          autoComplete="current-password"
           {...register("password")}
         />
         <p className="text-xs sm:text-sm text-colorError">
