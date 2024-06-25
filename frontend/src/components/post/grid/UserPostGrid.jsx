@@ -14,15 +14,20 @@ function UserPostGrid({ post }) {
 
   const { toggleModal } = useModal();
   return (
-    <img
-      className="h-48 sm:h-60 lg:h-72 w-full max-w-full object-cover object-center cursor-pointer"
-      src={post.image}
-      alt={post.author.username}
+    <div
+      className="relative group cursor-pointer"
       onClick={() => {
         setViewPost(post);
         toggleModal(setShowViewPost, showViewPost);
       }}
-    />
+    >
+      <img
+        src={post.image}
+        alt={`Imagen de ${post.author.username}`}
+        className="h-48 sm:h-60 lg:h-72 w-full max-w-full object-cover opacity-90 group-hover:opacity-100"
+      />
+      <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30"></div>
+    </div>
   );
 }
 

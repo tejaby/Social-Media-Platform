@@ -172,7 +172,7 @@ function PostCard() {
               </div>
             </div>
             <div>
-              <PostImage src={post.image} alt={post.author.username} />
+              <PostImage post={post} />
               <div className="flex gap-1">
                 <span
                   className="font-semibold text-black dark:text-white cursor-pointer"

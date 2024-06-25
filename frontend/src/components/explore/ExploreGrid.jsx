@@ -153,7 +153,7 @@ function ExploreGrid({ postsLoading }) {
           </button>
         </div>
         {isFocused && (
-          <div className="fixed xs:absolute flex flex-col xs:top-full w-full h-screen xs:left-1/2 xs:transform xs:-translate-x-1/2 xs:w-3/4 xs:h-auto xs:rounded shadow shadow-colorHover dark:shadow-darkColorHover bg-white dark:bg-DarkColor p-2">
+          <div className="fixed xs:absolute flex flex-col xs:top-full w-full h-screen xs:left-1/2 xs:transform xs:-translate-x-1/2 xs:w-3/4 xs:h-auto xs:rounded shadow shadow-colorHover dark:shadow-darkColorHover bg-white dark:bg-DarkColor p-2 z-50">
             {searchResults.length === 0 ? (
               searchTerm ? (
                 <div className="p-2 text-center">
