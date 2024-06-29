@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { refreshTokenService } from "./services/auth";
 
 // components
-import ShowModal from "./components/modal/ShowModal";
+import OverlayModal from "./components/modal/OverlayModal";
 import LoadingComponent from "./components/ui/LoadingComponent";
 
 // pages
@@ -60,7 +60,7 @@ function AppContent() {
   return (
     <BrowserRouter>
       <div
-        className={`grid ${showModal && "fixed"} ${
+        className={`grid ${
           !!token
             ? "grid-cols-1 sm:grid-cols-[144px_1fr] lg:grid-cols-[320px_1fr] grid-rows-[1fr_64px] sm:grid-rows-1 grid-flow-row sm:grid-flow-col"
             : "grid-cols-1"
@@ -76,7 +76,7 @@ function AppContent() {
             <div className="order-1 sm:order-2 w-full min-h-screen bg-white dark:bg-DarkColor">
               <Rutas />
             </div>
-            {showModal && <ShowModal />}
+            {showModal && <OverlayModal />}
           </>
         ) : (
           <Rutas />
