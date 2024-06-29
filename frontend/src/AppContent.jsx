@@ -18,6 +18,7 @@ import { InterfaceContext } from "./context/Interface";
 import { UserContext } from "./context/User";
 
 // hooks
+import useDarkMode from "./hooks/interface/useDarkMode";
 import { useAuthRequest } from "./hooks/user/useAuthRequest";
 
 // react
@@ -27,6 +28,7 @@ function AppContent() {
   const { theme, showModal } = useContext(InterfaceContext);
   const { token, loading, setLoading } = useContext(UserContext);
 
+  useDarkMode(theme);
   const { executeRequest } = useAuthRequest(refreshTokenService);
 
   useEffect(() => {
@@ -54,14 +56,6 @@ function AppContent() {
       }
     };
   }, [token, loading]);
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.querySelector("html").classList.add("dark");
-    } else {
-      document.querySelector("html").classList.remove("dark");
-    }
-  }, [theme]);
 
   return (
     <BrowserRouter>
