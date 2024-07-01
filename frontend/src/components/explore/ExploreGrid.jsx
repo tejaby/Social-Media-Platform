@@ -12,6 +12,7 @@ import { loadMorePostsService } from "../../services/post";
 import PostGrid from "../../components/post/grid/PostGrid";
 import UseSvgLoader from "../ui/UseSvgLoader";
 import Spinner from "../ui/Spinner";
+import UserSearchResults from "./UserSearchResults";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
@@ -105,9 +106,9 @@ function ExploreGrid({ postsLoading }) {
         ref={searchRef}
         className={`${
           isFocused && "fixed"
-        } xs:relative py-2 min-w-full bg-white dark:bg-DarkColor`}
+        } xs:relative py-2 min-w-full bg-white dark:bg-DarkColor z-50`}
       >
-        <div className="flex w-full gap-2">
+        <div className="flex w-full gap-2 bg-white dark:bg-DarkColor">
           {isFocused && (
             <button
               onClick={() => {
@@ -129,7 +130,7 @@ function ExploreGrid({ postsLoading }) {
           )}
           <input
             type="text"
-            className="grow p-2 rounded-full outline-none border-2 border-white dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor text-black dark:text-white bg-colorHover focus:bg-white dark:bg-darkColorHover dark:focus:bg-DarkColor"
+            className="grow px-4 py-2 rounded-full outline-none border-2 border-white dark:border-darkColorHover focus:border-PrimaryColor dark:focus:border-PrimaryColor text-black dark:text-white bg-colorHover focus:bg-white dark:bg-darkColorHover dark:focus:bg-DarkColor"
             placeholder="Buscar"
             onFocus={() => {
               setIsFocused(true);
@@ -153,53 +154,11 @@ function ExploreGrid({ postsLoading }) {
           </button>
         </div>
         {isFocused && (
-          <div className="fixed xs:absolute flex flex-col xs:top-full w-full h-screen xs:left-1/2 xs:transform xs:-translate-x-1/2 xs:w-3/4 xs:h-auto xs:rounded shadow shadow-colorHover dark:shadow-darkColorHover bg-white dark:bg-DarkColor p-2 z-50">
-            {searchResults.length === 0 ? (
-              searchTerm ? (
-                <div className="p-2 text-center">
-                  <span className="text-secondaryText dark:text-secondaryTextDark">
-                    No se encontraron usuarios
-                  </span>
-                </div>
-              ) : (
-                <div className="p-2 text-center">
-                  <span className="text-secondaryText dark:text-secondaryTextDark">
-                    Prueba a buscar personas
-                  </span>
-                </div>
-              )
-            ) : (
-              searchResults.map((user) => (
-                <div
-                  className="flex justify-start items-center gap-2 rounded sm:hover:bg-colorHover sm:dark:hover:bg-darkColorHover p-2 cursor-pointer"
-                  onClick={() => {
-                    handleUserPage(user.username);
-                  }}
-                  key={user.id}
-                >
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden">
-                    <img
-                      className="w-full h-full object-cover"
-                      src={`${
-                        user.profile_picture
-                          ? user.profile_picture
-                          : "/user-defect.png"
-                      }`}
-                      alt="Avatar"
-                    />
-                  </div>
-                  <div className="">
-                    <p className="text-black dark:text-white">
-                      {`${user.first_name} ${user.last_name}`}
-                    </p>
-                    <p className="text-secondaryText dark:text-secondaryTextDark">
-                      {user.username}
-                    </p>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
+          <UserSearchResults
+            searchTerm={searchTerm}
+            searchResults={searchResults}
+            handleUserPage={handleUserPage}
+          />
         )}
       </div>
       {postsLoading ? (
