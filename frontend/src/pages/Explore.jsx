@@ -33,7 +33,7 @@ function Explore() {
   }, [token, loading]);
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-3xl mx-auto mb-16">
       <ExploreGrid postsLoading={postsLoading} />
     </div>
   );

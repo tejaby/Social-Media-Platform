@@ -41,7 +41,7 @@ function Home() {
   }, [token, loading]);
 
   return !postsLoading ? (
-    <div className="max-w-lg sm:max-w-xl mx-auto sm:my-2">
+    <div className="max-w-lg sm:max-w-xl mx-auto mb-16 sm:my-2">
       <PostCard />
     </div>
   ) : (

@@ -11,11 +11,7 @@ import { useContext } from "react";
 function Form() {
   const { showLogin } = useContext(InterfaceContext);
 
-  return (
-    <div className="flex justify-center items-center min-h-screen">
-      {showLogin ? <Signin /> : <Signup />}
-    </div>
-  );
+  return showLogin ? <Signin /> : <Signup />;
 }
 
 export default Form;

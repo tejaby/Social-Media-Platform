@@ -66,7 +66,7 @@ function Profile() {
   }, [token, loading]);
 
   return (
-    <div className="max-w-3xl mx-auto sm:my-2">
+    <div className="max-w-3xl mx-auto mb-16 sm:my-2">
       <UserProfile
         userPostCount={userPostCount}
         followers={followers}

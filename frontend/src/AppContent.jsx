@@ -60,20 +60,20 @@ function AppContent() {
   return (
     <BrowserRouter>
       <div
-        className={`grid ${
+        className={`${
           !!token
-            ? "grid-cols-1 sm:grid-cols-[144px_1fr] lg:grid-cols-[320px_1fr] grid-rows-[1fr_64px] sm:grid-rows-1 grid-flow-row sm:grid-flow-col"
-            : "grid-cols-1"
-        } gap-2 w-full h-full bg-white dark:bg-DarkColor`}
+            ? "grid grid-rows-[1fr_auto] sm:grid-rows-none sm:grid-cols-[auto_1fr] sm:gap-2"
+            : "flex justify-center items-center"
+        } w-full min-h-screen bg-white dark:bg-DarkColor`}
       >
         {loading ? (
           <LoadingComponent />
         ) : !!token ? (
           <>
-            <div className="fixed sm:static order-2 sm:order-1 w-full h-16 sm:h-full bottom-0 bg-white dark:bg-DarkColor z-40">
+            <div className="fixed bottom-0 sm:static w-full sm:w-36 lg:w-80 h-16 sm:h-full bg-white dark:bg-DarkColor z-40">
               <Navbar />
             </div>
-            <div className="order-1 sm:order-2 w-full min-h-screen bg-white dark:bg-DarkColor">
+            <div className="w-full h-full bg-white dark:bg-DarkColor">
               <Rutas />
             </div>
             {showModal && <OverlayModal />}
