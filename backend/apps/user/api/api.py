@@ -1,5 +1,5 @@
 # rest_framework
-from rest_framework import viewsets, status, generics
+from rest_framework import viewsets, status, generics, permissions
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
@@ -9,7 +9,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserListSerializer
 
 # serializador para la creacion y actualizacion de usuarios.
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserPasswordSerializer
 
 # models
 from apps.user.models import CustomUser
@@ -83,9 +83,36 @@ class UserListView(generics.ListAPIView):
     model = CustomUser
     serializer_class = UserListSerializer
     pagination_class = CustomPagination
+    parser_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         query_params = self.request.query_params
         username = query_params.get('username', '')
 
         return self.model.objects.filter(username__startswith=username).filter(is_active=True)
+
+
+"""
+Vista basada en UpdateAPIView para cambiar la contraseña del usuario autenticado
+
+"""
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    serializer_class = UserPasswordSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            instance.set_password(
+                serializer.validated_data.get("new_password"))
+            instance.save()
+            return Response({"message": "Contraseña actualizada correctamente."}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
