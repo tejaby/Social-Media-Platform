@@ -19,7 +19,6 @@ import { useContext } from "react";
 
 function EditableUser({ setIsEditing, field }) {
   const { theme } = useContext(InterfaceContext);
-
   const { token } = useContext(UserContext);
 
   const { executeRequest } = useUserRequest(updateUserService);
@@ -42,7 +41,7 @@ function EditableUser({ setIsEditing, field }) {
   };
 
   return (
-    <div>
+    <>
       <div className="flex gap-2 items-center p-4 border-b-2 border-colorHover dark:border-darkColorHover">
         <button onClick={handleCancelEditing}>
           {theme === "light" ? (
@@ -93,7 +92,7 @@ function EditableUser({ setIsEditing, field }) {
           Guardar
         </button>
       </form>
-    </div>
+    </>
   );
 }
 

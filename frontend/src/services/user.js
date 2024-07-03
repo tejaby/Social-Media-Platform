@@ -41,3 +41,16 @@ export const listUsersService = async (data, access) => {
     throw err.response;
   }
 };
+
+export const changePasswordService = async (data, access) => {
+  try {
+    const response = await axios.put(`${USER_API_BASE_URL}change-password/`, data, {
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};

@@ -1,6 +1,7 @@
 // components
 import UserInfo from "../../components/profile/UserInfo";
 import EditableUser from "../../components/profile/EditableUser";
+import UpdatePassword from "./UpdatePassword";
 import UseSvgLoader from "../ui/UseSvgLoader";
 
 // context
@@ -20,6 +21,7 @@ function UserSettings() {
   const formattedDate = formatDate(user.date_joined);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [field, setField] = useState([]);
 
   const handleEditing = (fieldValue, fieldLabel, fieldName) => {
@@ -30,6 +32,11 @@ function UserSettings() {
       name: fieldName,
       id: user.id,
     });
+  };
+
+  const handlePasswordChange = () => {
+    setIsEditing(true);
+    setIsChangingPassword(true);
   };
 
   return !isEditing ? (
@@ -76,7 +83,10 @@ function UserSettings() {
             {user.date_joined && `Se unió: ${formattedDate}`}
           </span>
         </div>
-        <div className="flex gap-2 items-center px-4 py-6 hover:bg-colorHover dark:hover:bg-darkColorHover cursor-pointer">
+        <div
+          className="flex gap-2 items-center px-4 py-6 hover:bg-colorHover dark:hover:bg-darkColorHover cursor-pointer"
+          onClick={handlePasswordChange}
+        >
           {theme === "light" ? (
             <UseSvgLoader
               name="key"
@@ -118,8 +128,13 @@ function UserSettings() {
         </div>
       </div>
     </>
-  ) : (
+  ) : !isChangingPassword ? (
     <EditableUser setIsEditing={setIsEditing} field={field} />
+  ) : (
+    <UpdatePassword
+      setIsEditing={setIsEditing}
+      setIsChangingPassword={setIsChangingPassword}
+    />
   );
 }
 
