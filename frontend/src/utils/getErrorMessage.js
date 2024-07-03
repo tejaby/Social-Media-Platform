@@ -115,3 +115,41 @@ export const getFollowErrorMessage = (error, method) => {
   }
   return "Ha ocurrido un error inesperado";
 };
+
+// error message to update password
+export const getUpdatePasswordErrorMessage = (error) => {
+  if (!error) {
+    return "Error de conexión. Por favor, inténtalo de nuevo";
+  }
+
+  const { status, data } = error;
+
+  switch (status) {
+    case 401:
+      if (data.detail === "Given token not valid for any token type") {
+        return "Error al actualizar la contraseña";
+      }
+      return "No autorizado. Por favor, verifica tus credenciales.";
+    case 400:
+      if (data.old_password) {
+        if (data.old_password[0] === "This field is required.") {
+          return "La contraseña antigua es requerida";
+        } else if (data.old_password[0] === "Contraseña actual incorrecta") {
+          return "Contraseña actual incorrecta";
+        }
+      }
+      if (data.new_password) {
+        if (data.new_password[0] === "This field is required.") {
+          return "La nueva contraseña es requerida";
+        } else if (
+          data.new_password[0] ===
+          "La nueva contraseña no puede ser igual a la antigua."
+        ) {
+          return "La nueva contraseña no puede ser igual a la antigua";
+        }
+      }
+      return "Solicitud inválida. Por favor, revisa los datos ingresados.";
+    default:
+      return "Ha ocurrido un error inesperado";
+  }
+};

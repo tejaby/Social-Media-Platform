@@ -1,5 +1,6 @@
 // libraries
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 // services
 import { changePasswordService } from "../../services/user";
@@ -10,6 +11,9 @@ import UseSvgLoader from "../ui/UseSvgLoader";
 // context
 import { InterfaceContext } from "../../context/Interface";
 import { UserContext } from "../../context/User";
+
+// utils
+import { getUpdatePasswordErrorMessage } from "../../utils/getErrorMessage";
 
 // react
 import { useContext } from "react";
@@ -38,7 +42,10 @@ function UpdatePassword({ setIsEditing, setIsChangingPassword }) {
         await changePasswordService(data, token.access);
         setIsEditing(false);
         setIsChangingPassword(false);
-      } catch (err) {}
+      } catch (err) {
+        const errorMessage = getUpdatePasswordErrorMessage(err);
+        toast.error(errorMessage);
+      }
     }
   };
 
