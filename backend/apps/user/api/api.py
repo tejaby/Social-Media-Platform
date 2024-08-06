@@ -1,5 +1,6 @@
 # rest_framework
 from rest_framework import viewsets, status, generics, permissions
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
@@ -32,6 +33,9 @@ class UserViewSet(viewsets.GenericViewSet):
     def get_queryset(self):
         return self.model.objects.filter(is_active=True)
 
+    def get_all_users_queryset(self):
+        return self.model.objects.all()
+
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
@@ -45,7 +49,6 @@ class UserViewSet(viewsets.GenericViewSet):
 
         refresh = RefreshToken.for_user(instance)
         access = refresh.access_token
-        print(refresh, access)
 
         return Response({'message': 'Usuario creado con éxito', 'token': {
             'refresh': str(refresh),
@@ -59,8 +62,7 @@ class UserViewSet(viewsets.GenericViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.is_active = False
-        instance.save()
+        instance.delete()
         return Response({'message': 'Usuario eliminado con éxito'}, status=status.HTTP_200_OK)
 
     def update(self, request, *args, **kwargs):
@@ -71,6 +73,32 @@ class UserViewSet(viewsets.GenericViewSet):
         user_instance = user_serializer.save()
         serializer = self.get_serializer(user_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'], url_path='deactivate')
+    def deactivate(self, request, pk=None):
+        instance = self.get_all_users_queryset().filter(pk=pk).first()
+        if not instance:
+            return Response({'error': 'Usuario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+        if not instance.is_active:
+            return Response({'message': 'El usuario ya está deshabilitado'}, status=status.HTTP_400_BAD_REQUEST)
+
+        instance.is_active = False
+        instance.save()
+        return Response({'message': 'Usuario deshabilitado con éxito'}, status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=True, methods=['post'], url_path='activate')
+    def activate(self, request, pk=None):
+        instance = self.get_all_users_queryset().filter(pk=pk).first()
+        if not instance:
+            return Response({'error': 'Usuario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+        if instance.is_active:
+            return Response({'message': 'El usuario ya está activo'}, status=status.HTTP_400_BAD_REQUEST)
+
+        instance.is_active = True
+        instance.save()
+        return Response({'message': 'Usuario reactivado con éxito'}, status=status.HTTP_200_OK)
 
 
 """
