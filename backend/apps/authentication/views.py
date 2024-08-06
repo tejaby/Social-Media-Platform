@@ -13,6 +13,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 # serializador para la obtencion de usuarios.
 from apps.user.api.serializers import UserListSerializer
 
+# models
+from apps.user.models import CustomUser
+
 '''
 Vista basada en TokenObtainPairView para la autenticacion de usuarios y creacion de tokens con simplejwt
 
@@ -21,19 +24,32 @@ Vista basada en TokenObtainPairView para la autenticacion de usuarios y creacion
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
-        if not request.data.get('username') or not request.data.get('password'):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if not username or not password:
             return Response({'error': 'se requiere nombre de usuario y contraseña'}, status=status.HTTP_400_BAD_REQUEST)
 
-        user = authenticate(request=request,  username=request.data.get(
-            'username'), password=request.data.get('password'))
+        try:
+            user = CustomUser.objects.get(username=username)
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'No se encontró ninguna cuenta activa con las credenciales proporcionadas'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        if not user.is_active:
+            return Response({'error': 'La cuenta está desactivada. Por favor, contacta al administrador.'}, status=status.HTTP_403_FORBIDDEN)
+
+        user = authenticate(
+            request=request,  username=username, password=password)
 
         if user is None:
-            return Response({'error': 'no se encontró ninguna cuenta activa con las credenciales proporcionadas'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'La contraseña es incorrecta'}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user_serializer = UserListSerializer(user, context={'request': request})
+        user_serializer = UserListSerializer(
+            user, context={'request': request})
 
         return Response({'message': 'inicio de sesión exitosamente', 'token': serializer.validated_data, 'user': user_serializer.data}, status=status.HTTP_200_OK)
 
