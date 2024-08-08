@@ -23,30 +23,93 @@ export const getUserErrorMessage = (error, method) => {
 };
 
 // error message for authentication
-export const getAuthErrorMessage = (error, method) => {
-  if (method === "refresh") {
-    if (error.data?.detail) {
-      return "Tu sesión ha expirado. Por favor, vuelve a iniciar sesión";
-    } else if (error.data?.refresh) {
-      return "El Token de refresco es requerido";
-    }
-  } else if (method === "login") {
-    if (
-      error.data?.error ===
-      "no se encontró ninguna cuenta activa con las credenciales proporcionadas"
-    ) {
-      return "Credenciales inválidas";
-    }
-  } else if (method === "logout") {
-    if (error.data?.error) {
-      if (error.data.error === "se requiere el token de actualización") {
-        return "Error al cerrar sesión";
-      } else if (error.data.error === "Token de refresco inválido") {
-        return "Error al cerrar sesión";
+const getLoginErrorMessage = (error) => {
+  const { status, data } = error;
+
+  switch (status) {
+    case 400:
+      if (data.error === "se requiere nombre de usuario y contraseña") {
+        return "Se requiere nombre de usuario y contraseña";
+      } else if (
+        data.error ===
+        "No se encontró ninguna cuenta activa con las credenciales proporcionadas"
+      ) {
+        return "Las credenciales proporcionadas son incorrectas.";
+      } else if (data.error === "La contraseña es incorrecta") {
+        return "La contraseña ingresada es incorrecta.";
       }
-    }
+      return "Solicitud inválida.";
+    case 403:
+      if (
+        data.error ===
+        "La cuenta está desactivada. Por favor, contacta al administrador."
+      ) {
+        return "Su cuenta está desactivada. Active su cuenta o contacte al soporte.";
+      }
+      return "No tiene permiso para realizar esta acción.";
+    default:
+      if (status >= 500) {
+        return "Ocurrió un problema en el servidor. Por favor, intenta nuevamente más tarde.";
+      }
+      return "Ha ocurrido un error inesperado";
   }
-  return "Ha ocurrido un error inesperado";
+};
+
+const getRefreshErrorMessage = (error) => {
+  const { status, data } = error;
+
+  switch (status) {
+    case 401:
+      if (data.detail === "Token is invalid or expired.") {
+        return "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.";
+      } else return "No autorizado. Por favor, verifica tus credenciales.";
+    case 400:
+      if (data.refresh === "This field is required") {
+        return "Error al actualizar el token. Intente nuevamente.";
+      }
+      return "Solicitud inválida.";
+    default:
+      if (status >= 500) {
+        return "Ocurrió un problema en el servidor. Por favor, intenta nuevamente más tarde.";
+      }
+      return "Ha ocurrido un error inesperado";
+  }
+};
+
+const getLogoutErrorMessage = (error) => {
+  const { status, data } = error;
+
+  switch (status) {
+    case 400:
+      if (data.error === "se requiere el token de actualización") {
+        return "No se pudo cerrar la sesión. Intente nuevamente.";
+      } else if (data.error === "Token de refresco inválido") {
+        return "No se pudo cerrar la sesión. Intente nuevamente.";
+      }
+      return "Solicitud inválida.";
+    default:
+      if (status >= 500) {
+        return "Ocurrió un problema en el servidor. Por favor, intenta nuevamente más tarde.";
+      }
+      return "Ha ocurrido un error inesperado";
+  }
+};
+
+export const getAuthErrorMessage = (error, method) => {
+  if (error) {
+    switch (method) {
+      case "refresh":
+        return getRefreshErrorMessage(error);
+      case "login":
+        return getLoginErrorMessage(error);
+      case "logout":
+        return getLogoutErrorMessage(error);
+      default:
+        return "Ha ocurrido un error inesperado";
+    }
+  } else {
+    return "Error de conexión. Por favor, inténtalo de nuevo";
+  }
 };
 
 // error message for posts
@@ -130,8 +193,7 @@ export const getUpdatePasswordErrorMessage = (error) => {
         return "No se pudo verificar tu sesión. Por favor, inicia sesión nuevamente.";
       } else if (data.detail === "Given token not valid for any token type") {
         return "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.";
-      }
-      return "No autorizado. Por favor, verifica tus credenciales.";
+      } else return "No autorizado. Por favor, verifica tus credenciales.";
     case 400:
       if (data.old_password) {
         if (data.old_password[0] === "This field is required.") {
