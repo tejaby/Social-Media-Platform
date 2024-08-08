@@ -75,3 +75,15 @@ export const userDeactivationService = async (user, access) => {
     throw err.response;
   }
 };
+
+export const userActivationService = async (user) => {
+  try {
+    const response = await axios.post(
+      `${USER_API_BASE_URL}${user}/activate/`,
+      {}
+    );
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};

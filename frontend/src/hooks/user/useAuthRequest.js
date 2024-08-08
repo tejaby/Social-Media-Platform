@@ -34,8 +34,20 @@ export const useAuthRequest = (service) => {
         localStorage.setItem("authToken", JSON.stringify(response));
       }
     } catch (err) {
-      const errorMessage = getAuthErrorMessage(err, method);
-      toast.error(errorMessage);
+      const { status, data } = err;
+      if (
+        status != 403 &&
+        data.error !==
+          "La cuenta está desactivada. Por favor, contacta al administrador."
+      ) {
+        const errorMessage = getAuthErrorMessage(err, method);
+        toast.error(errorMessage, { duration: 5000 });
+      }
+
+      if (method === "login") {
+        throw err;
+      }
+
       if (method !== "login") {
         setTimeout(() => {
           setUser(null);

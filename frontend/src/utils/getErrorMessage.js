@@ -257,3 +257,31 @@ export const getDeactivateErrorMessage = (error) => {
     return "Error de conexión. Por favor, inténtalo de nuevo";
   }
 };
+
+// error message to activate account
+export const getActivateErrorMessage = (error) => {
+  if (error) {
+    const { status, data } = error;
+    switch (status) {
+      case 400:
+        if (data.error === "El usuario ya está activo") {
+          return "El usuario ya está activo";
+        } else {
+          return "Solicitud inválida";
+        }
+      case 404:
+        if (data.error === "Usuario no encontrado") {
+          return "Usuario no encontrado";
+        } else {
+          return "Recurso no encontrado";
+        }
+      default:
+        if (status >= 500) {
+          return "Ocurrió un problema en el servidor. Por favor, intenta nuevamente más tarde.";
+        }
+        return "Ha ocurrido un error inesperado";
+    }
+  } else {
+    return "Error de conexión. Por favor, inténtalo de nuevo";
+  }
+};

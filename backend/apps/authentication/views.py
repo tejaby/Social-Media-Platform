@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
+from django.contrib.auth.hashers import check_password
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
@@ -36,14 +37,14 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             return Response({'error': 'No se encontró ninguna cuenta activa con las credenciales proporcionadas'},
                             status=status.HTTP_400_BAD_REQUEST)
 
+        if not check_password(password, user.password):
+            return Response({'error': 'La contraseña es incorrecta'}, status=status.HTTP_400_BAD_REQUEST)
+
         if not user.is_active:
-            return Response({'error': 'La cuenta está desactivada. Por favor, contacta al administrador.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': 'La cuenta está desactivada. Por favor, contacta al administrador.', "id": user.id}, status=status.HTTP_403_FORBIDDEN)
 
         user = authenticate(
             request=request,  username=username, password=password)
-
-        if user is None:
-            return Response({'error': 'La contraseña es incorrecta'}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
