@@ -46,6 +46,45 @@ function UserSettings() {
     setIsChangingPassword(true);
   };
 
+  const handleOpenDeactivateModal = () => {
+    toast.custom(
+      (t) => (
+        <div className="max-w-md w-full p-4 rounded-lg shadow-lg border border-colorHover dark:border-darkColorHover bg-white dark:bg-DarkColor">
+          <div className="mb-4">
+            <p className="text-lg font-semibold text-center text-black dark:text-white">
+              Esta acción desactivará tu cuenta
+            </p>
+            <p className="text-justify text-secondaryText dark:text-secondaryTextDark">
+              Estás por iniciar el proceso de desactivación de tu cuenta. Tu
+              nombre visible, tu @nombre de usuario y tu perfil público ya no se
+              podrán ver.
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <button
+              className="w-full px-2 py-3 font-semibold rounded-full text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
+              onClick={() => {
+                toast.dismiss(t.id);
+                handleDeactivate();
+              }}
+            >
+              Sí, reactivar
+            </button>
+            <button
+              className="w-full px-2 py-3 font-semibold rounded-full text-black dark:text-white sm:hover:bg-lightOverlayColor"
+              onClick={() => {
+                toast.dismiss(t.id);
+              }}
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      ),
+      { duration: 10000, position: "top-center" }
+    );
+  };
+
   const handleDeactivate = async () => {
     if (token) {
       try {
@@ -142,7 +181,7 @@ function UserSettings() {
         </div>
         <div
           className="flex gap-2 items-center px-4 py-6 hover:bg-colorHover dark:hover:bg-darkColorHover cursor-pointer"
-          onClick={handleDeactivate}
+          onClick={handleOpenDeactivateModal}
         >
           {theme === "light" ? (
             <UseSvgLoader
