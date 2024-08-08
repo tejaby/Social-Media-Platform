@@ -126,8 +126,10 @@ export const getUpdatePasswordErrorMessage = (error) => {
 
   switch (status) {
     case 401:
-      if (data.detail === "Given token not valid for any token type") {
-        return "Error al actualizar la contraseña";
+      if (data.detail === "Authentication credentials were not provided.") {
+        return "No se pudo verificar tu sesión. Por favor, inicia sesión nuevamente.";
+      } else if (data.detail === "Given token not valid for any token type") {
+        return "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.";
       }
       return "No autorizado. Por favor, verifica tus credenciales.";
     case 400:
@@ -150,6 +152,46 @@ export const getUpdatePasswordErrorMessage = (error) => {
       }
       return "Solicitud inválida. Por favor, revisa los datos ingresados.";
     default:
+      if (status >= 500) {
+        return "Ocurrió un problema en el servidor. Por favor, intenta nuevamente más tarde.";
+      }
       return "Ha ocurrido un error inesperado";
+  }
+};
+
+// error message to deactivate account
+export const getDeactivateErrorMessage = (error) => {
+  if (error) {
+    const { status, data } = error;
+
+    switch (status) {
+      case 401:
+        if (data.detail === "Authentication credentials were not provided.") {
+          return "No se pudo verificar tu sesión. Por favor, inicia sesión nuevamente.";
+        } else if (data.detail === "Given token not valid for any token type") {
+          return "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.";
+        } else if (data.detail === "User is inactive") {
+          return "El usuario ya está deshabilitado";
+        } else return "No autorizado. Por favor, verifica tus credenciales.";
+      case 400:
+        if (data.error === "El usuario ya está deshabilitado") {
+          return "El usuario ya está deshabilitado";
+        } else {
+          return "Solicitud inválida";
+        }
+      case 404:
+        if (data.error === "Usuario no encontrado") {
+          return "Usuario no encontrado";
+        } else {
+          return "Recurso no encontrado";
+        }
+      default:
+        if (status >= 500) {
+          return "Ocurrió un problema en el servidor. Por favor, intenta nuevamente más tarde.";
+        }
+        return "Ha ocurrido un error inesperado";
+    }
+  } else {
+    return "Error de conexión. Por favor, inténtalo de nuevo";
   }
 };

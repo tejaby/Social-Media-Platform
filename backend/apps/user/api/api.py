@@ -81,11 +81,11 @@ class UserViewSet(viewsets.GenericViewSet):
             return Response({'error': 'Usuario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
 
         if not instance.is_active:
-            return Response({'message': 'El usuario ya está deshabilitado'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'El usuario ya está deshabilitado'}, status=status.HTTP_400_BAD_REQUEST)
 
         instance.is_active = False
         instance.save()
-        return Response({'message': 'Usuario deshabilitado con éxito'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'message': 'Usuario deshabilitado con éxito'}, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['post'], url_path='activate')
     def activate(self, request, pk=None):
@@ -94,7 +94,7 @@ class UserViewSet(viewsets.GenericViewSet):
             return Response({'error': 'Usuario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
 
         if instance.is_active:
-            return Response({'message': 'El usuario ya está activo'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'El usuario ya está activo'}, status=status.HTTP_400_BAD_REQUEST)
 
         instance.is_active = True
         instance.save()

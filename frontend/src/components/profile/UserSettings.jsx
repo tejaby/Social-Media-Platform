@@ -1,3 +1,9 @@
+// libraries
+import toast from "react-hot-toast";
+
+// services
+import { userDeactivationService } from "../../services/user";
+
 // components
 import UserInfo from "../../components/profile/UserInfo";
 import EditableUser from "../../components/profile/EditableUser";
@@ -13,10 +19,11 @@ import { useContext, useState } from "react";
 
 // utils
 import { formatDate } from "../../utils/dateUtils";
+import { getDeactivateErrorMessage } from "../../utils/getErrorMessage";
 
 function UserSettings() {
   const { theme } = useContext(InterfaceContext);
-  const { user } = useContext(UserContext);
+  const { user, token, setUser, setToken } = useContext(UserContext);
 
   const formattedDate = formatDate(user.date_joined);
 
@@ -37,6 +44,32 @@ function UserSettings() {
   const handlePasswordChange = () => {
     setIsEditing(true);
     setIsChangingPassword(true);
+  };
+
+  const handleDeactivate = async () => {
+    if (token) {
+      try {
+        const response = await userDeactivationService(user.id, token.access);
+        toast.success(response.message, { duration: 5000 });
+        setTimeout(() => {
+          setUser(null);
+          setToken(null);
+          localStorage.removeItem("authUser");
+          localStorage.removeItem("authToken");
+        }, 5000);
+      } catch (err) {
+        const errorMessage = getDeactivateErrorMessage(err);
+        toast.error(errorMessage, { duration: 5000 });
+        if (err.status === 401) {
+          setTimeout(() => {
+            setUser(null);
+            setToken(null);
+            localStorage.removeItem("authUser");
+            localStorage.removeItem("authToken");
+          }, 5000);
+        }
+      }
+    }
   };
 
   return !isEditing ? (
@@ -107,7 +140,10 @@ function UserSettings() {
             </span>
           </div>
         </div>
-        <div className="flex gap-2 items-center px-4 py-6 hover:bg-colorHover dark:hover:bg-darkColorHover cursor-pointer">
+        <div
+          className="flex gap-2 items-center px-4 py-6 hover:bg-colorHover dark:hover:bg-darkColorHover cursor-pointer"
+          onClick={handleDeactivate}
+        >
           {theme === "light" ? (
             <UseSvgLoader
               name="heart-broken"
@@ -120,9 +156,9 @@ function UserSettings() {
             />
           )}
           <div className="flex flex-col">
-            <span className="text-colorError">Eliminar tu cuenta</span>
+            <span className="text-colorError">Desactiva tu cuenta</span>
             <span className="text-sm text-secondaryText dark:text-secondaryTextDark">
-              Averigua cómo puedes eliminar tu cuenta.
+              Averigua cómo puedes desactivar tu cuenta.
             </span>
           </div>
         </div>

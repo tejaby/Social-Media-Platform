@@ -44,11 +44,32 @@ export const listUsersService = async (data, access) => {
 
 export const changePasswordService = async (data, access) => {
   try {
-    const response = await axios.put(`${USER_API_BASE_URL}change-password/`, data, {
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-    });
+    const response = await axios.put(
+      `${USER_API_BASE_URL}change-password/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+export const userDeactivationService = async (user, access) => {
+  try {
+    const response = await axios.post(
+      `${USER_API_BASE_URL}${user}/deactivate/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
     return response.data;
   } catch (err) {
     throw err.response;
