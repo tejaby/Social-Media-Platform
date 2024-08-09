@@ -76,7 +76,7 @@ function ExploreGrid({ postsLoading }) {
         setSearchResults(response.results);
       } catch (err) {
         const errorMessage = getUserErrorMessage(err, "search");
-        toast.error(errorMessage);
+        toast.error(errorMessage, { duration: 5000 });
       }
     };
 

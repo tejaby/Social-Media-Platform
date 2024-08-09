@@ -1,25 +1,103 @@
 // error message for users
-export const getUserErrorMessage = (error, method) => {
-  if (method === "create") {
-    if (error.data?.username) {
-      return "Ya existe un usuario con ese nombre";
-    }
-  } else if (method === "update") {
-    if (error.data?.detail) {
-      if (error.data.detail === "Given token not valid for any token type") {
-        return "Error al actualizar el usuario";
-      } else if (error.data.detail === "Not found.") {
+
+const getCreationErrorMessage = (error) => {
+  const { status, data } = error;
+
+  switch (status) {
+    case 400:
+      if (data.username) {
+        if (data.username[0] === "This field is required.") {
+          return "El campo de nombre de usuario es obligatorio.";
+        } else if (
+          data.username[0] === "A user with that username already exists."
+        ) {
+          return "Ya existe un usuario con ese nombre";
+        } else if (
+          data.username[0] ===
+          "Ensure this field has no more than 150 characters."
+        ) {
+          return "El nombre de usuario no debe tener más de 150 caracteres.";
+        }
+      } else if (data.password) {
+        if (data.password[0] === "This field is required.") {
+          return "El campo de contraseña es obligatorio.";
+        } else if (
+          data.password[0] ===
+          "Ensure this field has no more than 128 characters."
+        ) {
+          return "La contraseña no debe tener más de 128 caracteres.";
+        }
+      }
+      return "Solicitud inválida";
+    default:
+      if (status >= 500) {
+        return "Ocurrió un problema en el servidor. Por favor, intenta nuevamente más tarde.";
+      }
+      return "Ha ocurrido un error inesperado";
+  }
+};
+
+const getUpdateErrorMessage = (error) => {
+  const { status, data } = error;
+
+  switch (status) {
+    case 401:
+      if (data.detail === "Given token not valid for any token type") {
+        return "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.";
+      } else return "No autorizado. Por favor, verifica tus credenciales.";
+    case 400:
+      if (data.username[0] === "A user with that username already exists.") {
+        return "Ya existe un usuario con ese nombre.";
+      } else if (data.email[0] === "Enter a valid email address.") {
+        return "Ingrese una dirección de correo electrónico válida.";
+      }
+      return "Solicitud inválida";
+    case 404:
+      if (data.detail === "Not found.") {
         return "Usuario no encontrado";
       }
-    } else if (error.data?.username) {
-      return "Ya existe un usuario con ese nombre";
-    }
-  } else if (method === "search") {
-    if (error.data?.detail) {
-      return "Error al realizar la búsqueda";
-    }
+      return "Recurso no encontrado";
+    default:
+      if (status >= 500) {
+        return "Ocurrió un problema en el servidor. Por favor, intenta nuevamente más tarde.";
+      }
+      return "Ha ocurrido un error inesperado";
   }
-  return "Ha ocurrido un error inesperado";
+};
+
+const getSearchErrorMessage = (error) => {
+  const { status, data } = error;
+
+  switch (status) {
+    case 401:
+      if (data.detail === "Authentication credentials were not provided.") {
+        return "No se pudo verificar tu sesión. Por favor, inicia sesión nuevamente.";
+      } else if (data.detail === "Given token not valid for any token type") {
+        return "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.";
+      } else return "No autorizado. Por favor, verifica tus credenciales.";
+    default:
+      if (status >= 500) {
+        return "Ocurrió un problema en el servidor. Por favor, intenta nuevamente más tarde.";
+      }
+      return "Ha ocurrido un error inesperado";
+  }
+};
+
+export const getUserErrorMessage = (error, method) => {
+  if (error) {
+    switch (method) {
+      case "create":
+        return getCreationErrorMessage(error);
+      case "update":
+        return getUpdateErrorMessage(error);
+      case "search":
+        return getSearchErrorMessage(error);
+      default:
+        return "Ha ocurrido un error inesperado";
+    }
+  } else {
+    return "Error de conexión. Por favor, inténtalo de nuevo";
+  }
 };
 
 // error message for authentication

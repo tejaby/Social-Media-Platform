@@ -39,12 +39,13 @@ function UpdatePassword({ setIsEditing, setIsChangingPassword }) {
   const onSubmit = async (data) => {
     if (token) {
       try {
-        await changePasswordService(data, token.access);
+        const response = await changePasswordService(data, token.access);
+        toast.success(response.message, { duration: 5000 });
         setIsEditing(false);
         setIsChangingPassword(false);
       } catch (err) {
         const errorMessage = getUpdatePasswordErrorMessage(err);
-        toast.error(errorMessage);
+        toast.error(errorMessage, { duration: 5000 });
       }
     }
   };

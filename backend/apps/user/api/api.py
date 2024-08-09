@@ -111,7 +111,7 @@ class UserListView(generics.ListAPIView):
     model = CustomUser
     serializer_class = UserListSerializer
     pagination_class = CustomPagination
-    parser_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         query_params = self.request.query_params

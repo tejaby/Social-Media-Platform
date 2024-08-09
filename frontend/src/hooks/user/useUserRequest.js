@@ -32,6 +32,9 @@ export const useUserRequest = (service) => {
         setShowLogin(!showLogin);
       } else if (method === "update") {
         response = await service(id, data, token);
+        toast.success("¡Tus datos se han actualizado exitosamente!", {
+          duration: 5000,
+        });
         setUser(response);
         localStorage.setItem("authUser", JSON.stringify(response));
       }

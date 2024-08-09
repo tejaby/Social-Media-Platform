@@ -17,6 +17,9 @@ import { PostContext } from "../context/Post";
 // hooks
 import useFetchFollowData from "../hooks/follow/useFetchFollowData";
 
+// utils
+import { getUserErrorMessage } from "../utils/getErrorMessage";
+
 // react
 import { useContext, useState, useEffect } from "react";
 
@@ -69,7 +72,8 @@ function UserDetail() {
         setNextPageCurrentPosts(postsResponse.next);
         setUserPostCount(postsResponse.count);
       } catch (err) {
-        toast.error(err.data.detail);
+        const errorMessage = getUserErrorMessage(err, "search");
+        toast.error(errorMessage, { duration: 5000 });
         return;
       } finally {
         setPostsLoading(false);
