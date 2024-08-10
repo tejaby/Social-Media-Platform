@@ -1,6 +1,7 @@
 // libraries
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 // services
 import { userDeactivationService } from "../../services/user";
@@ -23,6 +24,22 @@ function DeactivateAccount() {
   const { user, setUser, token, setToken } = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  const handleOpenDeactivateModal = () => {
+    Swal.fire({
+      text: "¿Realmente quieres desactivar tu cuenta?",
+      showCancelButton: true,
+      color: "#FFFFFF",
+      background: "#15202B",
+      backdrop: "rgba(49, 64, 78, 0.6)",
+      confirmButtonText: "Sí, Desactivar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDeactivate();
+      }
+    });
+  };
 
   const handleDeactivate = async () => {
     if (token) {
@@ -135,9 +152,9 @@ function DeactivateAccount() {
         </div>
         <div
           className="w-full p-4 text-center hover:bg-colorHover dark:hover:bg-darkColorHover cursor-pointer"
-          onClick={handleDeactivate}
+          onClick={handleOpenDeactivateModal}
         >
-          <button className="rounded-full px-4 py-2 font-semibold text-red-600">
+          <button className="rounded-full px-4 py-2 font-semibold text-red-600 outline-none">
             Desactivar
           </button>
         </div>

@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.swal2-confirm,
+.swal2-cancel {
+  border-radius: 9999px;
+}
+
+.swal2-confirm {
+  background-color: #7856ff;
+  border: none;
+  color: white;
+  font-weight: bold;
+}
+
+.swal2-cancel {
+  border: 1px;
+  border-color: white;
+  border-style: solid;
+}
+
+.swal2-confirm:hover {
+  background-color: #6c4de6;
+}
+
+.swal2-cancel:hover {
+  background-color: #2c3640;
+}

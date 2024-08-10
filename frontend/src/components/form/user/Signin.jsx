@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 // services
 import { loginService } from "../../../services/auth";
@@ -66,41 +67,19 @@ function Signin() {
         data.error ===
           "La cuenta está desactivada. Por favor, contacta al administrador."
       ) {
-        toast.custom(
-          (t) => (
-            <div className="max-w-md w-full p-4 rounded-lg shadow-lg border border-colorHover dark:border-darkColorHover bg-white dark:bg-DarkColor">
-              <div className="mb-4">
-                <p className="text-lg font-semibold text-center text-black dark:text-white">
-                  ¿Quieres reactivar tu cuenta?
-                </p>
-                <p className="text-justify text-secondaryText dark:text-secondaryTextDark">
-                  Si haces clic en "Sí, reactivar", se detendrá el proceso de
-                  desactivación y tu cuenta se reactivará.
-                </p>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  className="w-full px-2 py-3 font-semibold rounded-full text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
-                  onClick={() => {
-                    toast.dismiss(t.id);
-                    handleActivate(data.id, user);
-                  }}
-                >
-                  Sí, reactivar
-                </button>
-                <button
-                  className="w-full px-2 py-3 font-semibold rounded-full text-black dark:text-white sm:hover:bg-lightOverlayColor"
-                  onClick={() => {
-                    toast.dismiss(t.id);
-                  }}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          ),
-          { duration: 10000, position: "top-center" }
-        );
+        Swal.fire({
+          text: `Si haces clic en "Sí, reactivar", se detendrá el proceso de desactivación y tu cuenta se reactivará.`,
+          showCancelButton: true,
+          color: "#FFFFFF",
+          background: "#15202B",
+          backdrop: "rgba(49, 64, 78, 0.6)",
+          confirmButtonText: "Sí, reactivar",
+          cancelButtonText: "Cancelar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            handleActivate(data.id, user);
+          }
+        });
       }
     }
   };
