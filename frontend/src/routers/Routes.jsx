@@ -11,6 +11,7 @@ import Explore from "../pages/Explore";
 import Profile from "../pages/Profile";
 import UserDetail from "../pages/UserDetail";
 import Settings from "../pages/Settings";
+import DeactivateAccount from "../components/profile/DeactivateAccount";
 // import Dashboard from "../pages/Dashboard";
 
 function Rutas() {
@@ -31,7 +32,8 @@ function Rutas() {
         />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:username" element={<UserDetail />} />
-        <Route path="/Settings" element={<Settings />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/settings/deactivate" element={<DeactivateAccount />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

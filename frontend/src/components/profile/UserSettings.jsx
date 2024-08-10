@@ -1,8 +1,5 @@
 // libraries
-import toast from "react-hot-toast";
-
-// services
-import { userDeactivationService } from "../../services/user";
+import { useNavigate } from "react-router-dom";
 
 // components
 import UserInfo from "../../components/profile/UserInfo";
@@ -19,11 +16,12 @@ import { useContext, useState } from "react";
 
 // utils
 import { formatDate } from "../../utils/dateUtils";
-import { getDeactivateErrorMessage } from "../../utils/getErrorMessage";
 
 function UserSettings() {
   const { theme } = useContext(InterfaceContext);
-  const { user, token, setUser, setToken } = useContext(UserContext);
+  const { user } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const formattedDate = formatDate(user.date_joined);
 
@@ -46,69 +44,8 @@ function UserSettings() {
     setIsChangingPassword(true);
   };
 
-  const handleOpenDeactivateModal = () => {
-    toast.custom(
-      (t) => (
-        <div className="max-w-md w-full p-4 rounded-lg shadow-lg border border-colorHover dark:border-darkColorHover bg-white dark:bg-DarkColor">
-          <div className="mb-4">
-            <p className="text-lg font-semibold text-center text-black dark:text-white">
-              Esta acción desactivará tu cuenta
-            </p>
-            <p className="text-justify text-secondaryText dark:text-secondaryTextDark">
-              Estás por iniciar el proceso de desactivación de tu cuenta. Tu
-              nombre visible, tu @nombre de usuario y tu perfil público ya no se
-              podrán ver.
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <button
-              className="w-full px-2 py-3 font-semibold rounded-full text-white bg-PrimaryColor hover:bg-PrimaryColorHover"
-              onClick={() => {
-                toast.dismiss(t.id);
-                handleDeactivate();
-              }}
-            >
-              Sí, reactivar
-            </button>
-            <button
-              className="w-full px-2 py-3 font-semibold rounded-full text-black dark:text-white sm:hover:bg-lightOverlayColor"
-              onClick={() => {
-                toast.dismiss(t.id);
-              }}
-            >
-              Cancelar
-            </button>
-          </div>
-        </div>
-      ),
-      { duration: 10000, position: "top-center" }
-    );
-  };
-
-  const handleDeactivate = async () => {
-    if (token) {
-      try {
-        const response = await userDeactivationService(user.id, token.access);
-        toast.success(response.message, { duration: 5000 });
-        setTimeout(() => {
-          setUser(null);
-          setToken(null);
-          localStorage.removeItem("authUser");
-          localStorage.removeItem("authToken");
-        }, 5000);
-      } catch (err) {
-        const errorMessage = getDeactivateErrorMessage(err);
-        toast.error(errorMessage, { duration: 5000 });
-        if (err.status === 401) {
-          setTimeout(() => {
-            setUser(null);
-            setToken(null);
-            localStorage.removeItem("authUser");
-            localStorage.removeItem("authToken");
-          }, 5000);
-        }
-      }
-    }
+  const handleDeactivate = () => {
+    navigate("/settings/deactivate");
   };
 
   return !isEditing ? (
@@ -181,7 +118,7 @@ function UserSettings() {
         </div>
         <div
           className="flex gap-2 items-center px-4 py-6 hover:bg-colorHover dark:hover:bg-darkColorHover cursor-pointer"
-          onClick={handleOpenDeactivateModal}
+          onClick={handleDeactivate}
         >
           {theme === "light" ? (
             <UseSvgLoader
