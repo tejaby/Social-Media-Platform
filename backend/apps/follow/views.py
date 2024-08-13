@@ -86,7 +86,7 @@ class FollowersListView(generics.ListAPIView):
         user = get_object_or_404(CustomUser, id=user_id)
         followers = Follow.objects.filter(
             followed=user).values_list('follower', flat=True)
-        return CustomUser.objects.filter(id__in=followers)
+        return CustomUser.objects.filter(id__in=followers, is_active=True)
 
 
 """
@@ -104,4 +104,4 @@ class FollowingListView(generics.ListAPIView):
         user = get_object_or_404(CustomUser, id=user_id)
         following = Follow.objects.filter(
             follower=user).values_list('followed', flat=True)
-        return CustomUser.objects.filter(id__in=following)
+        return CustomUser.objects.filter(id__in=following, is_active=True)

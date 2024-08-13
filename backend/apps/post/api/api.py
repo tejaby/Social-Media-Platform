@@ -28,7 +28,7 @@ class PostViewset(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Post.objects.filter(state=True).order_by('-created_at')
+        return Post.objects.filter(state=True, author__is_active=True).order_by('-created_at')
 
     def destroy(self, request, *args, **kwargs):
         instance = get_object_or_404(Post, pk=kwargs['pk'])
@@ -141,7 +141,7 @@ class PostsFromFollowedUsersView(ListAPIView):
     def get_queryset(self):
         followed_users = Follow.objects.filter(
             follower=self.request.user).values_list('followed', flat=True)
-        return Post.objects.filter(state=True, author__in=followed_users).order_by('-created_at')
+        return Post.objects.filter(state=True, author__is_active=True, author__in=followed_users).order_by('-created_at')
 
 
 """
