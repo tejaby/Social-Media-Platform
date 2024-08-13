@@ -3,7 +3,7 @@ function UseSvgLoader({ name = "error-404", options = {} }) {
 
   return (
     <img
-      src={`../public/${name}.svg`}
+      src={`/${name}.svg`}
       alt="name"
       style={{ width: width, height: height }}
     />

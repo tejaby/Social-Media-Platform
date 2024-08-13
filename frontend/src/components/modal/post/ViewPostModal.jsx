@@ -257,7 +257,7 @@ function ViewPostModal() {
                 options={{ width: "24px", height: "24px" }}
               />
             </button>
-            <span className="text-black dark:text-white">3</span>
+            <span className="text-black dark:text-white">0</span>
           </div>
           <div className="flex items-center gap-1">
             <button>
@@ -266,7 +266,7 @@ function ViewPostModal() {
                 options={{ width: "24px", height: "24px" }}
               />
             </button>
-            <span className="text-black dark:text-white">54</span>
+            <span className="text-black dark:text-white">0</span>
           </div>
         </div>
       </div>
@@ -378,7 +378,7 @@ function ViewPostModal() {
                     options={{ width: "28px", height: "28px" }}
                   />
                 </button>
-                <span className="text-black dark:text-white">3</span>
+                <span className="text-black dark:text-white">0</span>
               </div>
               <div className="flex items-center gap-1">
                 <button>
@@ -387,7 +387,7 @@ function ViewPostModal() {
                     options={{ width: "28px", height: "28px" }}
                   />
                 </button>
-                <span className="text-black dark:text-white">54</span>
+                <span className="text-black dark:text-white">0</span>
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 // libraries
 import axios from "axios";
 
-const FOLLOW_API_BASE_URL = "http://localhost:8000/api/follow/";
+const FOLLOW_API_BASE_URL = "https://socialmedia-s0f6.onrender.com/api/follow/";
 
 export const followUserService = async (user, access) => {
   try {

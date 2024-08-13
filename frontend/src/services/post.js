@@ -1,7 +1,7 @@
 // libraries
 import axios from "axios";
 
-const POST_API_BASE_URL = "http://localhost:8000/api/post/";
+const POST_API_BASE_URL = "https://socialmedia-s0f6.onrender.com/api/post/";
 
 export const createPostService = async (data, access) => {
   try {

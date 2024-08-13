@@ -1,7 +1,7 @@
 // libraries
 import axios from "axios";
 
-const USER_API_BASE_URL = "http://localhost:8000/api/user/";
+const USER_API_BASE_URL = "https://socialmedia-s0f6.onrender.com/api/user/";
 
 export const createUserService = async (data) => {
   try {

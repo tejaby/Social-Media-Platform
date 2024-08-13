@@ -1,7 +1,7 @@
 // libraries
 import axios from "axios";
 
-const AUTH_API_BASE_URL = "http://localhost:8000/api/token/";
+const AUTH_API_BASE_URL = "https://socialmedia-s0f6.onrender.com/api/token/";
 
 export const loginService = async (data) => {
   try {
