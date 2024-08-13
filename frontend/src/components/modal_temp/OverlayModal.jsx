@@ -1,7 +1,7 @@
 // components
-import ModalPost from "./post/ModalPost";
+import ModalPost from "./post_temp/ModalPost";
 import ModalProfile from "./profile/ModalProfile";
-import ViewPostModal from "./post/ViewPostModal";
+import ViewPostModal from "./post_temp/ViewPostModal";
 
 // context
 import { InterfaceContext } from "../../context/Interface";
