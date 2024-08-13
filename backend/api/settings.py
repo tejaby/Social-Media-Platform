@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+import cloudinary_storage
 
 from pathlib import Path
 from django.utils import timezone
@@ -47,7 +48,9 @@ THIRD_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'PIL',
-    'corsheaders'
+    'corsheaders',
+    'cloudinary',
+    'cloudinary_storage'
 ]
 
 LOCAL_APPS = [
@@ -164,8 +167,16 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 AUTH_USER_MODEL = 'user.CustomUser'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dghcjpnoc',
+    'API_KEY': '625887782831862',
+    'API_SECRET': 'G9ycPAyZdUMhTR5yeoMdO8iPHno'
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
